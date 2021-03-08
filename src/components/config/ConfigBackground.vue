@@ -1,22 +1,27 @@
 <template>
   <div>
-    Couleur fond <input v-model="j1.colorTagBg" /> <br />
+    <!-- TODO use same color/gradient -->
+    <!-- TODO bg unique -->
+    <config-background-player :i="1" :player="j1"></config-background-player>
+    <config-background-player :i="2" :player="j2"></config-background-player>
 
-    Fond <input v-model="j1.colorBg" /> <br />
-
-    Fond 2 <input v-model="j1.color2Bg" /> <br />
+    <h3>Phase</h3>
+    Couleur <input v-model="phase1.colorBg" /> <br />
+    Couleur 2 <input v-model="phase1.color2Bg" /> <br />
+    Couleur <input v-model="phase2.colorBg" /> <br />
+    Couleur 2 <input v-model="phase2.color2Bg" /> <br />
   </div>
 </template>
 
 <script>
+import ConfigBackgroundPlayer from './ConfigBackgroundPlayer.vue';
 export default {
+  components: { ConfigBackgroundPlayer },
   props: {
-    title: {
-      type: String,
-      default: "Tab",
-    },
     j1: Object,
     j2: Object,
+    phase1: Object,
+    phase2: Object
   },
   data() {
     return {

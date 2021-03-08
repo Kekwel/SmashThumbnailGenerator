@@ -118,7 +118,7 @@ class CustomText {
         return this.bgTag.color = pColor;
     }
     get color2Bg() {
-        return this.bgTag.color;
+        return this.bgTag.color2;
     }
     set color2Bg(pColor2) {
         return this.bgTag.color2 = pColor2;

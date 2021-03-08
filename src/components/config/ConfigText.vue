@@ -10,14 +10,8 @@ import ConfigTextPlayer from './ConfigTextPlayer.vue';
 export default {
   components: { ConfigTextPlayer },
   props: {
-    title: {
-      type: String,
-      default: "Tab",
-    },
     j1: Object,
     j2: Object,
-    phase1: Object,
-    phase2: Object,
   },
   data() {
     return {

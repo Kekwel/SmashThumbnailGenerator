@@ -11,6 +11,7 @@
         />
         <label for="displayGrid">Affichage Grid</label>
         <tabs>
+          <!-- TODO icon tab -->
           <tab title="VS"
             ><conf-player
               :j1="j1"
@@ -18,18 +19,14 @@
               :phase1="phase1"
               :phase2="phase2"
             ></conf-player
-          ></tab>
-          <tab title="Texte"><conf-text :j1="j1" :j2="j2"></conf-text></tab>
+          ></tab> <!-- Icone VS ou "account" -->
+          <tab title="Texte"><conf-text :j1="j1" :j2="j2"></conf-text></tab> <!-- Icone text ou font -->
           <tab title="Fond"
-            ><conf-background :j1="j1" :j2="j2"></conf-background
-          ></tab>
-          <tab title="Par défaut"><conf-default></conf-default></tab>
+            ><conf-background :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2"></conf-background
+          ></tab> <!-- Icone background ou color -->
+          <tab title="Par défaut"><conf-default></conf-default></tab> <!-- icone cog -->
         </tabs>
       </div>
-      <div id="info-j1">
-        <!-- Personange 2 <input v-model="j2.filename" /> <br /> -->
-      </div>
-      <!-- TODO component pour joueur -->
     </div>
     <div class="column">
       <canvas
