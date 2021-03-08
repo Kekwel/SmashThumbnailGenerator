@@ -1,61 +1,35 @@
 <template>
   <div class="columns is-gapless pl-2">
     <div class="column is-one-fifth">
-      <div >
+      <div>
+        <button @click="exportPNG">PNG</button>
+        <input
+          type="checkbox"
+          id="displayGrid"
+          v-model="isDisplayGrid"
+          @change="displayGrid($event)"
+        />
+        <label for="displayGrid">Affichage Grid</label>
         <tabs>
-          <tab title="Tab 1"><h3>Joueur 1</h3></tab>
-          <tab title="Tab 2"><config title="oui" :j1="j1.tag"></config></tab>
-          <tab title="Tab 3">Hello From Tab 3</tab>
-          <tab title="Tab 4">Hello From Tab 4</tab>
+          <tab title="VS"
+            ><conf-player
+              :j1="j1"
+              :j2="j2"
+              :phase1="phase1"
+              :phase2="phase2"
+            ></conf-player
+          ></tab>
+          <tab title="Texte"><conf-text :j1="j1" :j2="j2"></conf-text></tab>
+          <tab title="Fond"
+            ><conf-background :j1="j1" :j2="j2"></conf-background
+          ></tab>
+          <tab title="Par défaut"><conf-default></conf-default></tab>
         </tabs>
       </div>
-      <button @click="exportPNG">PNG</button>
-      <h2>Par défaut</h2>
-      <hr />
-      Police Taille Police Couleur Gras, Italique
-      <input
-        type="checkbox"
-        id="displayGrid"
-        v-model="isDisplayGrid"
-        @change="displayGrid($event)"
-      />
-      <label for="displayGrid">Afficahge Grid</label>
-
       <div id="info-j1">
-        <h3>Joueur 1</h3>
-        <hr />
-        Pseudo <input v-model="j1.tag" /> <br />
-        Taille <input v-model="j1.tagSize" /> <br />
-        Couleur <input v-model="j1.colorTag" /> <br />
-        Couleur fond <input v-model="j1.colorTagBg" /> <br />
-        Alignement <button @click="align(null, 'top')">TOP</button
-        ><button @click="align(null, 'middle')">MIDDLE</button
-        ><button @click="align(null, 'bottom')">BOTTOM</button> <br />
-        Alignement <button @click="align('left')">LEFT</button
-        ><button @click="align('center')">CENTER</button
-        ><button @click="align('right')">RIGHT</button> <br />
-        <input type="checkbox" id="boldJ1" v-model="j1.tagBold" />
-        <label for="boldJ1">Gras</label>
-        <input type="checkbox" id="italicJ1" v-model="j1.tagItalic" />
-        <label for="italicJ1">Italique</label><br />
-        <!-- TODO Perso -->
-        Personange <input v-model="j1.filename" /> <br />
         <!-- Personange 2 <input v-model="j2.filename" /> <br /> -->
-        <button @click="flip(j1.image)">FLIP</button>
-        Fond <input v-model="j1.colorBg" /> <br />
-        Fond 2 <input v-model="j1.color2Bg" /> <br />
       </div>
       <!-- TODO component pour joueur -->
-      <div id="info-phase">
-        <h3>Phase</h3>
-        <hr />
-        Custom 1 <input v-model="phase1.txt" /><br />
-        <!-- TODO radio button Pools | Winners | Losers | Grand -->
-        <!-- Taille 1<br /> -->
-        Custom 2 <input v-model="phase2.txt" /><br />
-        <!-- TODO radio button Round X | Quarters | Semis | Finals -->
-        <!-- Taille 2<br /> -->
-      </div>
     </div>
     <div class="column">
       <canvas
@@ -74,16 +48,22 @@ import { CustomRect } from "./js/CustomRect";
 import { Player } from "./js/Player";
 import { CustomText } from "./js/CustomText";
 import { CustomImage } from "./js/CustomImage";
-import Tab from "./Tab.vue";
-import Tabs from "./Tabs.vue";
-import Config from "./Config.vue";
+import Tab from "./Tab";
+import Tabs from "./Tabs";
+import ConfPlayer from "./config/ConfigPlayer";
+import ConfText from "./config/ConfigText";
+import ConfBackground from "./config/ConfigBackground";
+import ConfDefault from "./config/ConfigDefault";
 
 export default {
   name: "Thumbnail",
   components: {
     Tab,
     Tabs,
-    Config
+    ConfPlayer,
+    ConfText,
+    ConfBackground,
+    ConfDefault,
   },
   data() {
     return {
@@ -91,11 +71,10 @@ export default {
       gridLines: [],
       grid: 40,
       canvas: "",
-      // TODO regrouper en fonction du joueur ? j1 : {...}
-      j1: "",
-      j2: "",
-      phase1: "",
-      phase2: "",
+      j1: {},
+      j2: {},
+      phase1: {},
+      phase2: {},
     };
   },
   mounted() {
@@ -153,9 +132,11 @@ export default {
     tagOptions = { tag: "Round 1", x: 640, y: 620, size: 40, color: "black" };
     this.phase2 = new CustomText(this.canvas, tagOptions, bgTagOptions);
 
+    this.j1.addToCanvas();
+    this.j2.addToCanvas();
+
     this.canvas.add(this.phase1.group);
     this.canvas.add(this.phase2.group);
-
     // le VS
 
     // TODO pouvoir toggle le timestamp YT (pour voir ce qui va etre caché)
@@ -207,9 +188,6 @@ export default {
       });
       !link.dispatchEvent(evt);
     },
-    align: function (alignmentH, alignmentV) {
-      this.j1.alignTag(alignmentH, alignmentV);
-    },
     getImgChar(char) {
       var images = require.context("../assets/img/char/ult", false, /\.png$/);
       // require("../assets/img/char/$GAME/$CHARNAME_$ROW_$COL.png")
@@ -221,11 +199,6 @@ export default {
         line.set("visible", this.isDisplayGrid);
         this.canvas.renderAll();
       }
-    },
-    flip(img) {
-      console.log(".. flip image char");
-      img.toggle("flipX");
-      this.canvas.renderAll();
     },
   },
 };

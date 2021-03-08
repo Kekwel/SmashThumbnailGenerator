@@ -15,12 +15,27 @@ class Player {
 
         // Background
         this.bg = bg;
+    }
 
-        canvas.add(this.bg.rect);
-        canvas.add(this.myTag.group);
-        
-        canvas.sendToBack(this.bg.rect);
-        canvas.bringToFront(this.myTag.group);
+    addToCanvas() {
+        // console.log(".. add to canvas", this.tag);
+        this.canvas.add(this.bg.rect);
+        this.canvas.add(this.myTag.group);
+
+        this.characters.addImg();
+
+        this.canvas.sendToBack(this.bg.rect);
+        this.canvas.bringToFront(this.myTag.group);
+    }
+
+    alignTag(alignmentH, alignmentV) {
+		console.log(".. align tag", alignmentH ? alignmentH : alignmentV, this.tag);
+        this.myTag.align(alignmentH, alignmentV);
+    }
+
+    flipChar() {
+        console.log(".. flip image char", this.tag);
+        this.characters.flip();
     }
 
     // CHARACTERS
@@ -30,7 +45,7 @@ class Player {
     set filename(filename) {
         return this.characters.filename = filename;
     }
-    get image(){
+    get image() {
         return this.characters.image;
     }
 
@@ -84,10 +99,6 @@ class Player {
     }
     set colorTag(pColor) {
         return this.myTag.color = pColor;
-    }
-
-    alignTag(alignmentH, alignmentV) {
-        this.myTag.align(alignmentH, alignmentV);
     }
 }
 

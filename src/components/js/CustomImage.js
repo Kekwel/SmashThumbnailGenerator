@@ -23,7 +23,7 @@ class CustomImage {
         this._width = imgOpt.width || this._width;
         this._height = imgOpt.height || this._height;
 
-        this.addImg();
+        // this.addImg();
     }
 
     addImg() {
@@ -31,7 +31,7 @@ class CustomImage {
         var newUrl = this.getImgUrl(this._filename);
         fabric.Image.fromURL(newUrl, function (oImg) {
             self.initImage(oImg);
-            
+
             self._y = self.canvas.height - oImg.getScaledHeight();
             oImg.set('top', self._y);
             self.canvas.add(oImg);
@@ -40,7 +40,7 @@ class CustomImage {
         });
     }
 
-    get image(){
+    get image() {
         return this._image;
     }
 
@@ -62,18 +62,18 @@ class CustomImage {
         this.canvas.renderAll()
         return this._filename;
     }
-    
+
     initImage(newImg) {
         this._image = newImg;
         newImg.scaleToWidth(this._width)
-        
+
         newImg.set({
             left: this._x,
             top: this._y,
             perPixelTargetFind: true
         });
     }
-    
+
     updateImage(url) {
         console.log("update " + url);
         var self = this;
@@ -86,6 +86,11 @@ class CustomImage {
         var images = require.context("../../assets/img/char/ult", false, /\.png$/);
         // require("../assets/img/char/$GAME/$CHARNAME_$ROW_$COL.png")
         return images("./" + char + ".png");
+    }
+
+    flip() {
+        this._image.toggle("flipX");
+        this.canvas.renderAll();
     }
 }
 
