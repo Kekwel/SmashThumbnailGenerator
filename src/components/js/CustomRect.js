@@ -7,6 +7,11 @@ import {
 
 class CustomRect {
     canvas;
+
+    _colors;
+    _origin;
+    _dest;
+
     _width = 640;
     _height = 100;
     _x = 0;
@@ -22,12 +27,20 @@ class CustomRect {
         this._height = bgOptions.height || this._height;
         this._x = bgOptions.x || this._x;
         this._y = bgOptions.y || this._y;
-        this._color = bgOptions.color || this._color;
-        this._color2 = bgOptions.color2 || this._color;
+
+        this._colors = bgOptions.colors || this._colors;
+        this._origin = {
+            x: 0,
+            y: 0
+        }
+        this._dest = {
+            x: this._width,
+            y: this._height
+        }
+
         this._index = bgOptions.index || this._index;
 
         this.rect = new fabric.Rect({
-            fill: this._color,
             left: this._x,
             top: this._y,
             width: this._width,
@@ -36,72 +49,90 @@ class CustomRect {
             originY: "top",
         });
         this._grad = new CustomColor(this.canvas, {
-            colors: [this._color, this._color2],
-            dest: {
-                x: this._x + this._width,
-                y: this._y + this._height
-            }
+            colors: this._colors,
+            origin: this._origin,
+            dest: this._dest
         });
+        // si couleur tjs undefinded 
+        if (!this._colors)
+            this.colors = this._grad.colors;
 
         this.updateColor();
 
         this.rect.moveTo(this._index);
     }
 
-    get color() {
-        return this._grad.colors[0];
+    get colors() {
+        return this._colors;
     }
-    set color(pColor) {
-        if (this.isColor(pColor)) {
-            /* this._color = pColor; */
-            this._grad.colors[0] = pColor;
+    set colors(pColors) {
+        if (pColors) {
+            this._colors = pColors;
+            this._grad.colors = this._colors;
             this.updateColor();
         }
-        return this._grad.colors[0];
+        return this._colors;
     }
-    get color2() {
-        return this._grad.colors[1];
-    }
-    set color2(pColor2) {
-        if (this.isColor(pColor2)) {
-            /* this._color2 = pColor2; */
-            this._grad.colors[1] = pColor2;
-            this.updateColor();
+
+    get colorDirection() {
+        // TODO recup origin dset courant
+        var dir = {
+            origin: this._grad._origin,
+            dest: this._grad._dest
         }
-        return this._grad.colors[1];
+        return dir;
+    }
+    set colorDirection(dirLib) {
+        var x1, y1, x2, y2;
+        switch (dirLib) {
+            case 'topleft':
+                x1 = this._width; y1 = this._height;
+                x2 = 0; y2 = 0;
+                break;
+            case 'up':
+                x1 = this._width / 2; y1 = this._height;
+                x2 = this._width / 2; y2 = 0;
+                break;
+            case 'topright':
+                x1 = 0; y1 = this._height;
+                x2 = this._width; y2 = 0;
+                break;
+            case 'left':
+                x1 = this._width; y1 = this._height / 2;
+                x2 = 0; y2 = this._height / 2;
+                break;
+            case 'right':
+                x1 = 0; y1 = this._height / 2;
+                x2 = this._width; y2 = this._height / 2;
+                break;
+            case 'bottomleft':
+                x1 = this._width; y1 = 0;
+                x2 = 0; y2 = this._height;
+                break;
+            case 'down':
+                x1 = this._width / 2; y1 = 0;
+                x2 = this._width / 2; y2 = this._height;
+                break;
+            case 'bottomright':
+                x1 = 0; y1 = 0;
+                x2 = this._width; y2 = this._height;
+                break;
+            default:
+                break;
+        }
+        this._origin = {x: x1, y: y1};
+        this._dest = {x: x2, y: y2};
+        console.log(this._origin, this._dest);
+        this.updateColor();
+        return dirLib;
     }
 
     updateColor() {
         this._grad = new CustomColor(this.canvas, {
-            colors: [this._grad.colors[0], this._grad.colors[1]],
-            origin: {
-                x: this._x,
-                y: this._y
-            }, dest: {
-                x: this._x + this._width,
-                y: this._y + this._height
-            }
+            colors: this._colors,
+            origin: this._origin,
+            dest: this._dest
         });
-        /* this._gradient = new fabric.Gradient({
-            type: 'linear',
-            gradientUnits: 'pixels', // or 'percentage'
-            coords: {
-                x1: 0,
-                y1: 0,
-                x2: this.rect.width,
-                y2: this.rect.height
-            },
-            colorStops: [{
-                    offset: 0,
-                    color: this._color
-                },
-                {
-                    offset: 1,
-                    color: this._color2
-                }
-            ]
-        });
-        this.rect.set('fill', this._gradient); */
         this.rect.set('fill', this._grad.gradient);
         this.canvas.renderAll();
     }

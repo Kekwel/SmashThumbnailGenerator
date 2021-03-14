@@ -13,15 +13,25 @@ class CustomColor {
         x: 1280,
         y: 720
     };
-    _colors = ['green', 'black'];
+    
+    _color2= {id: 0, hex: "#141E30"};
+    _color = {id: 1, hex: "#243B55"};
+    _colors = [this._color, this._color2];
 
     constructor(pCanvas, colorOpt) {
         this.canvas = pCanvas;
         
-        this._origin.x = (colorOpt.origin && colorOpt.origin.x) || this._origin.x;
-        this._origin.y = (colorOpt.origin && colorOpt.origin.y) || this._origin.y;
-        this._dest.x = (colorOpt.dest && colorOpt.dest.x) || this._dest.x;
-        this._dest.y = (colorOpt.dest && colorOpt.dest.y) || this._dest.y;
+        if (colorOpt.origin) {
+            this._origin.x = colorOpt.origin.x;
+            this._origin.y = colorOpt.origin.y;
+        }
+        if (colorOpt.dest) {
+            this._dest.x = colorOpt.dest.x;
+            this._dest.y = colorOpt.dest.y;
+        }
+        /*  console.log(this._origin);
+        console.log(this._dest);
+        console.log('--'); */
         
         this._colors = colorOpt.colors || this._colors;
         
@@ -36,17 +46,21 @@ class CustomColor {
             },
             colorStops: [{
                     offset: 0,
-                    color: this._colors[0]
+                    color: this._colors[0].hex
                 },
                 {
                     offset: 1,
-                    color: this._colors[1]
+                    color: this._colors[1].hex
                 }
             ]
         });
     }
 
     get colors() {
+        return this._colors;
+    }
+    set colors(pColors) {
+        this._colors = pColors;
         return this._colors;
     }
     // TODO getter setter 

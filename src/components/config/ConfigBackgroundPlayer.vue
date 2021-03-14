@@ -2,14 +2,13 @@
   <div>
     <h2>Joueur {{ i }} : <b>{{ player.tag }}</b></h2>
     <h3>Tag</h3>
-    Couleur <input v-model="player.colorTagBg" /> <br />
-    Couleur 2 <input v-model="player.color2TagBg" /> <br />
+    <config-color :obj="player.myTag"></config-color>
+<!--     Couleur <input v-model="player.colorTagBg" /> <br />
+    Couleur 2 <input v-model="player.color2TagBg" /> <br /> -->
 
     <h3>Fond</h3>
-    Couleur <input v-model="player.colorBg" /> <br />
-    Couleur 2 <input v-model="player.color2Bg" /> <br />
+    <config-color :obj="player.bg"></config-color>
 
-    <config-color></config-color>
   </div>
 </template>
 
@@ -20,6 +19,6 @@ export default {
   props: {
     player: Object,
     i: Number,
-  },
+  }
 };
 </script>

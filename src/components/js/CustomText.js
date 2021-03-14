@@ -111,12 +111,20 @@ class CustomText {
         return this._italic;
     }
 
-    get colorBg() {
-        return this.bgTag.color;
+    get colors() {
+        return this.bgTag.colors;
     }
-    set colorBg(pColor) {
-        return this.bgTag.color = pColor;
+    set colors(pColors) {
+        return this.bgTag.colors = pColors;
     }
+
+    get colorDirection() {
+        return this.bgTag.colorDirection;
+    }
+    set colorDirection(pDir) {
+        return this.bgTag.colorDirection = pDir
+    }
+
     get color2Bg() {
         return this.bgTag.color2;
     }

@@ -88,18 +88,21 @@ class Player {
     set tagItalic(isItalic) {
         return this.myTag.italic = isItalic;
     }
-    get colorTagBg() {
-        return this.myTag.colorBg;
+
+    get colorsTagBg() {
+        return this.myTag.colors;
     }
-    set colorTagBg(pColor) {
-        return this.myTag.colorBg = pColor;
+    set colorsTagBg(pColors) {
+        return this.myTag.colors = pColors;
     }
+
     get color2TagBg() {
         return this.myTag.color2Bg;
     }
     set color2TagBg(pColor2) {
         return this.myTag.color2Bg = pColor2;
     }
+
     get colorTag() {
         return this.myTag.color;
     }
