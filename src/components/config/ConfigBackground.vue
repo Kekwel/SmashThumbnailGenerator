@@ -6,8 +6,14 @@
     <config-background-player :i="2" :player="j2"></config-background-player>
 
     <h3>Phase</h3>
-    <config-color :obj="phase1"></config-color>
-    <config-color :obj="phase2"></config-color>
+    <div class="columns is-gapless">
+      <div class="column">
+        <config-color :obj="phase1"></config-color>
+      </div>
+      <div class="column">
+        <config-color :obj="phase2"></config-color>
+      </div>
+    </div>
     <!-- 
     Couleur <input v-model="phase1.colorBg" /> <br />
     Couleur 2 <input v-model="phase1.color2Bg" /> <br />
@@ -18,7 +24,7 @@
 
 <script>
 import ConfigBackgroundPlayer from "./ConfigBackgroundPlayer.vue";
-import ConfigColor from './ConfigColor.vue';
+import ConfigColor from "./ConfigColor.vue";
 export default {
   components: { ConfigBackgroundPlayer, ConfigColor },
   props: {

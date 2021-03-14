@@ -47,6 +47,7 @@ class CustomRect {
             height: this._height,
             originX: "left",
             originY: "top",
+            strokeWidth: 0,
         });
         this._grad = new CustomColor(this.canvas, {
             colors: this._colors,
