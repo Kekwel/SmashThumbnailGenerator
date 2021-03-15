@@ -10,7 +10,11 @@
     />
     <label for="lockTag"> Couleur bandeau lié (Tag, Phases)</label>
     <div v-if="isLockTag">
-      <config-color :objs="[j1.myTag, j2.myTag, phase1, phase2]" :lockTag="isLockTag"></config-color>
+      <config-color
+        :title="'Tag & Phases'"
+        :objs="[j1.myTag, j2.myTag, phase1, phase2]"
+        :lockTag="isLockTag"
+      ></config-color>
     </div>
     <!-- TODO bg unique -->
     <config-background-player
@@ -25,15 +29,16 @@
     ></config-background-player>
 
     <div v-if="!isLockTag">
-      <h3>Phase</h3>
-      <div class="columns is-gapless">
-        <div class="column">
-          <config-color :obj="phase1" :lockTag="isLockTag"></config-color>
-        </div>
-        <div class="column">
-          <config-color :obj="phase2" :lockTag="isLockTag"></config-color>
-        </div>
-      </div>
+      <config-color
+        :title="'Phase 1'"
+        :obj="phase1"
+        :lockTag="isLockTag"
+      ></config-color>
+      <config-color
+        :title="'Phase 2'"
+        :obj="phase2"
+        :lockTag="isLockTag"
+      ></config-color>
     </div>
   </div>
 </template>

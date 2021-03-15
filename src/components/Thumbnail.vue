@@ -94,7 +94,7 @@ export default {
 
     // -- J1
     var bgOptions = { width: 640, height: 720, x: 0, y: 0 };
-    var bgTagOptions = { width: 640, height: 100, x: 0, y: 0 };
+    var bgTagOptions = { width: 640, height: 100, x: 0, y: 0, colors: [{id: 0, hex: '#000428'}, {id: 1, hex: '#004e92'}] };
     var tagOptions = { tag: "Joueur X", x: 0, y: 0, size: 40, color: "white" };
     var imgOpt = { filename: "banjo_00", x: 0, y: 0 };
     // tag
@@ -107,7 +107,7 @@ export default {
     // -- J2
     bgOptions = { width: 640, height: 720, x: 640, y: 0 };
     imgOpt = { filename: "marth_0_02", x: 640, y: 0 };
-    bgTagOptions = { width: 640, height: 100, x: 640, y: 0 };
+    bgTagOptions = { width: 640, height: 100, x: 640, y: 0, colors: [{id: 0, hex: '#000428'}, {id: 1, hex: '#004e92'}] };
     tagOptions = { tag: "Joueur Y", x: 640, y: 0, size: 40, color: "white" };
     // tag
     var bgJ2 = new CustomRect(this.canvas, bgOptions);
@@ -117,11 +117,11 @@ export default {
     this.j2 = new Player(this.canvas, tagJ2, imgJ2, bgJ2);
 
     // le ou les phases (WF, etc)
-    bgTagOptions = { width: 640, height: 100, x: 0, y: 620 };
+    bgTagOptions = { width: 640, height: 100, x: 0, y: 620, colors: [{id: 0, hex: '#000428'}, {id: 1, hex: '#004e92'}] };
     tagOptions = { tag: "Winners", x: 0, y: 620, size: 40, color: "white" };
     this.phase1 = new CustomText(this.canvas, tagOptions, bgTagOptions);
 
-    bgTagOptions = { width: 640, height: 100, x: 640, y: 620 };
+    bgTagOptions = { width: 640, height: 100, x: 640, y: 620, colors: [{id: 0, hex: '#000428'}, {id: 1, hex: '#004e92'}]  };
     tagOptions = { tag: "Round 1", x: 640, y: 620, size: 40, color: "white" };
     this.phase2 = new CustomText(this.canvas, tagOptions, bgTagOptions);
 
