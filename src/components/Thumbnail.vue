@@ -96,7 +96,7 @@ export default {
     var bgOptions = { width: 640, height: 720, x: 0, y: 0 };
     var bgTagOptions = { width: 640, height: 100, x: 0, y: 0 };
     var tagOptions = { tag: "Joueur X", x: 0, y: 0, size: 40, color: "white" };
-    var imgOpt = { filename: "bayonetta_00", x: 0, y: 0 };
+    var imgOpt = { filename: "banjo_00", x: 0, y: 0 };
     // tag
     var bgJ1 = new CustomRect(this.canvas, bgOptions);
     var tagJ1 = new CustomText(this.canvas, tagOptions, bgTagOptions);
@@ -135,7 +135,7 @@ export default {
     // TODO pouvoir toggle le timestamp YT (pour voir ce qui va etre caché)
   },
   methods: {
-    initGridLines: function () {
+    initGridLines() {
       // create grid
       for (var i = 0; i < 1280 / this.grid; i++) {
         var line = new fabric.Line([i * this.grid, 0, i * this.grid, 1280], {
@@ -169,7 +169,7 @@ export default {
         }
       });
     },
-    exportPNG: function () {
+    exportPNG() {
       console.log("Export PNG..");
       var link = document.createElement("a");
       link.download = "toto.png";

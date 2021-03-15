@@ -1,13 +1,25 @@
 <template>
   <div>
-    <div class="colors">
-      <div v-for="color in obj ? obj.colors : []" :key="color.id">
+    <div class="colors" v-if="obj">
+      <div v-for="color in obj.colors" :key="color.id">
         <input
           type="color"
           id="head"
           name="head"
           v-model="color.hex"
           @input="changeColors()"
+        />
+        <label for="head"> {{ color.hex }}</label>
+      </div>
+    </div>
+    <div class="colors" v-if="objs && objs[0]">
+      <div v-for="color in objs[0].colors" :key="color.id">
+        <input
+          type="color"
+          id="head"
+          name="head"
+          v-model="color.hex"
+          @input="changeAllColors(color.id, color.hex)"
         />
         <label for="head"> {{ color.hex }}</label>
       </div>
@@ -80,10 +92,11 @@ export default {
   components: { SvgIcon },
   props: {
     obj: Object,
+    objs: Array,
+    lockTag: Boolean
   },
   data() {
     return {
-      myColors: this.obj ? this.obj.colors : [],
       icon: {
         up: mdiArrowUpThick,
         down: mdiArrowDownThick,
@@ -105,8 +118,21 @@ export default {
       this.colors = this.obj.colors;
       this.obj.colors = this.colors;
     },
+    changeAllColors(id, hex) {
+      for (var tmp of this.objs) {
+        this.colors = tmp.colors;
+        this.colors[id].hex = hex;
+        tmp.colors = this.colors;
+      }
+    },
     changeDirection(dir) {
-      this.obj.colorDirection = dir;
+      if (this.lockTag) {
+        for (var tmp of this.objs) {
+          tmp.colorDirection = dir;
+        }
+      } else {
+        this.obj.colorDirection = dir;
+      }
     },
   },
 };

@@ -1,24 +1,40 @@
 <template>
   <div>
-    <!-- TODO use same color/gradient -->
+    <!-- use same color/gradient -->
+    <!-- TODO explication -->
+    <input
+      type="checkbox"
+      id="lockTag"
+      v-model="isLockTag"
+      @change="lockTag($event)"
+    />
+    <label for="lockTag"> Couleur bandeau lié (Tag, Phases)</label>
+    <div v-if="isLockTag">
+      <config-color :objs="[j1.myTag, j2.myTag, phase1, phase2]" :lockTag="isLockTag"></config-color>
+    </div>
     <!-- TODO bg unique -->
-    <config-background-player :i="1" :player="j1"></config-background-player>
-    <config-background-player :i="2" :player="j2"></config-background-player>
+    <config-background-player
+      :i="1"
+      :player="j1"
+      :lockTag="isLockTag"
+    ></config-background-player>
+    <config-background-player
+      :i="2"
+      :player="j2"
+      :lockTag="isLockTag"
+    ></config-background-player>
 
-    <h3>Phase</h3>
-    <div class="columns is-gapless">
-      <div class="column">
-        <config-color :obj="phase1"></config-color>
-      </div>
-      <div class="column">
-        <config-color :obj="phase2"></config-color>
+    <div v-if="!isLockTag">
+      <h3>Phase</h3>
+      <div class="columns is-gapless">
+        <div class="column">
+          <config-color :obj="phase1" :lockTag="isLockTag"></config-color>
+        </div>
+        <div class="column">
+          <config-color :obj="phase2" :lockTag="isLockTag"></config-color>
+        </div>
       </div>
     </div>
-    <!-- 
-    Couleur <input v-model="phase1.colorBg" /> <br />
-    Couleur 2 <input v-model="phase1.color2Bg" /> <br />
-    Couleur <input v-model="phase2.colorBg" /> <br />
-    Couleur 2 <input v-model="phase2.color2Bg" /> <br /> -->
   </div>
 </template>
 
@@ -35,8 +51,13 @@ export default {
   },
   data() {
     return {
-      isActive: true,
+      isLockTag: true,
     };
+  },
+  methods: {
+    lockTag() {
+      console.log(".. lock tag ", this.isLockTag);
+    },
   },
 };
 </script>

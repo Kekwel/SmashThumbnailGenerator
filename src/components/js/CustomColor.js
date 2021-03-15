@@ -14,8 +14,8 @@ class CustomColor {
         y: 720
     };
     
-    _color2= {id: 0, hex: "#141E30"};
-    _color = {id: 1, hex: "#243B55"};
+    _color = {id: 0, hex: "#243B55"};
+    _color2= {id: 1, hex: "#141E30"};
     _colors = [this._color, this._color2];
 
     constructor(pCanvas, colorOpt) {

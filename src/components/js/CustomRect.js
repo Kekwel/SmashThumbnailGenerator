@@ -123,7 +123,6 @@ class CustomRect {
         }
         this._origin = {x: x1, y: y1};
         this._dest = {x: x2, y: y2};
-        console.log(this._origin, this._dest);
         this.updateColor();
         return dirLib;
     }
