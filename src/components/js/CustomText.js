@@ -18,7 +18,7 @@ class CustomText {
     _y = 0;
     _alignmentX = 'center';
     _alignmentY = 'middle';
-    _color = 'black';
+    _color = {hex: 'black'};
     _bold = false;
     _italic = false;
     _index = 1;
@@ -83,7 +83,7 @@ class CustomText {
     set txt(txt) {
         this._txt = txt;
         this.text.set('text', txt);
-        this.canvas.renderAll()
+        this.align();
         return this._txt;
     }
     get size() {
@@ -138,6 +138,7 @@ class CustomText {
     set color(pColor) {
         this.text.set('fill', pColor);
         this.canvas.renderAll();
+        this._color = pColor;
         return this._color;
     }
 

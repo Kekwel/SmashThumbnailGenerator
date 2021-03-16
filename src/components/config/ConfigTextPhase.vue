@@ -1,54 +1,48 @@
 <template>
   <div>
     <h3 class="title is-4 ml-2 mt-1 mb-2 title-overflow">
-      Joueur {{ i }} : <b>{{ player.tag }}</b>
+      <b>Phase {{ i }} : {{ phase.txt }}</b>
     </h3>
     <!-- <hr /> TODO HR -->
     <!-- TODO padding -->
     <div class="columns is-gapless">
       <div class="column">
-        Taille <input size="3" v-model="player.tagSize" /> <br />
-        <input type="color" id="head" name="head" v-model="player.colorTag" />
-        <label for="head"> {{ player.colorTag }}</label
-        ><br />
-        <input type="checkbox" :id="idBold" v-model="player.tagBold" />
+        Taille <input size="3" v-model="phase.size" /> <br />
+        <input type="color" id="head" name="head" v-model="phase.color" />
+        <label for="head"> {{ phase.color }}</label><br />
+
+        <input type="checkbox" :id="idBold" v-model="phase.bold" />
         <label :for="idBold"> Gras </label>
-        <input type="checkbox" :id="idItalic" v-model="player.tagItalic" />
+        <input type="checkbox" :id="idItalic" v-model="phase.italic" />
         <label :for="idItalic"> Italique </label><br />
       </div>
       <div class="column">
         <!-- TODO component CustomButton ? -->
-        <button @click="player.alignTag(null, 'top')" class="button is-small">
+        <button @click="phase.align(null, 'top')" class="button is-small">
           <span class="icon is-small">
             <svg-icon type="mdi" :path="icon.top"></svg-icon>
           </span></button
-        ><button
-          @click="player.alignTag(null, 'middle')"
-          class="button is-small"
-        >
+        ><button @click="phase.align(null, 'middle')" class="button is-small">
           <span class="icon is-small">
             <svg-icon type="mdi" :path="icon.middle"></svg-icon>
           </span></button
-        ><button
-          @click="player.alignTag(null, 'bottom')"
-          class="button is-small"
-        >
+        ><button @click="phase.align(null, 'bottom')" class="button is-small">
           <span class="icon is-small">
             <svg-icon type="mdi" :path="icon.bottom"></svg-icon>
           </span>
         </button>
         <br />
-        <button @click="player.alignTag('left')" class="button is-small">
+        <button @click="phase.align('left')" class="button is-small">
           <span class="icon is-small">
             <svg-icon type="mdi" :path="icon.left"></svg-icon>
           </span>
         </button>
-        <button @click="player.alignTag('center')" class="button is-small">
+        <button @click="phase.align('center')" class="button is-small">
           <span class="icon is-small">
             <svg-icon type="mdi" :path="icon.center"></svg-icon>
           </span>
         </button>
-        <button @click="player.alignTag('right')" class="button is-small">
+        <button @click="phase.align('right')" class="button is-small">
           <span class="icon is-small">
             <svg-icon type="mdi" :path="icon.right"></svg-icon>
           </span>
@@ -70,13 +64,13 @@ import {
 export default {
   components: { SvgIcon },
   props: {
-    player: Object,
+    phase: Object,
     i: Number,
   },
   data() {
     return {
-      idBold: "italicPlayer" + this.i,
-      idItalic: "boldPlayer" + this.i,
+      idBold: "italicPhase" + this.i,
+      idItalic: "boldPhase" + this.i,
       icon: {
         left: mdiFormatAlignLeft,
         center: mdiFormatAlignCenter,
@@ -89,10 +83,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.title-overflow {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-</style>

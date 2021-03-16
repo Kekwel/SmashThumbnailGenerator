@@ -21,7 +21,14 @@
             ></conf-player
           ></tab>
           <!-- Icone VS ou "account" -->
-          <tab title="Texte"><conf-text :j1="j1" :j2="j2"></conf-text></tab>
+          <tab title="Texte"
+            ><conf-text
+              :j1="j1"
+              :j2="j2"
+              :phase1="phase1"
+              :phase2="phase2"
+            ></conf-text
+          ></tab>
           <!-- Icone text ou font -->
           <tab title="Fond"
             ><conf-background
@@ -94,8 +101,17 @@ export default {
 
     // -- J1
     var bgOptions = { width: 640, height: 720, x: 0, y: 0 };
-    var bgTagOptions = { width: 640, height: 100, x: 0, y: 0, colors: [{id: 0, hex: '#000428'}, {id: 1, hex: '#004e92'}] };
-    var tagOptions = { tag: "Joueur X", x: 0, y: 0, size: 40, color: "white" };
+    var bgTagOptions = {
+      width: 640,
+      height: 75,
+      x: 0,
+      y: 0,
+      colors: [
+        { id: 0, hex: "#ffffff" },
+        { id: 1, hex: "#ffffff" },
+      ],
+    };
+    var tagOptions = { tag: "Joueur X", x: 0, y: 0, size: 40, color: "#000000" };
     var imgOpt = { filename: "banjo_00", x: 0, y: 0 };
     // tag
     var bgJ1 = new CustomRect(this.canvas, bgOptions);
@@ -107,8 +123,17 @@ export default {
     // -- J2
     bgOptions = { width: 640, height: 720, x: 640, y: 0 };
     imgOpt = { filename: "marth_0_02", x: 640, y: 0 };
-    bgTagOptions = { width: 640, height: 100, x: 640, y: 0, colors: [{id: 0, hex: '#000428'}, {id: 1, hex: '#004e92'}] };
-    tagOptions = { tag: "Joueur Y", x: 640, y: 0, size: 40, color: "white" };
+    bgTagOptions = {
+      width: 640,
+      height: 75,
+      x: 640,
+      y: 0,
+      colors: [
+        { id: 0, hex: "#ffffff" },
+        { id: 1, hex: "#ffffff" },
+      ],
+    };
+    tagOptions = { tag: "Joueur Y", x: 640, y: 0, size: 40, color: "#000000" };
     // tag
     var bgJ2 = new CustomRect(this.canvas, bgOptions);
     var tagJ2 = new CustomText(this.canvas, tagOptions, bgTagOptions);
@@ -117,12 +142,30 @@ export default {
     this.j2 = new Player(this.canvas, tagJ2, imgJ2, bgJ2);
 
     // le ou les phases (WF, etc)
-    bgTagOptions = { width: 640, height: 100, x: 0, y: 620, colors: [{id: 0, hex: '#000428'}, {id: 1, hex: '#004e92'}] };
-    tagOptions = { tag: "Winners", x: 0, y: 620, size: 40, color: "white" };
+    bgTagOptions = {
+      width: 640,
+      height: 75,
+      x: 0,
+      y: 620,
+      colors: [
+        { id: 0, hex: "#ffffff" },
+        { id: 1, hex: "#ffffff" },
+      ],
+    };
+    tagOptions = { tag: "Winners", x: 0, y: 620, size: 40, color: "#000000" };
     this.phase1 = new CustomText(this.canvas, tagOptions, bgTagOptions);
 
-    bgTagOptions = { width: 640, height: 100, x: 640, y: 620, colors: [{id: 0, hex: '#000428'}, {id: 1, hex: '#004e92'}]  };
-    tagOptions = { tag: "Round 1", x: 640, y: 620, size: 40, color: "white" };
+    bgTagOptions = {
+      width: 640,
+      height: 75,
+      x: 640,
+      y: 620,
+      colors: [
+        { id: 0, hex: "#ffffff" },
+        { id: 1, hex: "#ffffff" },
+      ],
+    };
+    tagOptions = { tag: "Round 1", x: 640, y: 620, size: 40, color: "#000000" };
     this.phase2 = new CustomText(this.canvas, tagOptions, bgTagOptions);
 
     this.j1.addToCanvas();
