@@ -1,8 +1,6 @@
 <template>
   <div>
-    <h3 class="title is-4 ml-2 mt-1 mb-2 title-overflow">
-      Joueur {{ i }} : <b>{{ player.tag }}</b>
-    </h3>
+    <option-title :title="'Joueur ' + i + ' : ' + player.tag"/>
     <!-- <hr /> TODO HR -->
     <!-- TODO padding -->
     <div class="columns is-gapless">
@@ -67,8 +65,9 @@ import {
   mdiFormatVerticalAlignCenter,
   mdiFormatVerticalAlignTop,
 } from "@mdi/js";
+import OptionTitle from '../ui/OptionTitle.vue';
 export default {
-  components: { SvgIcon },
+  components: { SvgIcon, OptionTitle },
   props: {
     player: Object,
     i: Number,
@@ -89,10 +88,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.title-overflow {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-</style>

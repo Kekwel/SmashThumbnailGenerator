@@ -2,29 +2,29 @@
   <div>
     <div class="columns is-gapless">
       <div class="column">
-        <h3>{{ title }}</h3>
+        <h3>{{title}}</h3>
         <div class="colors" v-if="obj">
           <div v-for="color in obj.colors" :key="color.id">
             <input
               type="color"
-              id="head"
+              :id="idColor"
               name="head"
               v-model="color.hex"
               @input="changeColors()"
             />
-            <label for="head"> {{ color.hex }}</label>
+            <label :for="idColor"> {{ color.hex }}</label>
           </div>
         </div>
         <div class="colors" v-if="objs && objs[0]">
           <div v-for="color in objs[0].colors" :key="color.id">
             <input
               type="color"
-              id="head"
+              :id="idColor"
               name="head"
               v-model="color.hex"
               @input="changeAllColors(color.id, color.hex)"
             />
-            <label for="head"> {{ color.hex }}</label>
+            <label :for="idColor"> {{ color.hex }}</label>
           </div>
         </div>
       </div>
@@ -108,9 +108,11 @@ export default {
     objs: Array,
     lockTag: Boolean,
     title: String,
+    id: String
   },
   data() {
     return {
+      idColor: "idColor-" + this.id,
       icon: {
         up: mdiArrowUpThick,
         down: mdiArrowDownThick,

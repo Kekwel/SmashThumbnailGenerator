@@ -1,8 +1,6 @@
 <template>
   <div>
-    <h3 class="title is-4 ml-2 mt-1 mb-2 title-overflow">
-      <b>Phase {{ i }} : {{ phase.txt }}</b>
-    </h3>
+    <option-title :title="'Phase ' + i + ' : ' + phase.txt"/>
     <!-- <hr /> TODO HR -->
     <!-- TODO padding -->
     <div class="columns is-gapless">
@@ -61,8 +59,9 @@ import {
   mdiFormatVerticalAlignCenter,
   mdiFormatVerticalAlignTop,
 } from "@mdi/js";
+import OptionTitle from '../ui/OptionTitle.vue';
 export default {
-  components: { SvgIcon },
+  components: { SvgIcon, OptionTitle },
   props: {
     phase: Object,
     i: Number,
