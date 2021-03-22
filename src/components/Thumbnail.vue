@@ -245,4 +245,7 @@ export default {
   /* margin: auto; */
   margin-left: 1em;
 }
+.box {
+  margin-left: 1em;
+}
 </style>
