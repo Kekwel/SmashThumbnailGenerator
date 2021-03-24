@@ -6,6 +6,13 @@ class CustomImage {
     canvas;
     _filename; // TODO img non trouvé
     _image;
+    _shadow = {
+        color: '#000',
+        blur: 0,
+        offsetX: -10,
+        offsetY: 10,
+        opacity: 0.8
+    };
     // TODO data ?
     _width = 640;
     _height = 720;
@@ -33,6 +40,7 @@ class CustomImage {
             self.initImage(oImg);
 
             self._y = self.canvas.height - oImg.getScaledHeight();
+            // oImg.set('shadow', new fabric.Shadow(self._shadow));
             oImg.set('top', self._y);
             self.canvas.add(oImg);
 

@@ -4,27 +4,27 @@
       <div class="column">
         <h3>{{title}}</h3>
         <div class="colors" v-if="obj">
-          <div v-for="color in obj.colors" :key="color.id">
+          <div v-for="color in obj.colors" :key="idColor + color.id">
             <input
               type="color"
-              :id="idColor"
+              :id="idColor + color.id"
               name="head"
               v-model="color.hex"
               @input="changeColors()"
             />
-            <label :for="idColor"> {{ color.hex }}</label>
+            <label :for="idColor + color.id"> {{ color.hex }}</label>
           </div>
         </div>
         <div class="colors" v-if="objs && objs[0]">
-          <div v-for="color in objs[0].colors" :key="color.id">
+          <div v-for="color in objs[0].colors" :key="idColor + color.id">
             <input
               type="color"
-              :id="idColor"
+              :id="idColor + color.id"
               name="head"
               v-model="color.hex"
               @input="changeAllColors(color.id, color.hex)"
             />
-            <label :for="idColor"> {{ color.hex }}</label>
+            <label :for="idColor + color.id"> {{ color.hex }}</label>
           </div>
         </div>
       </div>

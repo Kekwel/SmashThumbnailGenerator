@@ -105,13 +105,13 @@ export default {
       width: 640,
       height: 75,
       x: 0,
-      y: 0,
+      y: 10,
       colors: [
         { id: 0, hex: "#ffffff" },
         { id: 1, hex: "#ffffff" },
       ],
     };
-    var tagOptions = { tag: "Joueur X", x: 0, y: 0, size: 40, color: "#000000" };
+    var tagOptions = { tag: "Joueur X", x: 0, y: 10, size: 40, color: "#000000" };
     var imgOpt = { filename: "banjo_00", x: 0, y: 0 };
     // tag
     var bgJ1 = new CustomRect(this.canvas, bgOptions);
@@ -121,19 +121,19 @@ export default {
     this.j1 = new Player(this.canvas, tagJ1, imgJ1, bgJ1);
 
     // -- J2
-    bgOptions = { width: 640, height: 720, x: 640, y: 0, colors: [{id: 0, hex: "#0049b9"}, {id: 0, hex: "#0086ea"}]};
+    bgOptions = { width: 640, height: 720, x: 640, y: 0, colors: [{id: 0, hex: "#0049b9"}, {id: 1, hex: "#0086ea"}]};
     imgOpt = { filename: "marth_0_02", x: 640, y: 0 };
     bgTagOptions = {
       width: 640,
       height: 75,
       x: 640,
-      y: 0,
+      y: 35,
       colors: [
         { id: 0, hex: "#ffffff" },
         { id: 1, hex: "#ffffff" },
       ],
     };
-    tagOptions = { tag: "Joueur Y", x: 640, y: 0, size: 40, color: "#000000" };
+    tagOptions = { tag: "Joueur Y", x: 640, y: 35, size: 40, color: "#000000" };
     // tag
     var bgJ2 = new CustomRect(this.canvas, bgOptions);
     var tagJ2 = new CustomText(this.canvas, tagOptions, bgTagOptions);
@@ -146,26 +146,26 @@ export default {
       width: 640,
       height: 75,
       x: 0,
-      y: 620,
+      y: 595,
       colors: [
         { id: 0, hex: "#ffffff" },
         { id: 1, hex: "#ffffff" },
       ],
     };
-    tagOptions = { tag: "Winners", x: 0, y: 620, size: 40, color: "#000000" };
+    tagOptions = { tag: "Winners", x: 0, y: 595, size: 40, color: "#000000" };
     this.phase1 = new CustomText(this.canvas, tagOptions, bgTagOptions);
 
     bgTagOptions = {
       width: 640,
       height: 75,
       x: 640,
-      y: 620,
+      y: 630,
       colors: [
         { id: 0, hex: "#ffffff" },
         { id: 1, hex: "#ffffff" },
       ],
     };
-    tagOptions = { tag: "Round 1", x: 640, y: 620, size: 40, color: "#000000" };
+    tagOptions = { tag: "Round 1", x: 640, y: 630, size: 40, color: "#000000" };
     this.phase2 = new CustomText(this.canvas, tagOptions, bgTagOptions);
 
     this.j1.addToCanvas();

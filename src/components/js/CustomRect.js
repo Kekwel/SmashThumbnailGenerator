@@ -40,7 +40,14 @@ class CustomRect {
 
         this._index = bgOptions.index || this._index;
 
-        this.rect = new fabric.Rect({
+        var rectPoints = [ {x: this._x, y: this._y}, {x: this._x, y: this._y + this._height}, 
+                            {x: this._x + this._width, y: this._y + this._height}, {x: this._x + this._width, y: this._y} ];
+        this.rect = new fabric.Polygon(rectPoints, {
+            strokeWidth: 0,
+        });
+        /* this.canvas.add(poly); */
+
+        /* this.rect = new fabric.Rect({
             left: this._x,
             top: this._y,
             width: this._width,
@@ -48,7 +55,7 @@ class CustomRect {
             originX: "left",
             originY: "top",
             strokeWidth: 0,
-        });
+        }); */
         this._grad = new CustomColor(this.canvas, {
             colors: this._colors,
             origin: this._origin,

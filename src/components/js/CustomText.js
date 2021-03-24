@@ -12,13 +12,20 @@ class CustomText {
     text;
     bgTag;
     group;
+
     _txt = 'Player X';
+
     _size = 40;
     _x = 0;
     _y = 0;
+    // TODO rotation angle
+    // TODO bordure radius
+
     _alignmentX = 'center';
     _alignmentY = 'middle';
+
     _color = {hex: 'black'};
+
     _bold = false;
     _italic = false;
     _index = 1;

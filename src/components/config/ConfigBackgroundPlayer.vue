@@ -11,14 +11,14 @@
 
     <div v-if="!lockTag">
       <config-color
-        :id="'j' + i"
+        :id="'tagj' + i"
         :title="'Tag'"
         :obj="player.myTag"
         :lockTag="lockTag"
       ></config-color>
     </div>
     <config-color
-      :id="'j' + i"
+      :id="'fondj' + i"
       :title="'Fond'"
       :obj="player.bg"
       :lockTag="lockTag"

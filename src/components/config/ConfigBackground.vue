@@ -35,12 +35,14 @@
       <div class="box">
         <option-title :title="'Phase 1'" />
         <config-color
+          :id="'phase1'"
           :title="'Fond'"
           :obj="phase1"
           :lockTag="isLockTag"
         ></config-color>
         <option-title :title="'Phase 2'" />
         <config-color
+          :id="'phase2'"
           :title="'Fond'"
           :obj="phase2"
           :lockTag="isLockTag"
