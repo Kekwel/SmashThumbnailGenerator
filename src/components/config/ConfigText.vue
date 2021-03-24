@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="box">
-      <config-text-player :i="1" :player="j1"></config-text-player>
+      <config-text-player :i="1" :player="j1" />
     </div>
     <div class="box">
-      <config-text-player :i="2" :player="j2"></config-text-player>
+      <config-text-player :i="2" :player="j2" />
     </div>
 
     <div class="box">
-      <config-text-phase :i="1" :phase="phase1"></config-text-phase>
-      <config-text-phase :i="2" :phase="phase2"></config-text-phase>
+      <config-text-phase :i="1" :phase="phase1" />
+      <config-text-phase :i="2" :phase="phase2" />
     </div>
   </div>
 </template>

@@ -121,7 +121,7 @@ export default {
     this.j1 = new Player(this.canvas, tagJ1, imgJ1, bgJ1);
 
     // -- J2
-    bgOptions = { width: 640, height: 720, x: 640, y: 0 };
+    bgOptions = { width: 640, height: 720, x: 640, y: 0, colors: [{id: 0, hex: "#0049b9"}, {id: 0, hex: "#0086ea"}]};
     imgOpt = { filename: "marth_0_02", x: 640, y: 0 };
     bgTagOptions = {
       width: 640,

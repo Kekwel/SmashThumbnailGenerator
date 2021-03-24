@@ -142,7 +142,9 @@ export default {
       }
     },
     changeDirection(dir) {
-      if (this.lockTag) {
+      console.log('locktag', this.lockTag);
+      if (this.lockTag && this.objs) {
+        console.log(this.objs);
         for (var tmp of this.objs) {
           tmp.colorDirection = dir;
         }
