@@ -12,6 +12,7 @@ class CustomText {
     text;
     bgTag;
     group;
+    clipPath;
 
     _txt = 'Player X';
 
@@ -20,6 +21,8 @@ class CustomText {
     _y = 0;
     // TODO rotation angle
     // TODO bordure radius
+
+    _isClipPath = true;
 
     _alignmentX = 'center';
     _alignmentY = 'middle';
@@ -30,7 +33,7 @@ class CustomText {
     _italic = false;
     _index = 1;
 
-    constructor(canvas, tagOptions, bgTagOptions) {
+    constructor(canvas, tagOptions, bgTagOptions, clipPath) {
         var self = this;
         this.canvas = canvas;
 
@@ -70,7 +73,8 @@ class CustomText {
         // Group
         this.group = new fabric.Group([this.bgTag.rect, this.text], {
             left: 0 + this._x,
-            top: 0 + this._y
+            top: 0 + this._y,
+            strokeWidth: 0,
         });
         this.group.on('scaling', function () {
             var rect = this.item(1),
@@ -80,6 +84,14 @@ class CustomText {
             rect.scaleY = scaleY;
             self.align();
         });
+
+        if (clipPath) {
+            // TODO on/off
+            // TODO povoir le déplacer ?
+            this.group.clipPath = clipPath;
+            this.clipPath = clipPath;
+            this._isClipPath = true;
+        }
 
         this.align('center', 'middle');
     }
@@ -147,6 +159,22 @@ class CustomText {
         this.canvas.renderAll();
         this._color = pColor;
         return this._color;
+    }
+
+    get isClipPath() {
+        return this._isClipPath;
+    }
+    set isClipPath(isClipP) {
+        this._isClipPath = isClipP;
+        if (isClipP) {
+            this.group.clipPath = this.clipPath;
+        } else {
+            this.group.clipPath = null;
+            var tmpColors = this.bgTag.colors;
+            this.bgTag.colors = tmpColors;
+        }
+        this.canvas.renderAll();
+        return this._isClipPath;
     }
 
     align(alignmentH, alignmentV) {

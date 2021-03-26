@@ -100,6 +100,17 @@
       </div>
       Custom 2 <input ref="phase2Input" v-model="phase2.txt" /><br />
     </div>
+    <div class="box">
+      <option-title :title="'Options'" />
+      <input type="checkbox" id="clipPathJ1" v-model="j1.isTagClipPath" />
+      <label for="clipPathJ1"> ClipPath J1 </label>
+      <input type="checkbox" id="clipPathJ2" v-model="j2.isTagClipPath" />
+      <label for="clipPathJ2"> ClipPath J2 </label>
+      <input type="checkbox" id="clipPathPhase1" v-model="phase1.isClipPath" />
+      <label for="clipPathPhase1"> ClipPath Phase 1 </label>
+      <input type="checkbox" id="clipPathPhase2" v-model="phase2.isClipPath" />
+      <label for="clipPathPhase2"> ClipPath Phase 2 </label>
+    </div>
   </div>
 </template>
 

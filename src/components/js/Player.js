@@ -88,6 +88,12 @@ class Player {
     set tagItalic(isItalic) {
         return this.myTag.italic = isItalic;
     }
+    get isTagClipPath() {
+        return this.myTag.isClipPath;
+    }
+    set isTagClipPath(isClipP) {
+        return this.myTag.isClipPath = isClipP;
+    }
 
     get colorsTagBg() {
         return this.myTag.colors;

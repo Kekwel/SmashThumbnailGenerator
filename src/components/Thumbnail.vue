@@ -94,6 +94,7 @@ export default {
     // le canvas
     this.canvas = new fabric.Canvas("can", {
       preserveObjectStacking: true,
+      strokeWidth: 0,
     });
 
     this.initGridLines();
@@ -101,72 +102,40 @@ export default {
 
     // -- J1
     var bgOptions = { width: 640, height: 720, x: 0, y: 0 };
-    var bgTagOptions = {
-      width: 640,
-      height: 75,
-      x: 0,
-      y: 10,
-      colors: [
-        { id: 0, hex: "#ffffff" },
-        { id: 1, hex: "#ffffff" },
-      ],
-    };
+    var bgTagOptions = { width: 640, height: 75, x: 0, y: 10, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ]};
     var tagOptions = { tag: "Joueur X", x: 0, y: 10, size: 40, color: "#000000" };
     var imgOpt = { filename: "banjo_00", x: 0, y: 0 };
+    // TODO class ?
+    var clipPathJ1 = new fabric.Rect({ width: 640, height: 720, top: 0, left: 0, absolutePositioned: true, strokeWidth: 0 });
     // tag
     var bgJ1 = new CustomRect(this.canvas, bgOptions);
-    var tagJ1 = new CustomText(this.canvas, tagOptions, bgTagOptions);
-    var imgJ1 = new CustomImage(this.canvas, imgOpt);
+    var tagJ1 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ1);
+    var imgJ1 = new CustomImage(this.canvas, imgOpt, clipPathJ1);
 
     this.j1 = new Player(this.canvas, tagJ1, imgJ1, bgJ1);
 
     // -- J2
     bgOptions = { width: 640, height: 720, x: 640, y: 0, colors: [{id: 0, hex: "#0049b9"}, {id: 1, hex: "#0086ea"}]};
-    imgOpt = { filename: "marth_0_02", x: 640, y: 0 };
-    bgTagOptions = {
-      width: 640,
-      height: 75,
-      x: 640,
-      y: 35,
-      colors: [
-        { id: 0, hex: "#ffffff" },
-        { id: 1, hex: "#ffffff" },
-      ],
-    };
+    bgTagOptions = { width: 640, height: 75, x: 640, y: 35, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ]};
     tagOptions = { tag: "Joueur Y", x: 640, y: 35, size: 40, color: "#000000" };
+    imgOpt = { filename: "marth_0_02", x: 640, y: 0 };
+  // TODO class ?
+    var clipPathJ2 = new fabric.Rect({ width: 640, height: 720, top: 0, left: 640, absolutePositioned: true, strokeWidth: 0 });
     // tag
     var bgJ2 = new CustomRect(this.canvas, bgOptions);
-    var tagJ2 = new CustomText(this.canvas, tagOptions, bgTagOptions);
-    var imgJ2 = new CustomImage(this.canvas, imgOpt);
+    var tagJ2 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ2);
+    var imgJ2 = new CustomImage(this.canvas, imgOpt, clipPathJ2);
 
     this.j2 = new Player(this.canvas, tagJ2, imgJ2, bgJ2);
 
     // le ou les phases (WF, etc)
-    bgTagOptions = {
-      width: 640,
-      height: 75,
-      x: 0,
-      y: 595,
-      colors: [
-        { id: 0, hex: "#ffffff" },
-        { id: 1, hex: "#ffffff" },
-      ],
-    };
+    bgTagOptions = { width: 640, height: 75, x: 0, y: 595, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ] };
     tagOptions = { tag: "Winners", x: 0, y: 595, size: 40, color: "#000000" };
-    this.phase1 = new CustomText(this.canvas, tagOptions, bgTagOptions);
+    this.phase1 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ1);
 
-    bgTagOptions = {
-      width: 640,
-      height: 75,
-      x: 640,
-      y: 630,
-      colors: [
-        { id: 0, hex: "#ffffff" },
-        { id: 1, hex: "#ffffff" },
-      ],
-    };
+    bgTagOptions = { width: 640, height: 75, x: 640, y: 630, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ] };
     tagOptions = { tag: "Round 1", x: 640, y: 630, size: 40, color: "#000000" };
-    this.phase2 = new CustomText(this.canvas, tagOptions, bgTagOptions);
+    this.phase2 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ2);
 
     this.j1.addToCanvas();
     this.j2.addToCanvas();

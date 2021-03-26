@@ -4,6 +4,8 @@ import {
 
 class CustomImage {
     canvas;
+    clipPath;
+
     _filename; // TODO img non trouvé
     _image;
     _shadow = {
@@ -20,7 +22,7 @@ class CustomImage {
     _y = 0;
     _index = -4;
 
-    constructor(canvas, imgOpt) {
+    constructor(canvas, imgOpt, clipPath) {
         this.canvas = canvas;
 
         this._filename = imgOpt.filename || this._filename;
@@ -30,6 +32,9 @@ class CustomImage {
         this._width = imgOpt.width || this._width;
         this._height = imgOpt.height || this._height;
 
+        if (clipPath) {
+            this.clipPath = clipPath;
+        }
         // this.addImg();
     }
 
@@ -78,7 +83,8 @@ class CustomImage {
         newImg.set({
             left: this._x,
             top: this._y,
-            perPixelTargetFind: true
+            perPixelTargetFind: true,
+            clipPath: this.clipPath
         });
     }
 
