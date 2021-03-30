@@ -1,113 +1,117 @@
 import {
-    fabric
+	fabric
 } from "fabric";
 
 class CustomImage {
-    canvas;
-    clipPath;
+	canvas;
+	clipPath;
 
-    _filename; // TODO img non trouvé
-    _image;
-    _shadow = {
-        color: '#000',
-        blur: 0,
-        offsetX: -10,
-        offsetY: 10,
-        opacity: 0.8
-    };
-    // TODO data ?
-    _width = 640;
-    _height = 720;
-    _x = 0;
-    _y = 0;
-    _index = -4;
+	_filename; // TODO img non trouvé
+	_character;
 
-    constructor(canvas, imgOpt, clipPath) {
-        this.canvas = canvas;
+	_image;
+	_shadow = {
+		color: '#000',
+		blur: 0,
+		offsetX: -10,
+		offsetY: 10,
+		opacity: 0.8
+	};
+	// TODO data ?
+	_width = 640;
+	_height = 720;
+	_x = 0;
+	_y = 0;
+	_index = -4;
 
-        this._filename = imgOpt.filename || this._filename;
-        this._index = imgOpt.index || this._index;
-        this._x = imgOpt.x || this._x;
-        this._y = imgOpt.y || this._y;
-        this._width = imgOpt.width || this._width;
-        this._height = imgOpt.height || this._height;
+	constructor(canvas, imgOpt, clipPath) {
+		this.canvas = canvas;
 
-        if (clipPath) {
-            this.clipPath = clipPath;
-        }
-        // this.addImg();
-    }
+		//this._filename = imgOpt.filename || this._filename;
+		this._character = imgOpt.character || this._character;
 
-    addImg() {
-        var self = this;
-        var newUrl = this.getImgUrl(this._filename);
-        fabric.Image.fromURL(newUrl, function (oImg) {
-            self.initImage(oImg);
+		this._index = imgOpt.index || this._index;
+		this._x = imgOpt.x || this._x;
+		this._y = imgOpt.y || this._y;
+		this._width = imgOpt.width || this._width;
+		this._height = imgOpt.height || this._height;
 
-            self._y = self.canvas.height - oImg.getScaledHeight();
-            // oImg.set('shadow', new fabric.Shadow(self._shadow));
-            oImg.set('top', self._y);
-            self.canvas.add(oImg);
+		if (clipPath) {
+			this.clipPath = clipPath;
+		}
+		// this.addImg();
+	}
 
-            oImg.moveTo(self._index)
-        });
-    }
+	addImg() {
+		var self = this;
+		var newUrl = this.filename;
+		fabric.Image.fromURL(newUrl, function (oImg) {
+			self.initImage(oImg);
 
-    get image() {
-        return this._image;
-    }
+			self._y = self.canvas.height - oImg.getScaledHeight();
+			// oImg.set('shadow', new fabric.Shadow(self._shadow));
+			oImg.set('top', self._y);
+			self.canvas.add(oImg);
 
-    get filename() {
-        return this._filename;
-    }
-    set filename(filename) {
-        var self = this;
-        // this.canvas.remove(this._image);
-        this._filename = filename;
+			oImg.moveTo(self._index)
+		});
+	}
 
-        var newUrl = this.getImgUrl(this._filename);
-        fabric.Image.fromURL(newUrl, function () {
-            self.updateImage(newUrl);
-            // self.initImage(oImg);
-            // self.canvas.add(oImg);
-        });
+	get image() {
+		return this._image;
+	}
 
-        this.canvas.renderAll()
-        return this._filename;
-    }
+	get filename() {
+		return this._character.getCharUrl();
+	}
+	set filename(filename) {
+		var self = this;
+		// this.canvas.remove(this._image);
+		this._filename = filename;
 
-    initImage(newImg) {
-        this._image = newImg;
-        newImg.scaleToWidth(this._width)
+		var newUrl = filename ? this._filename : '';
+		fabric.Image.fromURL(newUrl, function () {
+			self.updateImage(newUrl);
+			// self.initImage(oImg);
+			// self.canvas.add(oImg);
+		});
 
-        newImg.set({
-            left: this._x,
-            top: this._y,
-            perPixelTargetFind: true,
-            clipPath: this.clipPath
-        });
-    }
+		this.canvas.renderAll()
+		return this._filename;
+	}
 
-    updateImage(url) {
-        console.log("update " + url);
-        var self = this;
-        this._image.setSrc(url, function () {
-            self.canvas.requestRenderAll();
-        });
-    }
+	initImage(newImg) {
+		this._image = newImg;
+		newImg.scaleToWidth(this._width)
 
-    getImgUrl(char) {
-        var images = require.context("../../assets/img/char/ult", false, /\.png$/);
-        // require("../assets/img/char/$GAME/$CHARNAME_$ROW_$COL.png")
-        return images("./" + char + ".png");
-    }
+		newImg.set({
+			left: this._x,
+			top: this._y,
+			perPixelTargetFind: true,
+			clipPath: this.clipPath
+		});
+	}
 
-    flip() {
-        this._image.toggle("flipX");
-        this.canvas.renderAll();
-    }
+	updateImage(url) {
+		console.log("update img " + url);
+		var self = this;
+		this._image.setSrc(url, function () {
+			self.canvas.requestRenderAll();
+		});
+	}
+
+/* 	getImgUrl(char) {
+		var images = require.context("../../assets/img/char/ult", false, /\.png$/);
+		// require("../assets/img/char/$GAME/$CHARNAME_$ROW_$COL.png")
+		return images("./" + char + ".png");
+	} */
+
+	flip() {
+		this._image.toggle("flipX");
+		this.canvas.renderAll();
+	}
 }
 
 export {
-    CustomImage
+	CustomImage
 };

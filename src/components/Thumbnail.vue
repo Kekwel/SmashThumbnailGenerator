@@ -18,6 +18,7 @@
               :j2="j2"
               :phase1="phase1"
               :phase2="phase2"
+              :characters="characters"
             ></conf-player
           ></tab>
           <!-- Icone VS ou "account" -->
@@ -61,12 +62,14 @@ import { CustomRect } from "./js/CustomRect";
 import { Player } from "./js/Player";
 import { CustomText } from "./js/CustomText";
 import { CustomImage } from "./js/CustomImage";
+import { Character } from "./js/Character"
 import Tab from "./Tab";
 import Tabs from "./Tabs";
 import ConfPlayer from "./config/ConfigPlayer";
 import ConfText from "./config/ConfigText";
 import ConfBackground from "./config/ConfigBackground";
 import ConfDefault from "./config/ConfigDefault";
+import Ultimate from "../utils/ultimate"
 
 export default {
   name: "Thumbnail",
@@ -76,7 +79,7 @@ export default {
     ConfPlayer,
     ConfText,
     ConfBackground,
-    ConfDefault,
+    ConfDefault
   },
   data() {
     return {
@@ -88,6 +91,7 @@ export default {
       j2: {},
       phase1: {},
       phase2: {},
+      characters: [],
     };
   },
   mounted() {
@@ -99,12 +103,15 @@ export default {
 
     this.initGridLines();
     this.displayGrid();
+    // par defaut Ultimate
+    this.characters = Ultimate.STOCKS;
 
     // -- J1
     var bgOptions = { width: 640, height: 720, x: 0, y: 0 };
     var bgTagOptions = { width: 640, height: 75, x: 0, y: 10, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ]};
     var tagOptions = { tag: "Joueur X", x: 0, y: 10, size: 40, color: "#000000" };
-    var imgOpt = { filename: "banjo_00", x: 0, y: 0 };
+    var charJ1 = new Character("ult", 1, "Mario");
+    var imgOpt = { character: charJ1, filename: "banjo_00", x: 0, y: 0 };
     // TODO class ?
     var clipPathJ1 = new fabric.Rect({ width: 640, height: 720, top: 0, left: 0, absolutePositioned: true, strokeWidth: 0 });
     // tag
@@ -118,7 +125,8 @@ export default {
     bgOptions = { width: 640, height: 720, x: 640, y: 0, colors: [{id: 0, hex: "#0049b9"}, {id: 1, hex: "#0086ea"}]};
     bgTagOptions = { width: 640, height: 75, x: 640, y: 35, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ]};
     tagOptions = { tag: "Joueur Y", x: 640, y: 35, size: 40, color: "#000000" };
-    imgOpt = { filename: "marth_0_02", x: 640, y: 0 };
+    var charJ2 = new Character("ult", 73, "Banjo");
+    imgOpt = { character: charJ2, filename: "marth_0_02", x: 640, y: 0 };
   // TODO class ?
     var clipPathJ2 = new fabric.Rect({ width: 640, height: 720, top: 0, left: 640, absolutePositioned: true, strokeWidth: 0 });
     // tag
@@ -145,8 +153,9 @@ export default {
     // le VS
 
     // TODO pouvoir toggle le timestamp YT (pour voir ce qui va etre caché)
-  },
-  methods: {
+
+    console.log(this.$options.name + ' component succesfully mounted');
+  }, methods: {
     initGridLines() {
       // create grid
       for (var i = 0; i < 1280 / this.grid; i++) {

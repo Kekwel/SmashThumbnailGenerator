@@ -6,7 +6,17 @@
       VS <br />
       Joueur 2 <input v-model="j2.tag" /> <br />
       <!-- TODO Perso -->
-      Personnage <input v-model="j1.filename" /> <br />
+      <!-- <v-select ref="mySelect" :options="characters" label="_name" v-model="j1.filename" :value="j1.filename"> -->
+      <v-select ref="mySelect" :options="characters" label="_name" :reduce="charac => charac.getCharUrl()" @input="updateChar($event, j1)" >
+        <template #selected-option="{ _name, _firstStockUrl }">
+          <stock-icon :src="_firstStockUrl" /> {{ _name }}
+        </template>
+        <template #option="option">
+          <div class="stock-icon">
+            <stock-icon :src="option._firstStockUrl" />{{ option._name }}
+          </div>
+        </template>
+      </v-select>
       <button @click="j1.flipChar()">FLIP</button>
     </div>
     <div id="info-phase" class="box">
@@ -105,7 +115,7 @@
       <input type="checkbox" id="clipPathJ1" v-model="j1.isTagClipPath" />
       <label for="clipPathJ1"> ClipPath J1 </label>
       <input type="checkbox" id="clipPathJ2" v-model="j2.isTagClipPath" />
-      <label for="clipPathJ2"> ClipPath J2 </label>
+      <label for="clipPathJ2"> ClipPath J2 </label><br />
       <input type="checkbox" id="clipPathPhase1" v-model="phase1.isClipPath" />
       <label for="clipPathPhase1"> ClipPath Phase 1 </label>
       <input type="checkbox" id="clipPathPhase2" v-model="phase2.isClipPath" />
@@ -116,8 +126,11 @@
 
 <script>
 import OptionTitle from "../ui/OptionTitle.vue";
+import "vue-select/dist/vue-select.css";
+import vSelect from "vue-select";
+import StockIcon from '../ui/StockIcon.vue';
 export default {
-  components: { OptionTitle },
+  components: { OptionTitle, vSelect, StockIcon },
   props: {
     title: {
       type: String,
@@ -127,6 +140,7 @@ export default {
     j2: Object,
     phase1: Object,
     phase2: Object,
+    characters: Array,
   },
   data() {
     return {
@@ -140,6 +154,24 @@ export default {
     focusPhase2() {
       this.$refs.phase2Input.focus();
     },
+    updateChar(src, player) {
+      console.log("update char for player ..");
+      player.filename = src;
+    }
   },
+  mounted() {
+    this.$refs.mySelect.open = true
+  }
 };
 </script>
+
+<style>
+.v-select .vs__dropdown-menu {
+	display: block;
+}
+.stock-icon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+</style>

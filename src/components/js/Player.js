@@ -43,7 +43,10 @@ class Player {
         return this.characters.filename;
     }
     set filename(filename) {
-        return this.characters.filename = filename;
+        if (filename)
+            return this.characters.filename = filename;
+        else
+            return this.characters.filename = null;
     }
     get image() {
         return this.characters.image;
