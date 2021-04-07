@@ -1,14 +1,16 @@
 <template>
-  <div>
+  <!-- <div> -->
     <!-- <img :src="getStockUrl(src)" :alt="src" width="32" /> -->
-    <img :src="src" :alt="src" width="32" />
-  </div>
+    <img class="mr-2" :src="src" :alt="src" :width="width" :height="height" />
+  <!-- </div> -->
 </template>
 
 <script>
 export default {
   props: {
-    src: String
+    src: String,
+    width: Number,
+    height: Number,
   },
 };
 </script>

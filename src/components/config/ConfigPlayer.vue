@@ -1,24 +1,18 @@
 <template>
-  <div>
-    <div class="box">
+  <div style="margin: 1em auto;">
+    <div class="box" style="width: 28em">
       <option-title :title="'Match'" />
       Joueur 1 <input v-model="j1.tag" /> <br />
       VS <br />
       Joueur 2 <input v-model="j2.tag" /> <br />
-      <!-- TODO Perso -->
-      <!-- <v-select ref="mySelect" :options="characters" label="_name" v-model="j1.filename" :value="j1.filename"> -->
-      <v-select ref="mySelect" :options="characters" label="_name" :reduce="charac => charac.getCharUrl()" @input="updateChar($event, j1)" >
-        <template #selected-option="{ _name, _firstStockUrl }">
-          <stock-icon :src="_firstStockUrl" /> {{ _name }}
-        </template>
-        <template #option="option">
-          <div class="stock-icon">
-            <stock-icon :src="option._firstStockUrl" />{{ option._name }}
-          </div>
-        </template>
-      </v-select>
-      <button @click="j1.flipChar()">FLIP</button>
+      <!-- TODO select random -->
+      <!-- J1 -->
+      <stock-icon-picker :characters="characters" :player="j1" />
+      <!-- J2 -->
+      <stock-icon-picker :characters="characters" :player="j2" />
     </div>
+
+    <!-- TODO component -->
     <div id="info-phase" class="box">
       <option-title :title="'Phase'" />
       <div class="control">
@@ -127,10 +121,9 @@
 <script>
 import OptionTitle from "../ui/OptionTitle.vue";
 import "vue-select/dist/vue-select.css";
-import vSelect from "vue-select";
-import StockIcon from '../ui/StockIcon.vue';
+import StockIconPicker from "../ui/StockIconPicker.vue";
 export default {
-  components: { OptionTitle, vSelect, StockIcon },
+  components: { OptionTitle, StockIconPicker },
   props: {
     title: {
       type: String,
@@ -143,9 +136,7 @@ export default {
     characters: Array,
   },
   data() {
-    return {
-      isActive: true,
-    };
+    return {};
   },
   methods: {
     focusPhase1() {
@@ -154,24 +145,20 @@ export default {
     focusPhase2() {
       this.$refs.phase2Input.focus();
     },
-    updateChar(src, player) {
-      console.log("update char for player ..");
-      player.filename = src;
-    }
   },
   mounted() {
-    this.$refs.mySelect.open = true
-  }
+    // this.$refs.mySelect.open = true
+  },
 };
 </script>
 
 <style>
 .v-select .vs__dropdown-menu {
-	display: block;
+  display: block;
 }
-.stock-icon {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.stock-icon-selected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

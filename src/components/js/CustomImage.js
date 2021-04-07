@@ -45,6 +45,7 @@ class CustomImage {
 	addImg() {
 		var self = this;
 		var newUrl = this.filename;
+		
 		fabric.Image.fromURL(newUrl, function (oImg) {
 			self.initImage(oImg);
 

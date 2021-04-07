@@ -1,6 +1,6 @@
 <template>
   <div class="columns is-gapless pl-2">
-    <div class="column is-one-fifth">
+    <div class="column">
       <div>
         <button @click="exportPNG">PNG</button>
         <input
@@ -45,7 +45,7 @@
         </tabs>
       </div>
     </div>
-    <div class="column">
+    <div class="column is-8i s-offset-4 mr-5">
       <canvas
         id="can"
         width="1280"
@@ -202,11 +202,11 @@ export default {
       });
       !link.dispatchEvent(evt);
     },
-    getImgChar(char) {
+    /* getImgChar(char) {
       var images = require.context("../assets/img/char/ult", false, /\.png$/);
       // require("../assets/img/char/$GAME/$CHARNAME_$ROW_$COL.png")
       return images("./" + char + ".png");
-    },
+    }, */
     displayGrid() {
       console.log(".. set grid visible ", this.isDisplayGrid);
       for (let line of this.gridLines) {
