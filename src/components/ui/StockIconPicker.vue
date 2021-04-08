@@ -15,7 +15,12 @@
 
     <div v-if="crtCharacter">
       <div class="row-stock-icon m-1" v-for="(row, i) in crtCharacter.maxRow" :key="row" >
-        <div v-for="(col, j) in crtCharacter.maxCol" :key="col" class="stock-icon" :style="stockStyles(i, j)" @click="setCurrentChar(player, i, j)"></div>
+        <div  v-for="(col, j) in crtCharacter.maxCol" :key="col" 
+              :id="getIdStock(i, j)"
+              class="stock-icon"
+              :class="playerClass" 
+              :style="stockStyles(i, j)" 
+              @click="setCurrentChar(player, i, j)"></div>
       </div>
     </div>
     <button @click="player.flipChar()">FLIP</button>
@@ -34,6 +39,7 @@ export default {
   data() {
     return {
       crtCharacter: {_name: ''},
+      stockIconDivs: [],
     };
   },
   computed: {
@@ -41,6 +47,9 @@ export default {
     maxWidth() {
       return this.crtCharacter.maxCol * 48;
     },
+    playerClass() {
+      return this.player.number;
+    }
   },
   methods: {
     stockStyles(row, col) {
@@ -50,19 +59,48 @@ export default {
         'background-position': `${col * -48}px ${row * -48}px`
       }
     },
-    updateChar(character, player) {
-      console.log("update char for player ..");
+    updateChar(character) {
+      this.initStockIconDivsArray();
+      console.log("update", character.formatName, "for player ", this.player.number, "..");
       if (character)
-        player.filename = character.getCharUrl();
+        this.player.filename = character.getCharUrl();
       else
-        player.filename = '';
+        this.player.filename = '';
       this.crtCharacter = character;
+
+      this.resetActive();
+      var crtDivId = this.stockIconDivs[this.pad(this.crtCharacter.col, 1)];
+      var crtDiv = document.getElementById(crtDivId);
+      if (crtDiv)
+        crtDiv.classList.toggle('active-' + this.player.number);
     },
     setCurrentChar(player, row, col) {
       this.crtCharacter.row = row;
       this.crtCharacter.col = this.pad(col, 2);
-
       this.updateChar(this.crtCharacter, player);
+    },
+    initStockIconDivsArray() {
+      var divArray = [];
+      var i, j;
+      for (i = 0; i < this.crtCharacter.maxRow; i++) {
+        for (j = 0; j < this.crtCharacter.maxCol; j++) {
+          // TODO push directement la div ?
+          divArray.push(this.getIdStock(i, j));
+        }
+      }
+      this.stockIconDivs = divArray;
+    },
+    resetActive() {
+      for (let d of this.stockIconDivs) {
+        var crt = document.getElementById(d);
+        if (crt)
+          crt.classList.remove('active-' + this.player.number);
+      }
+    },
+    getIdStock(row, col) {
+      // TODO ajouter player dans id
+      // TODO ajouter dans Character ?
+      return this.player.number + '-' + this.crtCharacter.formatName + '-' + row + '-' + this.pad(col, 2);
     },
     /* TODO UTILS */
     pad(num, size) {
@@ -82,5 +120,18 @@ export default {
 .stock-icon {
   height: 48px;
   width: 48px;
+}
+
+.stock-icon.active-j1 {
+  box-shadow: inset 0 0 10px #D41619 !important;
+}
+.stock-icon:hover.j1 {
+  box-shadow: 0 0 10px #D41619;
+}
+.stock-icon.active-j2{
+  box-shadow: inset 0 0 10px #0049B9 !important;
+}
+.stock-icon:hover.j2 {
+  box-shadow: 0 0 10px #0049B9;
 }
 </style>

@@ -119,7 +119,7 @@ export default {
     var tagJ1 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ1);
     var imgJ1 = new CustomImage(this.canvas, imgOpt, clipPathJ1);
 
-    this.j1 = new Player(this.canvas, tagJ1, imgJ1, bgJ1);
+    this.j1 = new Player('j1', this.canvas, tagJ1, imgJ1, bgJ1);
 
     // -- J2
     bgOptions = { width: 640, height: 720, x: 640, y: 0, colors: [{id: 0, hex: "#0049b9"}, {id: 1, hex: "#0086ea"}]};
@@ -134,7 +134,7 @@ export default {
     var tagJ2 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ2);
     var imgJ2 = new CustomImage(this.canvas, imgOpt, clipPathJ2);
 
-    this.j2 = new Player(this.canvas, tagJ2, imgJ2, bgJ2);
+    this.j2 = new Player('j2', this.canvas, tagJ2, imgJ2, bgJ2);
 
     // le ou les phases (WF, etc)
     bgTagOptions = { width: 640, height: 75, x: 0, y: 595, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ] };

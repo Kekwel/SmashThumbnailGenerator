@@ -1,10 +1,13 @@
 class Player {
+    _number;
     canvas;
     myTag;
     characters;
     bg;
 
-    constructor(canvas, tag, char, bg) {
+    constructor(nb, canvas, tag, char, bg) {
+        this.number = nb;
+
         this.canvas = canvas;
 
         // Tag (custom text)
@@ -36,6 +39,14 @@ class Player {
     flipChar() {
         console.log(".. flip image char", this.tag);
         this.characters.flip();
+    }
+
+    get number() {
+        return this._number;
+    }  
+    set number(nb) {
+        this._number = nb;
+        return this._number;
     }
 
     // CHARACTERS

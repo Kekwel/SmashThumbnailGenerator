@@ -1,8 +1,5 @@
 <template>
-  <!-- <div> -->
-    <!-- <img :src="getStockUrl(src)" :alt="src" width="32" /> -->
-    <img class="mr-2" :src="src" :alt="src" :width="width" :height="height" />
-  <!-- </div> -->
+  <img class="mr-2" :src="src" :alt="src" :width="width" :height="height" />
 </template>
 
 <script>
