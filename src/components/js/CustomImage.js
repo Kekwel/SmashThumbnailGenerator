@@ -3,7 +3,7 @@ import {
 } from "fabric";
 
 class CustomImage {
-	canvas;
+	_canvas;
 	clipPath;
 
 	_filename; // TODO img non trouvé
@@ -58,6 +58,13 @@ class CustomImage {
 		});
 	}
 
+	get canvas() {
+        return this._canvas;
+    }
+    set canvas(cv) {
+        this._canvas = cv;
+        return this.canvas;
+    }
 	get image() {
 		return this._image;
 	}
@@ -96,9 +103,11 @@ class CustomImage {
 	updateImage(url) {
 		console.log("update img " + url);
 		var self = this;
-		this._image.setSrc(url, function () {
-			self.canvas.requestRenderAll();
-		});
+		if (this._image) {
+			this._image.setSrc(url, function () {
+				self.canvas.requestRenderAll();
+			});
+		}
 	}
 
 /* 	getImgUrl(char) {

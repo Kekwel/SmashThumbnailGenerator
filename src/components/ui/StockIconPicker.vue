@@ -42,6 +42,9 @@ export default {
       stockIconDivs: [],
     };
   },
+  updated() {
+    this.updateActive();
+  },
   computed: {
     // a computed getter
     maxWidth() {
@@ -60,19 +63,16 @@ export default {
       }
     },
     updateChar(character) {
-      this.initStockIconDivsArray();
-      console.log("update", character.formatName, "for player ", this.player.number, "..");
+      this.resetActive();
+      console.log("update", character ? character.formatName : 'null', "for player", this.player.number, "..");
       if (character)
         this.player.filename = character.getCharUrl();
       else
         this.player.filename = '';
       this.crtCharacter = character;
 
-      this.resetActive();
-      var crtDivId = this.stockIconDivs[this.pad(this.crtCharacter.col, 1)];
-      var crtDiv = document.getElementById(crtDivId);
-      if (crtDiv)
-        crtDiv.classList.toggle('active-' + this.player.number);
+      this.initStockIconDivsArray();
+      this.updateActive();
     },
     setCurrentChar(player, row, col) {
       this.crtCharacter.row = row;
@@ -82,13 +82,23 @@ export default {
     initStockIconDivsArray() {
       var divArray = [];
       var i, j;
-      for (i = 0; i < this.crtCharacter.maxRow; i++) {
-        for (j = 0; j < this.crtCharacter.maxCol; j++) {
-          // TODO push directement la div ?
-          divArray.push(this.getIdStock(i, j));
+      if (this.crtCharacter) {
+        for (i = 0; i < this.crtCharacter.maxRow; i++) {
+          for (j = 0; j < this.crtCharacter.maxCol; j++) {
+            // TODO push directement la div ?
+            divArray.push(this.getIdStock(i, j));
+          }
         }
       }
       this.stockIconDivs = divArray;
+    },
+    updateActive() {
+      if (this.crtCharacter) {
+        var crtDivId = this.stockIconDivs[this.pad(this.crtCharacter.col, 1)];
+        var crtDiv = document.getElementById(crtDivId);
+        if (crtDiv)
+          crtDiv.classList.toggle('active-' + this.player.number);
+      }
     },
     resetActive() {
       for (let d of this.stockIconDivs) {
@@ -101,6 +111,9 @@ export default {
       // TODO ajouter player dans id
       // TODO ajouter dans Character ?
       return this.player.number + '-' + this.crtCharacter.formatName + '-' + row + '-' + this.pad(col, 2);
+    },
+    selectChar(char) {
+      this.updateChar(char);
     },
     /* TODO UTILS */
     pad(num, size) {

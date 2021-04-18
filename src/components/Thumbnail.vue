@@ -14,6 +14,7 @@
           <!-- TODO icon tab -->
           <tab title="VS"
             ><conf-player
+              ref="confPlayer"
               :j1="j1"
               :j2="j2"
               :phase1="phase1"
@@ -62,7 +63,6 @@ import { CustomRect } from "./js/CustomRect";
 import { Player } from "./js/Player";
 import { CustomText } from "./js/CustomText";
 import { CustomImage } from "./js/CustomImage";
-import { Character } from "./js/Character"
 import Tab from "./Tab";
 import Tabs from "./Tabs";
 import ConfPlayer from "./config/ConfigPlayer";
@@ -86,23 +86,17 @@ export default {
       isDisplayGrid: false,
       gridLines: [],
       grid: 40,
-      canvas: "",
+      canvas: '',
       j1: {},
+      charJ1: {},
+      charJ2: {},
       j2: {},
       phase1: {},
       phase2: {},
       characters: [],
     };
   },
-  mounted() {
-    // le canvas
-    this.canvas = new fabric.Canvas("can", {
-      preserveObjectStacking: true,
-      strokeWidth: 0,
-    });
-
-    this.initGridLines();
-    this.displayGrid();
+  created() {
     // par defaut Ultimate
     this.characters = Ultimate.STOCKS;
 
@@ -110,8 +104,9 @@ export default {
     var bgOptions = { width: 640, height: 720, x: 0, y: 0 };
     var bgTagOptions = { width: 640, height: 75, x: 0, y: 10, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ]};
     var tagOptions = { tag: "Joueur X", x: 0, y: 10, size: 40, color: "#000000" };
-    var charJ1 = new Character("ult", 1, "Mario");
-    var imgOpt = { character: charJ1, filename: "banjo_00", x: 0, y: 0 };
+    // TODO Character unique, là on a un character pour tous les joueurs
+    this.charJ1 = this.getRandomChar();
+    var imgOpt = { character: this.charJ1, x: 0, y: 0 };
     // TODO class ?
     var clipPathJ1 = new fabric.Rect({ width: 640, height: 720, top: 0, left: 0, absolutePositioned: true, strokeWidth: 0 });
     // tag
@@ -125,8 +120,8 @@ export default {
     bgOptions = { width: 640, height: 720, x: 640, y: 0, colors: [{id: 0, hex: "#0049b9"}, {id: 1, hex: "#0086ea"}]};
     bgTagOptions = { width: 640, height: 75, x: 640, y: 35, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ]};
     tagOptions = { tag: "Joueur Y", x: 640, y: 35, size: 40, color: "#000000" };
-    var charJ2 = new Character("ult", 73, "Banjo");
-    imgOpt = { character: charJ2, filename: "marth_0_02", x: 640, y: 0 };
+    this.charJ2 = this.getRandomChar();
+    imgOpt = { character: this.charJ2, x: 640, y: 0 };
   // TODO class ?
     var clipPathJ2 = new fabric.Rect({ width: 640, height: 720, top: 0, left: 640, absolutePositioned: true, strokeWidth: 0 });
     // tag
@@ -144,6 +139,22 @@ export default {
     bgTagOptions = { width: 640, height: 75, x: 640, y: 630, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ] };
     tagOptions = { tag: "Round 1", x: 640, y: 630, size: 40, color: "#000000" };
     this.phase2 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ2);
+    
+    console.log(this.$options.name + ' component succesfully created');
+  }, 
+  mounted() {
+    this.canvas = new fabric.Canvas("can", {
+      preserveObjectStacking: true,
+      strokeWidth: 0,
+    });
+    // le canvas
+    this.initGridLines();
+    this.displayGrid();
+
+    this.j1.canvas = this.canvas;
+    this.j2.canvas = this.canvas;
+    this.phase1.canvas = this.canvas;
+    this.phase2.canvas = this.canvas;
 
     this.j1.addToCanvas();
     this.j2.addToCanvas();
@@ -153,7 +164,7 @@ export default {
     // le VS
 
     // TODO pouvoir toggle le timestamp YT (pour voir ce qui va etre caché)
-
+    this.$refs.confPlayer.selectChar(this.charJ1, this.charJ2);
     console.log(this.$options.name + ' component succesfully mounted');
   }, methods: {
     initGridLines() {
@@ -214,6 +225,26 @@ export default {
         this.canvas.renderAll();
       }
     },
+    getRandomChar() {
+      // TODO costume
+      var rand = this.characters[Math.floor(Math.random() * this.characters.length)];
+      // tant que random
+      while(rand._id === '?') {
+        rand = this.getRandomChar();
+      }
+      // -- random costume
+      var randCostum = this.pad(this.getRandomInt(rand.maxCol), 2);
+      rand.col = randCostum;
+      return rand;
+    },
+    /* TODO UTILS */
+    pad(num, size) {
+        var s = "000000000" + num;
+        return s.substr(s.length - size);
+    },
+    getRandomInt(max) {
+      return Math.floor(Math.random() * max);
+    }
   },
 };
 </script>

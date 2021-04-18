@@ -3,7 +3,7 @@ import {
 } from "fabric";
 
 class CustomColor {
-    canvas;
+    _canvas;
     gradient;
     _origin = {
         x: 0,
@@ -19,7 +19,7 @@ class CustomColor {
     _colors = [this._color, this._color2];
 
     constructor(pCanvas, colorOpt) {
-        this.canvas = pCanvas;
+        this._canvas = pCanvas;
         
         if (colorOpt.origin) {
             this._origin.x = colorOpt.origin.x;
@@ -29,9 +29,6 @@ class CustomColor {
             this._dest.x = colorOpt.dest.x;
             this._dest.y = colorOpt.dest.y;
         }
-        /*  console.log(this._origin);
-        console.log(this._dest);
-        console.log('--'); */
         
         this._colors = colorOpt.colors || this._colors;
         
@@ -54,6 +51,14 @@ class CustomColor {
                 }
             ]
         });
+    }
+
+    get canvas() {
+        return this._canvas;
+    }
+    set canvas(cv) {
+        this._canvas = cv;
+        return this.canvas;
     }
 
     get colors() {

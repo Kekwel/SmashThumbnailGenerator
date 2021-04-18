@@ -7,9 +7,9 @@
       Joueur 2 <input v-model="j2.tag" /> <br />
       <!-- TODO select random -->
       <!-- J1 -->
-      <stock-icon-picker :characters="characters" :player="j1" />
+      <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" />
       <!-- J2 -->
-      <stock-icon-picker :characters="characters" :player="j2" />
+      <stock-icon-picker ref="charJ2" :characters="characters" :player="j2" />
     </div>
 
     <!-- TODO component -->
@@ -145,6 +145,10 @@ export default {
     focusPhase2() {
       this.$refs.phase2Input.focus();
     },
+    selectChar(charJ1, charJ2){
+      this.$refs.charJ1.selectChar(charJ1);
+      this.$refs.charJ2.selectChar(charJ2);
+    }
   },
   mounted() {
     // this.$refs.mySelect.open = true

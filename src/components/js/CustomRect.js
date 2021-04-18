@@ -6,7 +6,7 @@ import {
 } from "./CustomColor";
 
 class CustomRect {
-    canvas;
+    _canvas;
 
     _colors;
     _origin;
@@ -21,7 +21,7 @@ class CustomRect {
     _grad;
 
     constructor(pCanvas, bgOptions) {
-        this.canvas = pCanvas;
+        this._canvas = pCanvas;
 
         this._width = bgOptions.width || this._width;
         this._height = bgOptions.height || this._height;
@@ -65,9 +65,16 @@ class CustomRect {
         if (!this._colors)
             this.colors = this._grad.colors;
 
-        this.updateColor();
-
         this.rect.moveTo(this._index);
+    }
+
+    get canvas() {
+        return this._canvas;
+    }
+    set canvas(cv) {
+        this._canvas = cv;
+        this.updateColor();
+        return this.canvas;
     }
 
     get colors() {
@@ -135,13 +142,15 @@ class CustomRect {
     }
 
     updateColor() {
-        this._grad = new CustomColor(this.canvas, {
-            colors: this._colors,
-            origin: this._origin,
-            dest: this._dest
-        });
-        this.rect.set('fill', this._grad.gradient);
-        this.canvas.renderAll();
+        if (this.canvas) {
+            this._grad = new CustomColor(this.canvas, {
+                colors: this._colors,
+                origin: this._origin,
+                dest: this._dest
+            });
+            this.rect.set('fill', this._grad.gradient);
+            this.canvas.renderAll();
+        }
     }
 
     // TODO a deplacer !

@@ -8,7 +8,7 @@ import {
 class CustomText {
 
     /* Fabric components */
-    canvas;
+    _canvas;
     text;
     bgTag;
     group;
@@ -35,7 +35,7 @@ class CustomText {
 
     constructor(canvas, tagOptions, bgTagOptions, clipPath) {
         var self = this;
-        this.canvas = canvas;
+        this._canvas = canvas;
 
         this._index = tagOptions.index || this._index;
 
@@ -94,6 +94,15 @@ class CustomText {
         }
 
         this.align('center', 'middle');
+    }
+
+    get canvas() {
+        return this._canvas;
+    }
+    set canvas(cv) {
+        this._canvas = cv;
+        this.bgTag.canvas = cv;
+        return this.canvas;
     }
 
     get txt() {
@@ -213,7 +222,9 @@ class CustomText {
             default:
                 break;
         }
-        this.canvas.renderAll();
+
+        if (this.canvas)
+            this.canvas.renderAll();
     }
 }
 
