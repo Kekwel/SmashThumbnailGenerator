@@ -34,6 +34,7 @@
           <!-- Icone text ou font -->
           <tab title="Fond"
             ><conf-background
+              ref="confBG"
               :j1="j1"
               :j2="j2"
               :phase1="phase1"
@@ -165,6 +166,7 @@ export default {
 
     // TODO pouvoir toggle le timestamp YT (pour voir ce qui va etre caché)
     this.$refs.confPlayer.selectChar(this.charJ1, this.charJ2);
+    this.$refs.confBG.randomColor();
     console.log(this.$options.name + ' component succesfully mounted');
   }, methods: {
     initGridLines() {
@@ -226,8 +228,7 @@ export default {
       }
     },
     getRandomChar() {
-      // TODO costume
-      var rand = this.characters[Math.floor(Math.random() * this.characters.length)];
+      var rand = this.characters[this.getRandomInt(this.characters.length)];
       // tant que random
       while(rand._id === '?') {
         rand = this.getRandomChar();

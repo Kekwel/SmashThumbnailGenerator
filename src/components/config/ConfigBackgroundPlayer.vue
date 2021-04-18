@@ -2,8 +2,9 @@
   <div>
     <option-title :title="'Joueur ' + i + ' : ' + player.tag" />
     <color-picker-select
+      ref="bgpicker"
       :color-options="colors"
-      label="Select Color..."
+      label="Choix couleur..."
       input-id="color"
       v-model="selectedColorHex"
       :obj="player.bg"
@@ -85,6 +86,11 @@ export default {
     };
   },
   methods: {
+    randomColor() {
+      var rand = this.colors[Math.floor(Math.random() * 8)];
+      this.selectedColorHex = rand;
+      this.$refs.bgpicker.setColor(rand.hex, rand.hex2, rand.name);
+    }
   },
 };
 </script>

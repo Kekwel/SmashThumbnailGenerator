@@ -19,12 +19,14 @@
     </div>
     <!-- TODO bg unique -->
     <config-background-player
+      ref="j1BG"
       class="box"
       :i="1"
       :player="j1"
       :lockTag="isLockTag"
     ></config-background-player>
     <config-background-player
+      ref="j2BG"
       class="box"
       :i="2"
       :player="j2"
@@ -73,6 +75,10 @@ export default {
     lockTag() {
       console.log(".. lock tag ", this.isLockTag);
     },
+    randomColor() {
+      this.$refs.j1BG.randomColor();
+      this.$refs.j2BG.randomColor();
+    }
   },
 };
 </script>
