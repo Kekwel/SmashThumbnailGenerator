@@ -94,10 +94,3 @@ export default {
   },
 };
 </script>
-
-<style>
-select option {
-  /* background-image: linear-gradient(to right bottom, #d41619, #f66e25); */
-  background: #f66e25;
-}
-</style>

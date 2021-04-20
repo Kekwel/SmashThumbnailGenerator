@@ -42,7 +42,13 @@
             ></conf-background
           ></tab>
           <!-- Icone background ou color -->
-          <tab title="Par défaut"><conf-default></conf-default></tab>
+          <tab title="Par défaut">
+            <conf-default
+              :j1="j1"
+              :j2="j2"
+              :phase1="phase1"
+              :phase2="phase2" />
+          </tab>
           <!-- icone cog -->
         </tabs>
       </div>
@@ -159,6 +165,9 @@ export default {
 
     this.j1.addToCanvas();
     this.j2.addToCanvas();
+
+    // update direction bg J2
+    this.j2.bg.colorDirection = 'bottomleft';
 
     this.canvas.add(this.phase1.group);
     this.canvas.add(this.phase2.group);

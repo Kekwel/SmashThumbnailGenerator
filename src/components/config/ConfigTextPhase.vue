@@ -8,7 +8,6 @@
         Taille <input size="3" v-model="phase.size" /> <br />
         <input type="color" id="head" name="head" v-model="phase.color" />
         <label for="head"> {{ phase.color }}</label><br />
-
         <input type="checkbox" :id="idBold" v-model="phase.bold" />
         <label :for="idBold"> Gras </label>
         <input type="checkbox" :id="idItalic" v-model="phase.italic" />

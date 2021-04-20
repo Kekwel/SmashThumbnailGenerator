@@ -1,9 +1,7 @@
-import {
-    fabric
-} from "fabric";
-import {
-    CustomRect
-} from "./CustomRect";
+import { fabric } from "fabric";
+// import { FontFaceObserver } from "fontfaceobserver";
+import { CustomRect } from "./CustomRect";
+var FontFaceObserver = require('fontfaceobserver');
 
 class CustomText {
 
@@ -28,6 +26,8 @@ class CustomText {
     _alignmentY = 'middle';
 
     _color = {hex: 'black'};
+
+    _font = 'Open Sans';
 
     _bold = false;
     _italic = false;
@@ -118,6 +118,7 @@ class CustomText {
         return this._size;
     }
     set size(size) {
+        this._size = size;
         this.text.set('fontSize', size);
         this.canvas.renderAll()
         return this._size;
@@ -126,6 +127,7 @@ class CustomText {
         return this._bold;
     }
     set bold(isBold) {
+        this._bold = isBold;
         this.text.set('fontWeight', isBold ? 'bold' : 'normal');
         this.canvas.renderAll();
         return this._bold;
@@ -134,9 +136,32 @@ class CustomText {
         return this._italic;
     }
     set italic(isItalic) {
+        this._italic = isItalic;
         this.text.set('fontStyle', isItalic ? 'italic' : 'normal');
         this.canvas.renderAll();
         return this._italic;
+    }
+    get font() {
+        return this._font;
+    }
+    set font(pFont) {
+        this._font = pFont;
+        /* this.text.set("fontFamily", pFont);
+            this.canvas.renderAll(); */
+        // eslint-disable-next-line no-unused-vars
+        var self = this;
+        var myfont = new FontFaceObserver(pFont);
+        myfont.load().then(function () {
+            // when font is loaded, use it.
+            self.text.set("fontFamily", pFont);
+            self.canvas.renderAll();
+            console.log('font loaded', pFont);
+
+            self.align();
+        }).catch(function(e) {
+            console.log('font loading failed', pFont, e);
+        });
+        return pFont;
     }
 
     get colors() {

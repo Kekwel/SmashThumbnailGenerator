@@ -31,7 +31,7 @@ class Player {
         this.canvas.bringToFront(this.myTag.group);
     }
 
-    alignTag(alignmentH, alignmentV) {
+    align(alignmentH, alignmentV) {
 		console.log(".. align tag", alignmentH ? alignmentH : alignmentV, this.tag);
         this.myTag.align(alignmentH, alignmentV);
     }
@@ -39,6 +39,10 @@ class Player {
     flipChar() {
         console.log(".. flip image char", this.tag);
         this.characters.flip();
+    }
+
+    renderAll() {
+        this.canvas.renderAll();
     }
 
     get canvas() {
@@ -95,22 +99,22 @@ class Player {
     set tag(txt) {
         return this.myTag.txt = txt;
     }
-    get tagSize() {
+    get size() {
         return this.myTag.size;
     }
-    set tagSize(size) {
+    set size(size) {
         return this.myTag.size = size;
     }
-    get tagBold() {
+    get bold() {
         return this.myTag.bold;
     }
-    set tagBold(idBold) {
+    set bold(idBold) {
         return this.myTag.bold = idBold;
     }
-    get tagItalic() {
+    get italic() {
         return this.myTag.italic;
     }
-    set tagItalic(isItalic) {
+    set italic(isItalic) {
         return this.myTag.italic = isItalic;
     }
     get isTagClipPath() {
@@ -118,6 +122,12 @@ class Player {
     }
     set isTagClipPath(isClipP) {
         return this.myTag.isClipPath = isClipP;
+    }
+    get font() {
+        return this.myTag.font;
+    }
+    set font(pFont) {
+        return this.myTag.font = pFont;
     }
 
     get colorsTagBg() {
@@ -134,10 +144,10 @@ class Player {
         return this.myTag.color2Bg = pColor2;
     }
 
-    get colorTag() {
+    get color() {
         return this.myTag.color;
     }
-    set colorTag(pColor) {
+    set color(pColor) {
         return this.myTag.color = pColor;
     }
 }
