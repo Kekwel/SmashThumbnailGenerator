@@ -5,7 +5,6 @@
       Joueur 1 <input v-model="j1.tag" /> <br />
       VS <br />
       Joueur 2 <input v-model="j2.tag" /> <br />
-      <!-- TODO select random -->
       <!-- J1 -->
       <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" />
       <!-- J2 -->

@@ -32,23 +32,23 @@
         <h3>Direction</h3>
         <div>
           <!-- TODO component button direction -->
-          <button @click="changeDirection('topleft')" class="button is-small">
+          <button @click="changeDirection('topleft'); active = 'topleft';" class="button is-small" :class="{'is-primary': isActive('topleft')}">
             <span class="icon is-small">
               <svg-icon type="mdi" :path="icon.top.left"></svg-icon>
             </span>
           </button>
-          <button @click="changeDirection('up')" class="button is-small">
+          <button @click="changeDirection('up'); active = 'up';" class="button is-small" :class="{'is-primary': isActive('up')}">
             <span class="icon is-small">
               <svg-icon type="mdi" :path="icon.up"></svg-icon>
             </span>
           </button>
-          <button @click="changeDirection('topright')" class="button is-small">
+          <button @click="changeDirection('topright'); active = 'topright';" class="button is-small" :class="{'is-primary': isActive('topright')}">
             <span class="icon is-small">
               <svg-icon type="mdi" :path="icon.top.right"></svg-icon>
             </span>
           </button>
           <br />
-          <button @click="changeDirection('left')" class="button is-small">
+          <button @click="changeDirection('left'); active = 'left';" class="button is-small" :class="{'is-primary': isActive('left')}">
             <span class="icon is-small">
               <svg-icon type="mdi" :path="icon.left"></svg-icon>
             </span>
@@ -56,29 +56,23 @@
           <button class="button is-small">
             <span class="icon is-small"> </span>
           </button>
-          <button @click="changeDirection('right')" class="button is-small">
+          <button @click="changeDirection('right'); active = 'right';" class="button is-small" :class="{'is-primary': isActive('right')}">
             <span class="icon is-small">
               <svg-icon type="mdi" :path="icon.right"></svg-icon>
             </span>
           </button>
           <br />
-          <button
-            @click="changeDirection('bottomleft')"
-            class="button is-small"
-          >
+          <button @click="changeDirection('bottomleft'); active = 'bottomleft';" class="button is-small" :class="{'is-primary': isActive('bottomleft')}">
             <span class="icon is-small">
               <svg-icon type="mdi" :path="icon.bottom.left"></svg-icon>
             </span>
           </button>
-          <button @click="changeDirection('down')" class="button is-small">
+          <button @click="changeDirection('down'); active = 'down';" class="button is-small" :class="{'is-primary': isActive('down')}">
             <span class="icon is-small">
               <svg-icon type="mdi" :path="icon.down"></svg-icon>
             </span>
           </button>
-          <button
-            @click="changeDirection('bottomright')"
-            class="button is-small"
-          >
+          <button @click="changeDirection('bottomright'); active = 'bottomright';" class="button is-small" :class="{'is-primary': isActive('bottomright')}">
             <span class="icon is-small">
               <svg-icon type="mdi" :path="icon.bottom.right"></svg-icon>
             </span>
@@ -112,6 +106,7 @@ export default {
   },
   data() {
     return {
+      active: '',
       idColor: "idColor-" + this.id,
       icon: {
         up: mdiArrowUpThick,
@@ -149,6 +144,9 @@ export default {
       } else {
         this.obj.colorDirection = dir;
       }
+    },
+    isActive(val) {
+      return this.active === val;
     },
   },
 };

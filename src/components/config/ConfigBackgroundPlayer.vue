@@ -90,7 +90,7 @@ export default {
       var rand = this.colors[Math.floor(Math.random() * 8)];
       this.selectedColorHex = rand;
       this.$refs.bgpicker.setColor(rand.hex, rand.hex2, rand.name);
-    }
+    },
   },
 };
 </script>
