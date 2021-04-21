@@ -29,20 +29,26 @@ class Character {
     }
 
     // img/stock/$GAME/$CHARNAME.png
+    getRoot() {
+        return process.env.NODE_ENV === 'production'
+                ? '/SmashThumbnailGenerator/'
+                : '/'
+    }
+
     getfirstStockUrl() {
-        var stockUrl = "/img/stock/" + this._game + "/"  + this._formatName + ".png";
+        var stockUrl = this.getRoot() + "img/stock/" + this._game + "/"  + this._formatName + ".png";
 		return stockUrl;
 	}
     // img/stock/$GAME/$CHARNAME_all.png
     getAllStocksUrl() {
-        var stocksUrl = "/img/stock/" + this._game + "/"  + this._formatName + "_all.png";
+        var stocksUrl = this.getRoot() + "img/stock/" + this._game + "/"  + this._formatName + "_all.png";
 		return stocksUrl;
     }
     // img/char/$GAME/$CHARNAME_$ROW_$COL.png
     getCharUrl() {
-        var charUrl = "/img/char/" + this._game + "/mario_" + this._row + "_" + this._col + ".png";
+        var charUrl = this.getRoot() + "img/char/" + this._game + "/mario_" + this._row + "_" + this._col + ".png";
         if (this._formatName)
-            charUrl = "/img/char/" + this._game + "/" + this._formatName + "_" + this._row + "_" + this._col + ".png";
+            charUrl = this.getRoot() + "img/char/" + this._game + "/" + this._formatName + "_" + this._row + "_" + this._col + ".png";
 		return charUrl;
     }
 

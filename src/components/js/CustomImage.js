@@ -110,12 +110,6 @@ class CustomImage {
 		}
 	}
 
-/* 	getImgUrl(char) {
-		var images = require.context("../../assets/img/char/ult", false, /\.png$/);
-		// require("../assets/img/char/$GAME/$CHARNAME_$ROW_$COL.png")
-		return images("./" + char + ".png");
-	} */
-
 	flip() {
 		this._image.toggle("flipX");
 		this.canvas.renderAll();
