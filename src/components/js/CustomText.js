@@ -120,7 +120,8 @@ class CustomText {
     set size(size) {
         this._size = size;
         this.text.set('fontSize', size);
-        this.canvas.renderAll()
+        this.align();
+        this.canvas.renderAll();
         return this._size;
     }
     get bold() {

@@ -1,29 +1,12 @@
 <template>
   <div>
-    <option-title :title="'Joueur ' + i + ' : ' + player.tag" />
-    <color-picker-select
-      ref="bgpicker"
-      :color-options="colors"
-      label="Choix couleur..."
-      input-id="color"
-      v-model="selectedColorHex"
-      :obj="player.bg"
-    ></color-picker-select>
+    <option-title :title="'Joueur ' + i" />
+    <color-picker-select ref="bgpicker" :color-options="colors" label="Choix couleur..." input-id="color" v-model="selectedColorHex" :obj="player.bg" />
 
+    <config-color :id="'fondj' + i" :title="'Fond'" :obj="player.bg" :lockTag="lockTag" />
     <div v-if="!lockTag">
-      <config-color
-        :id="'tagj' + i"
-        :title="'Tag'"
-        :obj="player.myTag"
-        :lockTag="lockTag"
-      ></config-color>
+      <config-color :id="'tagj' + i" :title="'Tag'" :obj="player.myTag" :lockTag="lockTag" />
     </div>
-    <config-color
-      :id="'fondj' + i"
-      :title="'Fond'"
-      :obj="player.bg"
-      :lockTag="lockTag"
-    ></config-color>
   </div>
 </template>
 

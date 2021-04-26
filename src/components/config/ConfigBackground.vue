@@ -1,54 +1,29 @@
 <template>
-  <div>
+  <div style="margin: 1em auto;">
     <!-- use same color/gradient -->
     <!-- TODO explication -->
-    <input
-      type="checkbox"
-      id="lockTag"
-      v-model="isLockTag"
-      @change="lockTag($event)"
-    />
+    <input type="checkbox" id="lockTag" v-model="isLockTag" @change="lockTag($event)" />
     <label for="lockTag"> Couleur bandeau lié (Tag, Phases)</label>
-    <div class="box" v-if="isLockTag">
+    <div class="box column center" v-if="isLockTag">
       <option-title :title="'Tag & Phases'" />
-      <config-color
-        :title="'Fond'"
-        :objs="[j1.myTag, j2.myTag, phase1, phase2]"
-        :lockTag="isLockTag"
-      ></config-color>
+      <config-color :title="'Fond'" :objs="[j1.myTag, j2.myTag, phase1, phase2]" :lockTag="isLockTag" />
     </div>
     <!-- TODO bg unique -->
-    <config-background-player
-      ref="j1BG"
-      class="box"
-      :i="1"
-      :player="j1"
-      :lockTag="isLockTag"
-    ></config-background-player>
-    <config-background-player
-      ref="j2BG"
-      class="box"
-      :i="2"
-      :player="j2"
-      :lockTag="isLockTag"
-    ></config-background-player>
-
+    <div class="box columns center">
+      <config-background-player class="column" ref="j1BG" :i="1" :player="j1" :lockTag="isLockTag" />
+      <config-background-player class="column" ref="j2BG" :i="2" :player="j2" :lockTag="isLockTag" />
+    </div>
+    <br />
     <div v-if="!isLockTag">
-      <div class="box">
-        <option-title :title="'Phase 1'" />
-        <config-color
-          :id="'phase1'"
-          :title="'Fond'"
-          :obj="phase1"
-          :lockTag="isLockTag"
-        ></config-color>
-        <option-title :title="'Phase 2'" />
-        <config-color
-          :id="'phase2'"
-          :title="'Fond'"
-          :obj="phase2"
-          :lockTag="isLockTag"
-        ></config-color>
+      <div class="box columns center">
+        <div class="column">
+          <option-title :title="'Phase 1'" />
+          <config-color :id="'phase1'" :title="'Fond'" :obj="phase1" :lockTag="isLockTag" />
+        </div>
+        <div class="column">
+          <option-title :title="'Phase 2'" />
+          <config-color :id="'phase2'" :title="'Fond'" :obj="phase2" :lockTag="isLockTag" />
+        </div>
       </div>
     </div>
   </div>
@@ -82,3 +57,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.center {
+  text-align: center;
+}
+</style>

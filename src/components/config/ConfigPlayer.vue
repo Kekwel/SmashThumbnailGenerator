@@ -16,88 +16,38 @@
       <option-title :title="'Phase'" />
       <div class="control">
         <label class="radio">
-          <input
-            type="radio"
-            name="phase1"
-            value="Pools"
-            v-model="phase1.txt"
-            @change="focusPhase1()"
-          />
+          <input type="radio" name="phase1" value="Pools" v-model="phase1.txt" @change="focusPhase1()" />
           Pools
         </label>
         <label class="radio">
-          <input
-            type="radio"
-            name="phase1"
-            value="Winners"
-            v-model="phase1.txt"
-            @change="focusPhase1()"
-            checked
-          />
+          <input type="radio" name="phase1" value="Winners" v-model="phase1.txt" @change="focusPhase1()" checked />
           Winners
         </label>
         <label class="radio">
-          <input
-            type="radio"
-            name="phase1"
-            value="Losers"
-            v-model="phase1.txt"
-            @change="focusPhase1()"
-          />
+          <input type="radio" name="phase1" value="Losers" v-model="phase1.txt" @change="focusPhase1()" />
           Losers
         </label>
         <label class="radio">
-          <input
-            type="radio"
-            name="phase1"
-            value="Grand"
-            v-model="phase1.txt"
-            @change="focusPhase1()"
-          />
+          <input type="radio" name="phase1" value="Grand" v-model="phase1.txt" @change="focusPhase1()" />
           Grand
         </label>
       </div>
       Custom 1 <input ref="phase1Input" v-model="phase1.txt" /><br />
       <div class="control">
         <label class="radio">
-          <input
-            type="radio"
-            name="phase2"
-            value="Round "
-            v-model="phase2.txt"
-            @change="focusPhase2()"
-            checked
-          />
+          <input type="radio" name="phase2" value="Round " v-model="phase2.txt" @change="focusPhase2()" checked />
           Round
         </label>
         <label class="radio">
-          <input
-            type="radio"
-            name="phase2"
-            value="Quarters"
-            v-model="phase2.txt"
-            @change="focusPhase2()"
-          />
+          <input type="radio" name="phase2" value="Quarters" v-model="phase2.txt" @change="focusPhase2()" />
           Quarters
         </label>
         <label class="radio">
-          <input
-            type="radio"
-            name="phase2"
-            value="Semis"
-            v-model="phase2.txt"
-            @change="focusPhase2()"
-          />
+          <input type="radio" name="phase2" value="Semis" v-model="phase2.txt" @change="focusPhase2()" />
           Semis
         </label>
         <label class="radio">
-          <input
-            type="radio"
-            name="phase2"
-            value="Finals"
-            v-model="phase2.txt"
-            @change="focusPhase2()"
-          />
+          <input type="radio" name="phase2" value="Finals" v-model="phase2.txt" @change="focusPhase2()" />
           Finals
         </label>
       </div>

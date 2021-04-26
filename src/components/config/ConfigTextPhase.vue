@@ -1,6 +1,6 @@
 <template>
   <div>
-    <option-title :title="'Phase ' + i + ' : ' + phase.txt"/>
+    <option-title :title="'Phase ' + i "/>
     <!-- <hr /> TODO HR -->
     <!-- TODO padding -->
     <div class="columns is-gapless">
@@ -10,6 +10,7 @@
         <label for="head"> {{ phase.color }}</label><br />
         <input type="checkbox" :id="idBold" v-model="phase.bold" />
         <label :for="idBold"> Gras </label>
+        <br />
         <input type="checkbox" :id="idItalic" v-model="phase.italic" />
         <label :for="idItalic"> Italique </label><br />
       </div>
@@ -18,12 +19,14 @@
         <button @click="phase.align(null, 'top'); activeV = 'top';" class="button is-small" :class="{'is-primary': isActiveV('top')}">
           <span class="icon is-small">
             <svg-icon type="mdi" :path="icon.top"></svg-icon>
-          </span></button
-        ><button @click="phase.align(null, 'middle'); activeV = 'middle';" class="button is-small" :class="{'is-primary': isActiveV('middle')}">
+          </span>
+        </button>
+        <button @click="phase.align(null, 'middle'); activeV = 'middle';" class="button is-small" :class="{'is-primary': isActiveV('middle')}">
           <span class="icon is-small">
             <svg-icon type="mdi" :path="icon.middle"></svg-icon>
-          </span></button
-        ><button @click="phase.align(null, 'bottom'); activeV = 'bottom';" class="button is-small" :class="{'is-primary': isActiveV('bottom')}">
+          </span>
+        </button>
+        <button @click="phase.align(null, 'bottom'); activeV = 'bottom';" class="button is-small" :class="{'is-primary': isActiveV('bottom')}">
           <span class="icon is-small">
             <svg-icon type="mdi" :path="icon.bottom"></svg-icon>
           </span>

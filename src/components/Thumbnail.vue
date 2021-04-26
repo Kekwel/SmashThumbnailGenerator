@@ -3,63 +3,31 @@
     <div class="column">
       <div>
         <button @click="exportPNG">PNG</button>
-        <input
-          type="checkbox"
-          id="displayGrid"
-          v-model="isDisplayGrid"
-          @change="displayGrid($event)"
-        />
+        <input type="checkbox" id="displayGrid" v-model="isDisplayGrid" @change="displayGrid($event)" />
         <label for="displayGrid">Affichage Grid</label>
         <tabs>
           <!-- TODO icon tab -->
-          <tab title="VS"
-            ><conf-player
-              ref="confPlayer"
-              :j1="j1"
-              :j2="j2"
-              :phase1="phase1"
-              :phase2="phase2"
-              :characters="characters"
-            ></conf-player
-          ></tab>
+          <tab title="VS">
+            <conf-player ref="confPlayer" :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2" :characters="characters" />
+          </tab>
           <!-- Icone VS ou "account" -->
-          <tab title="Texte"
-            ><conf-text
-              :j1="j1"
-              :j2="j2"
-              :phase1="phase1"
-              :phase2="phase2"
-            ></conf-text
-          ></tab>
+          <tab title="Texte">
+            <conf-text :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2" />
+          </tab>
           <!-- Icone text ou font -->
-          <tab title="Fond"
-            ><conf-background
-              ref="confBG"
-              :j1="j1"
-              :j2="j2"
-              :phase1="phase1"
-              :phase2="phase2"
-            ></conf-background
-          ></tab>
+          <tab title="Fond">
+            <conf-background ref="confBG" :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2" />
+          </tab>
           <!-- Icone background ou color -->
           <tab title="Par défaut">
-            <conf-default
-              :j1="j1"
-              :j2="j2"
-              :phase1="phase1"
-              :phase2="phase2" />
+            <conf-default :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2" />
           </tab>
           <!-- icone cog -->
         </tabs>
       </div>
     </div>
-    <div class="column is-8i s-offset-4 mr-5">
-      <canvas
-        id="can"
-        width="1280"
-        height="720"
-        style="border: 1px solid black"
-      ></canvas>
+    <div class="column is-8 is-offset-4 mr-5">
+      <canvas id="can" width="1280" height="720" style="border: 1px solid black"></canvas>
     </div>
   </div>
 </template>
@@ -224,11 +192,6 @@ export default {
       });
       !link.dispatchEvent(evt);
     },
-    /* getImgChar(char) {
-      var images = require.context("../assets/img/char/ult", false, /\.png$/);
-      // require("../assets/img/char/$GAME/$CHARNAME_$ROW_$COL.png")
-      return images("./" + char + ".png");
-    }, */
     displayGrid() {
       console.log(".. set grid visible ", this.isDisplayGrid);
       for (let line of this.gridLines) {

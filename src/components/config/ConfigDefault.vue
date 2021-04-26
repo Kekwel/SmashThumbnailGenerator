@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div style="margin: 1em auto;">
     <option-title :title="'Par défaut'"/>
     <div class="box">
+      <h4 class="subtitle is-4">Texte</h4>
       Taille <input size="3" v-model="text.size"/> <br />
       <input type="color" id="head" name="head" v-model="text.HEX" />
       <label for="head"> {{ text.HEX }} </label><br />
@@ -9,11 +10,11 @@
       <label for="idBold"> Gras </label>
       <input type="checkbox" id="idItalic" v-model="text.italic" />
       <label for="idItalic"> Italique </label><br />
-    </div>
-    <div class="box">
-      <p class="apply-font">Google Font</p>
+
+      <p class="apply-font" style="margin: 0.5em 1em;">Google Font</p>
       <font-picker :api-key="key" :active-font="fontFamily" @change="updateFont" class="font-select" /> <button class="button is-small is-danger" @click="forceUpdate">FORCE UPDATE</button>
-      <p>Custom Font</p>
+      
+      <p style="margin: 0.5em 1em;">Custom Font</p>
       <!-- <select v-model="fontFamily"> -->
       <div class="select">
         <select v-model="customFontFamily" @change="updateCustomFont">

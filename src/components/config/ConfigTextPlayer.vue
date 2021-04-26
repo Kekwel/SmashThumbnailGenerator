@@ -1,6 +1,6 @@
 <template>
   <div>
-    <option-title :title="'Joueur ' + i + ' : ' + player.tag"/>
+    <option-title :title="'Joueur ' + i"/>
     <!-- <hr /> TODO HR -->
     <!-- TODO padding -->
     <div class="columns is-gapless">
@@ -10,6 +10,7 @@
         <label for="head"> {{ player.color }}</label><br />
         <input type="checkbox" :id="idBold" v-model="player.bold" />
         <label :for="idBold"> Gras </label>
+        <br />
         <input type="checkbox" :id="idItalic" v-model="player.italic" />
         <label :for="idItalic"> Italique </label><br />
       </div>
@@ -93,7 +94,3 @@ export default {
   }
 };
 </script>
-
-<style>
-
-</style>
