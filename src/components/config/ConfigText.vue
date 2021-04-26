@@ -6,8 +6,11 @@
     </div>
     <br />
     <div class="columns box">
-      <config-text-phase class="column" :i="1" :phase="phase1" />
-      <config-text-phase class="column" :i="2" :phase="phase2" />
+      <config-text-phase class="column" :title="'Phase 1'" :phase="phase1" />
+      <config-text-phase class="column" :title="'Phase 2'" :phase="phase2" />
+    </div>
+    <div class="box">
+      <config-text-phase :title="'Versus'" :phase="versus" />
     </div>
   </div>
 </template>
@@ -22,6 +25,7 @@ export default {
     j2: Object,
     phase1: Object,
     phase2: Object,
+    versus: Object,
   },
   data() {
     return {

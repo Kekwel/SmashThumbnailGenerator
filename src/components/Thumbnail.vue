@@ -12,7 +12,7 @@
           </tab>
           <!-- Icone VS ou "account" -->
           <tab title="Texte">
-            <conf-text :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2" />
+            <conf-text :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2" :versus="versus" />
           </tab>
           <!-- Icone text ou font -->
           <tab title="Fond">
@@ -20,7 +20,7 @@
           </tab>
           <!-- Icone background ou color -->
           <tab title="Par défaut">
-            <conf-default :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2" />
+            <conf-default :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2" :versus="versus" />
           </tab>
           <!-- icone cog -->
         </tabs>
@@ -68,6 +68,7 @@ export default {
       j2: {},
       phase1: {},
       phase2: {},
+      versus: {},
       characters: [],
     };
   },
@@ -106,6 +107,11 @@ export default {
 
     this.j2 = new Player('j2', this.canvas, tagJ2, imgJ2, bgJ2);
 
+    // le VS
+    bgTagOptions = { width: 1280, height: 720, x: 0, y: 0, colors: [ { id: 0, hex: "rgba(255, 0, 0, 0)" }, { id: 1, hex: "rgba(255, 0, 0, 0)" } ] };
+    tagOptions = { tag: "VS", x: 0, y: 0, size: 99, color: "#000000", bold: true, italic: true };
+    this.versus = new CustomText(this.canvas, tagOptions, bgTagOptions);
+
     // le ou les phases (WF, etc)
     bgTagOptions = { width: 640, height: 75, x: 0, y: 595, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ] };
     tagOptions = { tag: "Winners", x: 0, y: 595, size: 40, color: "#000000" };
@@ -128,6 +134,7 @@ export default {
 
     this.j1.canvas = this.canvas;
     this.j2.canvas = this.canvas;
+    this.versus.canvas = this.canvas;
     this.phase1.canvas = this.canvas;
     this.phase2.canvas = this.canvas;
 
@@ -137,6 +144,8 @@ export default {
     // update direction bg J2
     this.j2.bg.colorDirection = 'bottomleft';
 
+    this.canvas.add(this.versus.group);
+    
     this.canvas.add(this.phase1.group);
     this.canvas.add(this.phase2.group);
     // le VS

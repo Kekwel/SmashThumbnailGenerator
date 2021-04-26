@@ -34,10 +34,12 @@ import CustomFonts from "../../utils"
 export default {
   components: { OptionTitle, FontPicker },
   props: {
+    // TODO array object ?
     j1: Object,
     j2: Object,
     phase1: Object,
     phase2: Object,
+    versus: Object
   },
   data() {
     return {
@@ -58,17 +60,21 @@ export default {
   },
   methods: {
     updateText(text) {
-      if (this.text.size != text.size) {
-        text.size = this.text.size;
-        text.align();
+      // TODO ?
+      if (text !== this.versus) {
+        if (this.text.size != text.size) {
+            text.size = this.text.size;
+          text.align();
+        }
+        text.color = this.text.HEX;
+        text.bold = this.text.bold;
+        text.italic = this.text.italic;
       }
-      text.color = this.text.HEX;
-      text.bold = this.text.bold;
-      text.italic = this.text.italic;
     },
     updateCustomFont() {
       this.j1.font = this.customFontFamily;
       this.j2.font = this.customFontFamily;
+      this.versus.font = this.customFontFamily;
       this.phase1.font = this.customFontFamily;
       this.phase2.font = this.customFontFamily;
     },
@@ -76,6 +82,7 @@ export default {
       this.fontFamily = font.family;
       this.j1.font = this.fontFamily;
       this.j2.font = this.fontFamily;
+      this.versus.font = this.fontFamily;
       this.phase1.font = this.fontFamily;
       this.phase2.font = this.fontFamily;
     },
@@ -85,6 +92,7 @@ export default {
     updateAll() {
       this.updateText(this.j1);
       this.updateText(this.j2);
+      this.updateText(this.versus);
       this.updateText(this.phase1);
       this.updateText(this.phase2);
     },

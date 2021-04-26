@@ -1,6 +1,6 @@
 <template>
   <div>
-    <option-title :title="'Phase ' + i "/>
+    <option-title :title="title"/>
     <!-- <hr /> TODO HR -->
     <!-- TODO padding -->
     <div class="columns is-gapless">
@@ -66,14 +66,14 @@ export default {
   components: { SvgIcon, OptionTitle },
   props: {
     phase: Object,
-    i: Number,
+    title: String,
   },
   data() {
     return {
       activeV: 'middle',
       activeH: 'center',
-      idBold: "italicPhase" + this.i,
-      idItalic: "boldPhase" + this.i,
+      idBold: "italicPhase" + this.title,
+      idItalic: "boldPhase" + this.title,
       icon: {
         left: mdiFormatAlignLeft,
         center: mdiFormatAlignCenter,

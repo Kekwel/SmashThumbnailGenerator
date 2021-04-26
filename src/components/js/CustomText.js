@@ -66,24 +66,28 @@ class CustomText {
             fontSize: this._size,
             fill: this._color
         });
+        this.text.set('fontWeight', this._bold ? 'bold' : 'normal');
+        this.text.set('fontStyle', this._italic ? 'italic' : 'normal');
 
         // Custom object : CustomRect
-        this.bgTag = new CustomRect(this.canvas, bgTagOptions);
+        if (bgTagOptions) {
+            this.bgTag = new CustomRect(this.canvas, bgTagOptions);
 
-        // Group
-        this.group = new fabric.Group([this.bgTag.rect, this.text], {
-            left: 0 + this._x,
-            top: 0 + this._y,
-            strokeWidth: 0,
-        });
-        this.group.on('scaling', function () {
-            var rect = this.item(1),
-                scaleX = this.width / (this.width * this.scaleX),
-                scaleY = this.height / (this.height * this.scaleY);
-            rect.scaleX = scaleX;
-            rect.scaleY = scaleY;
-            self.align();
-        });
+            // Group
+            this.group = new fabric.Group([this.bgTag.rect, this.text], {
+                left: 0 + this._x,
+                top: 0 + this._y,
+                strokeWidth: 0,
+            });
+            this.group.on('scaling', function () {
+                var rect = this.item(1),
+                    scaleX = this.width / (this.width * this.scaleX),
+                    scaleY = this.height / (this.height * this.scaleY);
+                rect.scaleX = scaleX;
+                rect.scaleY = scaleY;
+                self.align();
+            });
+        }
 
         if (clipPath) {
             // TODO on/off
@@ -101,7 +105,8 @@ class CustomText {
     }
     set canvas(cv) {
         this._canvas = cv;
-        this.bgTag.canvas = cv;
+        if (this.bgTag)
+            this.bgTag.canvas = cv;
         return this.canvas;
     }
 
@@ -218,37 +223,38 @@ class CustomText {
         if (alignmentV)
             this._alignmentY = alignmentV;
 
-        // var textW = this.text.width,
-        var textW = this.text.getScaledWidth(),
-            textH = this.text.getScaledHeight();
-        var rectW = this.bgTag.rect.width,
-            rectH = this.bgTag.rect.height;
+        if (this.bgTag) {
+            // var textW = this.text.width,
+            var textW = this.text.getScaledWidth(),
+                textH = this.text.getScaledHeight();
+            var rectW = this.bgTag.rect.width,
+                rectH = this.bgTag.rect.height;
 
-        switch (this._alignmentX) {
-            case 'left':
-                this.text.set('left', -rectW / 2);
-                break;
-            case 'center':
-                this.text.set('left', -(textW / 2));
-                break;
-            case 'right':
-                this.text.set('left', rectW / 2 - textW);
-                break;
+            switch (this._alignmentX) {
+                case 'left':
+                    this.text.set('left', -rectW / 2);
+                    break;
+                case 'center':
+                    this.text.set('left', -(textW / 2));
+                    break;
+                case 'right':
+                    this.text.set('left', rectW / 2 - textW);
+                    break;
+            }
+            switch (this._alignmentY) {
+                case 'top':
+                    this.text.set('top', -rectH / 2);
+                    break;
+                case 'middle':
+                    this.text.set('top', -(textH / 2));
+                    break;
+                case 'bottom':
+                    this.text.set('top', rectH / 2 - textH);
+                    break;
+                default:
+                    break;
+            }
         }
-        switch (this._alignmentY) {
-            case 'top':
-                this.text.set('top', -rectH / 2);
-                break;
-            case 'middle':
-                this.text.set('top', -(textH / 2));
-                break;
-            case 'bottom':
-                this.text.set('top', rectH / 2 - textH);
-                break;
-            default:
-                break;
-        }
-
         if (this.canvas)
             this.canvas.renderAll();
     }
