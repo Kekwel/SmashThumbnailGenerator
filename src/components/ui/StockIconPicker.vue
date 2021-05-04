@@ -1,20 +1,30 @@
 <template>
-  <div>
-    <v-select :options="characters" label="_name" @input="updateChar($event, player)" v-model="crtCharacter">
-      <template #selected-option="{ _name, _firstStockUrl }">
-        <div class="stock-icon-selected">
-          <stock-icon :width="32" :src="_firstStockUrl" /> {{ _name }}
-        </div>
-      </template>
-      <template #option="option">
-        <div class="stock-icon-selected">
-          <stock-icon :width="32" :src="option._firstStockUrl" />{{ option._name }}
-        </div>
-      </template>
-    </v-select>
+  <div style="width: 100%;">
+    <div class="columns is-gapless is-vcentered is-centered" style="margin-top: 0.5em; margin-bottom: 0.25em;">
+      <div class="column">
+        <v-select style="width: 20em; margin: auto" :options="characters" label="_name" @input="updateChar($event, player)" v-model="crtCharacter">
+          <template #selected-option="{ _name, _firstStockUrl }">
+            <div class="stock-icon-selected">
+              <stock-icon :width="32" :src="_firstStockUrl" /> {{ _name }}
+            </div>
+          </template>
+          <template #option="option">
+            <div class="stock-icon-selected">
+              <stock-icon :width="32" :src="option._firstStockUrl" />{{ option._name }}
+            </div>
+          </template>
+        </v-select>
+      </div>
+      <div class="column">
+        <button title="Flip" class="button" style="margin-left: 0.5em;" @click="player.flipChar(); activeFlip = !activeFlip" :class="{'is-primary': activeFlip}">
+          <span class="icon is-small">
+            <svg-icon type="mdi" :path="icon.flip"></svg-icon>
+          </span></button>
+      </div>
+    </div>
 
     <div v-if="crtCharacter">
-      <div class="row-stock-icon m-1" v-for="(row, i) in crtCharacter.maxRow" :key="row" >
+      <div class="row-stock-icon my-1" v-for="(row, i) in crtCharacter.maxRow" :key="row" >
         <div  v-for="(col, j) in crtCharacter.maxCol" :key="col" 
               :id="getIdStock(i, j)"
               class="stock-icon"
@@ -23,15 +33,18 @@
               @click="setCurrentChar(player, i, j)"></div>
       </div>
     </div>
-    <button @click="player.flipChar()">FLIP</button>
   </div>
 </template>
 
 <script>
 import vSelect from "vue-select";
 import StockIcon from '../ui/StockIcon.vue';
+import SvgIcon from "@jamescoyle/vue-icon";
+import {
+  mdiFlipHorizontal
+} from "@mdi/js";
 export default {
-  components: { vSelect, StockIcon },
+  components: { vSelect, StockIcon, SvgIcon },
   props: {
     player: Object,
     characters: Array,
@@ -40,6 +53,10 @@ export default {
     return {
       crtCharacter: {_name: ''},
       stockIconDivs: [],
+      activeFlip: false,
+      icon: {
+        flip: mdiFlipHorizontal
+      }
     };
   },
   updated() {
@@ -115,6 +132,9 @@ export default {
     selectChar(char) {
       this.updateChar(char);
     },
+    isActiveFlip(val) {
+      return this.activeFlip === val;
+    },
     /* TODO UTILS */
     pad(num, size) {
         var s = "000000000" + num;
@@ -125,6 +145,10 @@ export default {
 </script>
 
 <style>
+.center {
+  text-align: center;
+}
+
 .row-stock-icon {
   display: flex;
   height: 48px;

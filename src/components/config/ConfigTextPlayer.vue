@@ -17,33 +17,33 @@
       <div class="column">
         <!-- TODO component CustomButton ? -->
         <button @click="player.align(null, 'top'); activeV = 'top';" class="button is-small" :class="{'is-primary': isActiveV('top')}">
-          <span class="icon is-small">
+          <span class="icon">
             <svg-icon type="mdi" :path="icon.top"></svg-icon>
           </span>
         </button>
         <button @click="player.align(null, 'middle'); activeV = 'middle';" class="button is-small" :class="{'is-primary': isActiveV('middle')}">
-          <span class="icon is-small">
+          <span class="icon">
             <svg-icon type="mdi" :path="icon.middle"></svg-icon>
           </span>
         </button>
         <button @click="player.align(null, 'bottom'); activeV = 'bottom';" class="button is-small" :class="{'is-primary': isActiveV('bottom')}">
-          <span class="icon is-small">
+          <span class="icon">
             <svg-icon type="mdi" :path="icon.bottom"></svg-icon>
           </span>
         </button>
         <br />
         <button @click="player.align('left'); activeH = 'left';" class="button is-small" :class="{'is-primary': isActiveH('left')}">
-          <span class="icon is-small">
+          <span class="icon">
             <svg-icon type="mdi" :path="icon.left"></svg-icon>
           </span>
         </button>
         <button @click="player.align('center'); activeH = 'center';" class="button is-small" :class="{'is-primary': isActiveH('center')}">
-          <span class="icon is-small">
+          <span class="icon">
             <svg-icon type="mdi" :path="icon.center"></svg-icon>
           </span>
         </button>
         <button @click="player.align('right'); activeH = 'right';" class="button is-small" :class="{'is-primary': isActiveH('right')}">
-          <span class="icon is-small">
+          <span class="icon">
             <svg-icon type="mdi" :path="icon.right"></svg-icon>
           </span>
         </button>

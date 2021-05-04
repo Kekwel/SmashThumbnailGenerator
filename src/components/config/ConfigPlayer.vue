@@ -1,17 +1,34 @@
 <template>
   <div style="margin: 1em auto;">
+    <!-- Joueurs -->
     <div class="box" style="width: 28em">
       <option-title :title="'Match'" />
-      Joueur 1 <input v-model="j1.tag" /> <br />
-      VS <br />
-      Joueur 2 <input v-model="j2.tag" /> <br />
+      <div>
+        <div class="columns is-centered">
+          <div class="column input-tag">
+            <input class="input is-danger" style="" v-model="j1.tag" onClick="this.select();" />
+            <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" />  
+            <span class="versus">VS</span>
+            <input class="input is-link" style="text-align: end;"  v-model="j2.tag" onClick="this.select();" />
+            <stock-icon-picker ref="charJ2" :characters="characters" :player="j2" />
+          </div>
+        </div>
+        <!-- TODO Colonne pour aligner + facilement le VS ? -->
+        <!-- <div class="input-tag">
+          Joueur 1 : <input class="input is-danger" style="width: 15em;" v-model="j1.tag" /> <br />
+          <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" />
+        </div>
+        <span class="input-tag versus">VS</span> <br />
+        <div class="input-tag">
+          Joueur 2 : <input class="input is-link" style="width: 15em;"  v-model="j2.tag" /> <br />
+        </div> -->
+      </div>
       <!-- J1 -->
-      <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" />
       <!-- J2 -->
-      <stock-icon-picker ref="charJ2" :characters="characters" :player="j2" />
+      <!-- <stock-icon-picker ref="charJ2" :characters="characters" :player="j2" /> -->
     </div>
 
-    <!-- TODO component -->
+    <!-- Phase TODO component -->
     <div id="info-phase" class="box">
       <option-title :title="'Phase'" />
       <div class="control">
@@ -113,5 +130,20 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+/* .input-tag {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+} */
+.input-tag {
+  display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.versus {
+  font-weight: bold;
+  font-size: larger;
 }
 </style>
