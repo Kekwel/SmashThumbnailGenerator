@@ -18,6 +18,15 @@ class CustomRect {
     _y = 0;
     _index = 0;
 
+    _isShadow = false;
+    _shadow = {
+		color: '#000',
+		blur: 0,
+		offsetX: -10,
+		offsetY: 10,
+		opacity: 0.8
+	};
+
     _grad;
 
     constructor(pCanvas, bgOptions) {
@@ -139,6 +148,33 @@ class CustomRect {
         this._dest = {x: x2, y: y2};
         this.updateColor();
         return dirLib;
+    }
+
+    get ombre() {
+        return this._isShadow;
+    }
+    set ombre(pOmbre) {
+        this.rect.set('shadow', pOmbre ? this._shadow : '');
+        this.canvas.renderAll();
+        return this._isShadow = pOmbre;
+    }
+    get ombreX(){
+        return this._shadow.offsetX;
+    }
+    set ombreX(pOffset){
+        this._shadow.offsetX = pOffset
+        this.rect.set('shadow', this.ombre ? this._shadow : '');
+        this.canvas.renderAll();
+        return this._shadow.offsetX;
+    }
+    get ombreY(){
+        return this._shadow.offsetY;
+    }
+    set ombreY(pOffset){
+        this._shadow.offsetY = pOffset
+        this.rect.set('shadow', this.ombre ? this._shadow : '');
+        this.canvas.renderAll();
+        return this._shadow.offsetY;
     }
 
     updateColor() {

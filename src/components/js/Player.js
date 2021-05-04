@@ -78,6 +78,32 @@ class Player {
         return this.characters.image;
     }
 
+    // OMBRE
+    get ombre() {
+        return this.characters.ombre;
+    }
+    set ombre(pOmbre) {
+        return this.characters.ombre = pOmbre;
+    }
+    get ombreX() {
+        return this.characters.ombreX;
+    }
+    set ombreX(pOmbre) {
+        return this.characters.ombreX = pOmbre;
+    }
+    get ombreY() {
+        return this.characters.ombreY;
+    }
+    set ombreY(pOmbre) {
+        return this.characters.ombreY = pOmbre;
+    }
+    get ombreTag() {
+        return this.myTag.ombre;
+    }
+    set ombreTag(pOmbre) {
+        return this.myTag.ombre = pOmbre;
+    }
+
     get colorBg() {
         return this.bg.color;
     }

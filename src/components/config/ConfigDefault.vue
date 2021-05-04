@@ -24,6 +24,15 @@
         </select>
       </div>
     </div>
+    <div class="box">
+      <h4 class="subtitle is-4">Ombre</h4>
+      <shadow-setting :title="'Personnage J1'" :i="1" :obj="j1"/>
+      <shadow-setting :title="'Personnage J2'" :i="2" :obj="j2"/>
+      <shadow-setting :title="'Tag J1'" :i="3" :obj="j1.myTag"/>
+      <shadow-setting :title="'Tag J2'" :i="4" :obj="j2.myTag"/>
+      <shadow-setting :title="'Phase 1'" :i="5" :obj="phase1"/>
+      <shadow-setting :title="'Phase 2'" :i="6" :obj="phase2"/>
+    </div>
   </div>
 </template>
 
@@ -31,8 +40,9 @@
 import OptionTitle from '../ui/OptionTitle.vue';
 import FontPicker from 'font-picker-vue';
 import CustomFonts from "../../utils"
+import ShadowSetting from '../ui/ShadowSetting.vue';
 export default {
-  components: { OptionTitle, FontPicker },
+  components: { OptionTitle, FontPicker, ShadowSetting },
   props: {
     // TODO array object ?
     j1: Object,

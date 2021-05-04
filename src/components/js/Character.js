@@ -102,7 +102,7 @@ class Character {
     set maxCol(pCol) {
         this._maxCol = pCol;
         return this.maxCol;
-    }
+    }    
 }
 
 export {

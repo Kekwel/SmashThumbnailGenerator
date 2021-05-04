@@ -20,6 +20,7 @@ class CustomText {
     // TODO rotation angle
     // TODO bordure radius
 
+    _isShadow = false;
     _isClipPath = true;
 
     _alignmentX = 'center';
@@ -108,6 +109,36 @@ class CustomText {
         if (this.bgTag)
             this.bgTag.canvas = cv;
         return this.canvas;
+    }
+    get ombre() {
+        return this._isShadow;
+    }
+    set ombre(pOmbre) {
+        this._isShadow = pOmbre;
+
+		this.group.set('shadow', this._isShadow ? this.bgTag._shadow : '');
+		this.canvas.renderAll();
+        return this.maxCol;
+    }
+    get ombreX(){
+        return this.bgTag._shadow.offsetX;
+    }
+    set ombreX(pOffset){
+        this.bgTag.ombreX = pOffset
+
+        this.group.set('shadow', this.ombre ? this.bgTag._shadow : '');
+        this.canvas.renderAll();
+        return this.bgTag.ombreX;
+    }
+    get ombreY(){
+        return this.bgTag._shadow.offsetY;
+    }
+    set ombreY(pOffset){
+        this.bgTag.ombreY = pOffset
+
+        this.group.set('shadow', this.ombre ? this.bgTag._shadow : '');
+        this.canvas.renderAll();
+        return this.bgTag.ombreY;
     }
 
     get txt() {

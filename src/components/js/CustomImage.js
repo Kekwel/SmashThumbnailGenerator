@@ -10,6 +10,7 @@ class CustomImage {
 	_character;
 
 	_image;
+	_isShadow = true;
 	_shadow = {
 		color: '#000',
 		blur: 0,
@@ -50,7 +51,7 @@ class CustomImage {
 			self.initImage(oImg);
 
 			self._y = self.canvas.height - oImg.getScaledHeight();
-			// oImg.set('shadow', new fabric.Shadow(self._shadow));
+			oImg.set('shadow', new fabric.Shadow(self._shadow));
 			oImg.set('top', self._y);
 			self.canvas.add(oImg);
 
@@ -87,6 +88,37 @@ class CustomImage {
 		this.canvas.renderAll()
 		return this._filename;
 	}
+
+	get ombre() {
+        return this._isShadow;
+    }
+    set ombre(pOmbre) {
+        this._isShadow = pOmbre;
+		this._image.set('shadow', this._isShadow ? this._shadow : '');
+		
+		this.updateImage(this._filename);
+        return this.maxCol;
+    }
+    get ombreX(){
+        return this._shadow.offsetX;
+    }
+    set ombreX(pOffset) {
+        this._shadow.offsetX = pOffset
+        this._image.set('shadow', this.ombre ? this._shadow : '');
+
+        this.updateImage(this._filename);
+        return this._shadow.offsetX;
+    }
+    get ombreY(){
+        return this._shadow.offsetY;
+    }
+    set ombreY(pOffset) {
+        this._shadow.offsetY = pOffset
+        this._image.set('shadow', this.ombre ? this._shadow : '');
+
+        this.updateImage(this._filename);
+        return this._shadow.offsetY;
+    }
 
 	initImage(newImg) {
 		this._image = newImg;
