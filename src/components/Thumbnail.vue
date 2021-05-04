@@ -109,8 +109,8 @@ export default {
 
     // le VS
     bgTagOptions = { width: 1280, height: 720, x: 0, y: 0, colors: [ { id: 0, hex: "rgba(255, 0, 0, 0)" }, { id: 1, hex: "rgba(255, 0, 0, 0)" } ] };
-    tagOptions = { tag: "VS", x: 0, y: 0, size: 99, color: "#000000", bold: true, italic: true };
-    this.versus = new CustomText(this.canvas, tagOptions, bgTagOptions);
+    tagOptions = { tag: "VS", size: 99, color: "#000000", bold: true, italic: true };
+    this.versus = new CustomText(this.canvas, tagOptions);
 
     // le ou les phases (WF, etc)
     bgTagOptions = { width: 640, height: 75, x: 0, y: 595, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ] };
@@ -144,7 +144,9 @@ export default {
     // update direction bg J2
     this.j2.bg.colorDirection = 'bottomleft';
 
-    this.canvas.add(this.versus.group);
+    // this.canvas.add(this.versus.group);
+    this.canvas.add(this.versus.text);
+    this.versus.text.center();
     
     this.canvas.add(this.phase1.group);
     this.canvas.add(this.phase2.group);
