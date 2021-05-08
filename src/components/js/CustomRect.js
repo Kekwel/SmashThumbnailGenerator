@@ -1,9 +1,6 @@
-import {
-    fabric
-} from "fabric";
-import {
-    CustomColor
-} from "./CustomColor";
+import { fabric } from "fabric";
+import { CustomColor } from "./CustomColor";
+import { Shadow } from "./Shadow";
 
 class CustomRect {
     _canvas;
@@ -18,14 +15,7 @@ class CustomRect {
     _y = 0;
     _index = 0;
 
-    _isShadow = false;
-    _shadow = {
-		color: '#000',
-		blur: 0,
-		offsetX: -10,
-		offsetY: 10,
-		opacity: 0.8
-	};
+	_shadow = new Shadow();
 
     _grad;
 
@@ -150,32 +140,26 @@ class CustomRect {
         return dirLib;
     }
 
+    /* OMBRE */
     get ombre() {
-        return this._isShadow;
+        return this._shadow.active;
     }
     set ombre(pOmbre) {
-        this.rect.set('shadow', pOmbre ? this._shadow : '');
-        this.canvas.renderAll();
-        return this._isShadow = pOmbre;
+        return this._shadow.active = pOmbre;
     }
-    get ombreX(){
+    get ombreX() {
         return this._shadow.offsetX;
     }
-    set ombreX(pOffset){
-        this._shadow.offsetX = pOffset
-        this.rect.set('shadow', this.ombre ? this._shadow : '');
-        this.canvas.renderAll();
-        return this._shadow.offsetX;
+    set ombreX(pOffset) {
+        return this._shadow.offsetX = pOffset;
     }
-    get ombreY(){
+    get ombreY() {
         return this._shadow.offsetY;
     }
-    set ombreY(pOffset){
-        this._shadow.offsetY = pOffset
-        this.rect.set('shadow', this.ombre ? this._shadow : '');
-        this.canvas.renderAll();
-        return this._shadow.offsetY;
+    set ombreY(pOffset) {
+        return this._shadow.offsetY = pOffset;
     }
+    /* */
 
     updateColor() {
         if (this.canvas) {

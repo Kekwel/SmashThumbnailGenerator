@@ -1,6 +1,5 @@
-import {
-	fabric
-} from "fabric";
+import { fabric } from "fabric";
+import { Shadow } from "./Shadow";
 
 class CustomImage {
 	_canvas;
@@ -10,14 +9,7 @@ class CustomImage {
 	_character;
 
 	_image;
-	_isShadow = true;
-	_shadow = {
-		color: '#000',
-		blur: 0,
-		offsetX: -10,
-		offsetY: 10,
-		opacity: 0.8
-	};
+	_shadow = new Shadow();
 	// TODO data ?
 	_width = 640;
 	_height = 720;
@@ -40,6 +32,7 @@ class CustomImage {
 		if (clipPath) {
 			this.clipPath = clipPath;
 		}
+
 		// this.addImg();
 	}
 
@@ -51,7 +44,7 @@ class CustomImage {
 			self.initImage(oImg);
 
 			self._y = self.canvas.height - oImg.getScaledHeight();
-			oImg.set('shadow', new fabric.Shadow(self._shadow));
+			oImg.set('shadow', new fabric.Shadow(self._shadow.data));
 			oImg.set('top', self._y);
 			self.canvas.add(oImg);
 
@@ -89,39 +82,30 @@ class CustomImage {
 		return this._filename;
 	}
 
+	/* ombre */
 	get ombre() {
-        return this._isShadow;
+        return this._shadow.active;
     }
     set ombre(pOmbre) {
-        this._isShadow = pOmbre;
-		this._image.set('shadow', this._isShadow ? this._shadow : '');
-		
-		this.updateImage(this._filename);
-        return this.maxCol;
+        return this._shadow.active = pOmbre;
     }
-    get ombreX(){
+    get ombreX() {
         return this._shadow.offsetX;
     }
     set ombreX(pOffset) {
-        this._shadow.offsetX = pOffset
-        this._image.set('shadow', this.ombre ? this._shadow : '');
-
-        this.updateImage(this._filename);
-        return this._shadow.offsetX;
+        return this._shadow.offsetX = pOffset;
     }
-    get ombreY(){
+    get ombreY() {
         return this._shadow.offsetY;
     }
     set ombreY(pOffset) {
-        this._shadow.offsetY = pOffset
-        this._image.set('shadow', this.ombre ? this._shadow : '');
-
-        this.updateImage(this._filename);
-        return this._shadow.offsetY;
+        return this._shadow.offsetY = pOffset
     }
 
 	initImage(newImg) {
 		this._image = newImg;
+		this._shadow._parent = newImg;
+		this._shadow.canvas = this.canvas;
 		newImg.scaleToWidth(this._width)
 
 		newImg.set({

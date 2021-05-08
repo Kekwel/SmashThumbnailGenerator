@@ -88,6 +88,10 @@ class CustomText {
                 rect.scaleY = scaleY;
                 self.align();
             });
+
+            this.bgTag._shadow.canvas = this.canvas;
+            this.bgTag._shadow.parent = this.group;
+            //this.bgTag._shadow.active = false;
         }
 
         if (clipPath) {
@@ -106,40 +110,33 @@ class CustomText {
     }
     set canvas(cv) {
         this._canvas = cv;
-        if (this.bgTag)
+        if (this.bgTag){
             this.bgTag.canvas = cv;
+            this.bgTag._shadow.canvas = cv;
+        }            
         return this.canvas;
     }
+    
+    /* OMBRE */
     get ombre() {
         return this._isShadow;
     }
     set ombre(pOmbre) {
-        this._isShadow = pOmbre;
-
-		this.group.set('shadow', this._isShadow ? this.bgTag._shadow : '');
-		this.canvas.renderAll();
-        return this.maxCol;
+        return this.bgTag._shadow.active = pOmbre;
     }
-    get ombreX(){
+    get ombreX() {
         return this.bgTag._shadow.offsetX;
     }
-    set ombreX(pOffset){
-        this.bgTag.ombreX = pOffset
-
-        this.group.set('shadow', this.ombre ? this.bgTag._shadow : '');
-        this.canvas.renderAll();
-        return this.bgTag.ombreX;
+    set ombreX(pOffset) {
+        return this.bgTag._shadow.offsetX = pOffset;
     }
-    get ombreY(){
+    get ombreY() {
         return this.bgTag._shadow.offsetY;
     }
-    set ombreY(pOffset){
-        this.bgTag.ombreY = pOffset
-
-        this.group.set('shadow', this.ombre ? this.bgTag._shadow : '');
-        this.canvas.renderAll();
-        return this.bgTag.ombreY;
+    set ombreY(pOffset) {
+        return this.bgTag._shadow.offsetY = pOffset;
     }
+    /* */
 
     get txt() {
         return this._txt;
@@ -157,7 +154,6 @@ class CustomText {
         this._size = size;
         this.text.set('fontSize', size);
         this.align();
-        this.canvas.renderAll();
         return this._size;
     }
     get bold() {
