@@ -3,13 +3,23 @@ import { Shadow } from "./Shadow";
 
 class CustomImage {
 	_canvas;
+	group = new fabric.Group();
 	clipPath;
 
 	_filename; // TODO img non trouvé
 	_character;
 
 	_image;
+	_imgLoaded = false;
+
+	_imageShadow;
+	_imgShadowLoaded = false;
+	shadowActive = true;
+	_shadowX = -10;
+	_shadowY = 10;
+
 	_shadow = new Shadow();
+
 	// TODO data ?
 	_width = 640;
 	_height = 720;
@@ -30,7 +40,8 @@ class CustomImage {
 		this._height = imgOpt.height || this._height;
 
 		if (clipPath) {
-			this.clipPath = clipPath;
+			this.group.clipPath = clipPath;
+            this.clipPath = clipPath;
 		}
 
 		// this.addImg();
@@ -40,16 +51,45 @@ class CustomImage {
 		var self = this;
 		var newUrl = this.filename;
 		
+		// omb img
+		fabric.Image.fromURL(newUrl, function (oImg) {
+			self.initImageShadow(oImg);
+			
+			self._y = self.canvas.height - oImg.getScaledHeight();
+			//oImg.set('top', self._y);
+			oImg.moveTo(self._index - 1);
+
+			// self.addImgToGroup(oImg, true);
+			self.group.addWithUpdate(oImg);
+			self.canvas.requestRenderAll();
+			self._imageShadowLoaded = true;
+		});
+
+		// img
 		fabric.Image.fromURL(newUrl, function (oImg) {
 			self.initImage(oImg);
-
+			
 			self._y = self.canvas.height - oImg.getScaledHeight();
-			oImg.set('shadow', new fabric.Shadow(self._shadow.data));
 			oImg.set('top', self._y);
-			self.canvas.add(oImg);
+			oImg.moveTo(self._index);
 
-			oImg.moveTo(self._index)
+			// on l'ajout qu'une fois l'ombre ajouté
+			self.addImgToGroup(oImg, self._imageShadowLoaded)
+			self._imageLoaded = true;
 		});
+		
+		this._canvas.add(this.group).renderAll();
+	}
+
+	addImgToGroup(oImg) {
+		var self = this;
+		if (!self._imageShadowLoaded) {
+			// Image not loaded yet, need to wait
+			setTimeout(function () { self.addImgToGroup(oImg) }, 100);
+			return;
+		}
+		this.group.addWithUpdate(oImg);
+		this.canvas.requestRenderAll();
 	}
 
 	get canvas() {
@@ -68,51 +108,80 @@ class CustomImage {
 	}
 	set filename(filename) {
 		var self = this;
-		// this.canvas.remove(this._image);
 		this._filename = filename;
 
 		var newUrl = filename ? this._filename : '';
 		fabric.Image.fromURL(newUrl, function () {
 			self.updateImage(newUrl);
-			// self.initImage(oImg);
-			// self.canvas.add(oImg);
+			self.updateShadow(newUrl);
 		});
 
-		this.canvas.renderAll()
+		this.canvas.renderAll();
 		return this._filename;
 	}
 
 	/* ombre */
 	get ombre() {
-        return this._shadow.active;
+        return this.shadowActive;
     }
     set ombre(pOmbre) {
-        return this._shadow.active = pOmbre;
+		this.shadowActive = pOmbre;
+		this._imageShadow.set('opacity', pOmbre ? '1' : '0');
+		this.canvas.renderAll();
+        return this.shadowActive;
     }
     get ombreX() {
-        return this._shadow.offsetX;
+        return this._shadowX;
     }
     set ombreX(pOffset) {
-        return this._shadow.offsetX = pOffset;
+		var pOffsetInt = parseInt(pOffset);
+		var newX = this._image.left + parseInt(pOffset);
+		this._imageShadow.set('left', newX);
+		this.canvas.renderAll();
+        return this._shadowX = pOffsetInt;
     }
     get ombreY() {
-        return this._shadow.offsetY;
+        return this._shadowY;
     }
     set ombreY(pOffset) {
-        return this._shadow.offsetY = pOffset
+        var pOffsetInt = parseInt(pOffset);
+		var newY = this._image.top + parseInt(pOffset);
+		
+		this._imageShadow.set('top', newY);
+		this.canvas.renderAll();
+        return this._shadowY = pOffsetInt;
     }
+	/* */
 
 	initImage(newImg) {
 		this._image = newImg;
+
 		this._shadow._parent = newImg;
 		this._shadow.canvas = this.canvas;
-		newImg.scaleToWidth(this._width)
+		newImg.scaleToWidth(this._width);
 
 		newImg.set({
 			left: this._x,
 			top: this._y,
-			perPixelTargetFind: true,
-			clipPath: this.clipPath
+			perPixelTargetFind: true
+		});
+	}
+	initImageShadow(newImg) {
+		this._imageShadow = newImg;
+		var filter = new fabric.Image.filters.BlendColor({
+			color: 'black',
+			mode: 'tint',
+		});
+		this._imageShadow.filters.push(filter);
+		this._imageShadow.applyFilters();
+
+		newImg.scaleToWidth(this._width);
+
+		var newY = this.canvas.height - newImg.getScaledHeight()
+		newImg.set({
+			left: this._x + this._shadowX,
+			top: newY + this._shadowY,
+			perPixelTargetFind: true
 		});
 	}
 
@@ -125,9 +194,18 @@ class CustomImage {
 			});
 		}
 	}
+	updateShadow(url) {
+		var self = this;
+		if (this._imageShadow) {
+			this._imageShadow.setSrc(url, function () {
+				self.canvas.requestRenderAll();
+			});
+		}
+	}
 
 	flip() {
 		this._image.toggle("flipX");
+		this._imageShadow.toggle("flipX");
 		this.canvas.renderAll();
 	}
 }
