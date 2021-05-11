@@ -97,6 +97,19 @@ class Player {
     set ombreY(pOmbre) {
         return this.characters.ombreY = pOmbre;
     }
+    get ombreColor() {
+        return this.characters.ombreColor;
+    }
+    set ombreColor(pOmbre) {
+        return this.characters.ombreColor = pOmbre;
+    }
+    get ombreBlur() {
+        return this.characters.blur;
+    }
+    set ombreBlur(pOmbre) {
+        return this.characters.blur = pOmbre;
+    }
+
     get ombreTag() {
         return this.myTag.ombre;
     }

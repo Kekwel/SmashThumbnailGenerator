@@ -136,6 +136,18 @@ class CustomText {
     set ombreY(pOffset) {
         return this.bgTag._shadow.offsetY = pOffset;
     }
+    get ombreBlur() {
+        return this.bgTag._shadow.blur / 100;
+    }
+    set ombreBlur(pBlur) {
+        return this.bgTag._shadow.blur = pBlur * 100;
+    }
+    get ombreColor() {
+        return this.bgTag._shadow.color;
+    }
+    set ombreColor(pColor) {
+        return this.bgTag._shadow.color = pColor;
+    }
     /* */
 
     get txt() {

@@ -17,6 +17,8 @@ class CustomImage {
 	shadowActive = true;
 	_shadowX = -10;
 	_shadowY = 10;
+	_shadowBlur = 0;
+	_shadowColor = '#000000';
 
 	_shadow = new Shadow();
 
@@ -151,6 +153,37 @@ class CustomImage {
 		this.canvas.renderAll();
         return this._shadowY = pOffsetInt;
     }
+	get blur() {
+		return this._shadowBlur;
+	}
+	set blur(pBlur) {
+		this._shadowBlur = pBlur;
+		var filter = new fabric.Image.filters.Blur({
+			blur: pBlur
+		});
+		//if (this._imageShadow.filters[0])
+		//	delete this._imageShadow.filters[0];
+		
+		this._imageShadow.filters[1] = filter;
+		this._imageShadow.applyFilters();
+		this.canvas.renderAll();
+	}
+	get ombreColor() {
+		return this._shadowColor;
+	}
+	set ombreColor(pColor) {
+		this._shadowColor = pColor;
+		var filter = new fabric.Image.filters.BlendColor({
+			color: pColor,
+			mode: 'tint',
+		});
+		//if (this._imageShadow.filters[0])
+		//	delete this._imageShadow.filters[0];
+		
+		this._imageShadow.filters[0] = filter;
+		this._imageShadow.applyFilters();
+		this.canvas.renderAll();
+	}
 	/* */
 
 	initImage(newImg) {

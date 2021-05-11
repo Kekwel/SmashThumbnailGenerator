@@ -2,7 +2,7 @@ class Shadow {
     _parent;
     canvas;
     data = {
-		color: '#000',
+		color: '#000000',
 		blur: 0,
 		offsetX: -10,
 		offsetY: 10,
@@ -30,13 +30,15 @@ class Shadow {
         return this.data.color;
     }
     set color(pColor) {
-        return this.data.color = pColor;
+        this.data.color = pColor;
+        this.update();
     }
     get blur() {
         return this.data.blur;
     }
     set blur(pBlur) {
-        return this.data.blur = pBlur;
+        this.data.blur = pBlur;
+        this.update();
     }
     get offsetX() {
         return this.data.offsetX;
@@ -51,12 +53,6 @@ class Shadow {
     set offsetY(pY) {
         this.data.offsetY = pY;
         this.update();
-    }
-    get opacity() {
-        return this.data.opacity;
-    }
-    set opacity(pOpacity) {
-        return this.data.opacity = pOpacity;
     }
 
     update() {
