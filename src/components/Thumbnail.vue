@@ -20,7 +20,7 @@
           </tab>
           <!-- Icone background ou color -->
           <tab title="Par défaut">
-            <conf-default :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2" :versus="versus" />
+            <conf-default ref="confDef" :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2" :versus="versus" />
           </tab>
           <!-- icone cog -->
         </tabs>
@@ -137,6 +137,11 @@ export default {
     this.versus.canvas = this.canvas;
     this.phase1.canvas = this.canvas;
     this.phase2.canvas = this.canvas;
+    // desactive shadow tag
+    this.j1.ombreTag = false;
+    this.j2.ombreTag = false;
+    this.phase1.ombre = false;
+    this.phase2.ombre = false;
 
     this.j1.addToCanvas();
     this.j2.addToCanvas();
@@ -147,14 +152,18 @@ export default {
     // this.canvas.add(this.versus.group);
     this.canvas.add(this.versus.text);
     this.versus.text.center();
+    this.versus.ombreColor = '#ffffff';
+    this.versus.ombreColor = '#ffffff';
+    this.versus.ombreX = 5;
+    this.versus.ombreY = 5;
     
     this.canvas.add(this.phase1.group);
     this.canvas.add(this.phase2.group);
-    // le VS
 
     // TODO pouvoir toggle le timestamp YT (pour voir ce qui va etre caché)
     this.$refs.confPlayer.selectChar(this.charJ1, this.charJ2);
     this.$refs.confBG.randomColor();
+    this.$refs.confDef.updateCustomFont();
     console.log(this.$options.name + ' component succesfully mounted');
   }, methods: {
     initGridLines() {

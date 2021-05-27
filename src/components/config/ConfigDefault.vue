@@ -1,8 +1,8 @@
 <template>
   <div style="margin: 1em auto;">
-    <option-title :title="'Par défaut'"/>
+    <option-title :title="'Texte'"/>
+      <!-- <h4 class="subtitle is-4">Texte</h4> -->
     <div class="box">
-      <h4 class="subtitle is-4">Texte</h4>
       Taille <input size="3" v-model="text.size"/> <br />
       <input type="color" id="head" name="head" v-model="text.HEX" />
       <label for="head"> {{ text.HEX }} </label><br />
@@ -24,14 +24,28 @@
         </select>
       </div>
     </div>
-    <div class="box">
-      <h4 class="subtitle is-4">Ombre</h4>
-      <shadow-setting :title="'Personnage J1'" :i="1" :obj="j1"/>
-      <shadow-setting :title="'Personnage J2'" :i="2" :obj="j2"/>
-      <shadow-setting :title="'Tag J1'" :i="3" :obj="j1.myTag"/>
-      <shadow-setting :title="'Tag J2'" :i="4" :obj="j2.myTag"/>
-      <shadow-setting :title="'Phase 1'" :i="5" :obj="phase1"/>
-      <shadow-setting :title="'Phase 2'" :i="6" :obj="phase2"/>
+      <option-title :title="'Ombre Personnage'"/>
+      <!-- <h4 class="subtitle is-4">Ombre Personnage</h4> -->
+    <div class="box columns">
+      <div class="column">
+        <shadow-setting :title="'Joueur 1'" :i="1" :obj="j1"/>
+        <shadow-setting :title="'Versus'" :i="7" :obj="versus"/>
+      </div>
+      <div class="column">
+        <shadow-setting :title="'Joueur 2'" :i="2" :obj="j2"/>
+      </div>
+    </div>
+      <!-- <h4 class="subtitle is-4">Ombre Bandeau</h4> -->
+      <option-title :title="'Ombre Bandeau'"/>
+    <div class="box columns">
+      <div class="column">
+        <shadow-setting :title="'Tag J1'" :i="3" :obj="j1.myTag"/>
+        <shadow-setting :title="'Phase 1'" :i="5" :obj="phase1"/>
+      </div>
+      <div class="column">
+        <shadow-setting :title="'Tag J2'" :i="4" :obj="j2.myTag"/>
+        <shadow-setting :title="'Phase 2'" :i="6" :obj="phase2"/>
+      </div>
     </div>
   </div>
 </template>
@@ -60,8 +74,8 @@ export default {
         italic: false,
       },
       key: 'AIzaSyBK9DgEY5MY3DNBps6r9vYbKeJ7fXW6HmA',
-      fontFamily: 'Open Sans',
-      customFontFamily: '',
+      fontFamily: '',
+      customFontFamily: 'Futura Bold',
       customFonts: CustomFonts.FONTS
     };
   },
@@ -79,6 +93,9 @@ export default {
         text.color = this.text.HEX;
         text.bold = this.text.bold;
         text.italic = this.text.italic;
+      } else {
+        // TODO
+        //this.versus.text.center();
       }
     },
     updateCustomFont() {

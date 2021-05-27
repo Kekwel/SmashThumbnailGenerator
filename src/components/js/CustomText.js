@@ -1,6 +1,7 @@
 import { fabric } from "fabric";
-// import { FontFaceObserver } from "fontfaceobserver";
 import { CustomRect } from "./CustomRect";
+import { Shadow } from "./Shadow";
+
 var FontFaceObserver = require('fontfaceobserver');
 
 class CustomText {
@@ -20,6 +21,7 @@ class CustomText {
     // TODO rotation angle
     // TODO bordure radius
 
+    _shadow;
     _isShadow = false;
     _isClipPath = true;
 
@@ -92,6 +94,10 @@ class CustomText {
             this.bgTag._shadow.canvas = this.canvas;
             this.bgTag._shadow.parent = this.group;
             //this.bgTag._shadow.active = false;
+        } else {
+            this._shadow  = new Shadow();
+            this._shadow.canvas = this.canvas;
+            this._shadow.parent = this.text;
         }
 
         if (clipPath) {
@@ -113,40 +119,72 @@ class CustomText {
         if (this.bgTag){
             this.bgTag.canvas = cv;
             this.bgTag._shadow.canvas = cv;
-        }            
+        } else {
+            this._shadow.canvas = cv;
+        }
         return this.canvas;
     }
     
     /* OMBRE */
     get ombre() {
-        return this._isShadow;
+        if (this.bgTag)
+            return this.bgTag._shadow.active;
+        else 
+            return this._shadow.active;
     }
     set ombre(pOmbre) {
-        return this.bgTag._shadow.active = pOmbre;
+        if (this.bgTag)
+            this.bgTag._shadow.active = pOmbre;
+        else 
+            this._shadow.active = pOmbre;         
     }
     get ombreX() {
-        return this.bgTag._shadow.offsetX;
+        if (this.bgTag)
+            return this.bgTag._shadow.offsetX;
+        else
+            return this._shadow.offsetX;
     }
     set ombreX(pOffset) {
-        return this.bgTag._shadow.offsetX = pOffset;
+        if (this.bgTag)
+            this.bgTag._shadow.offsetX = pOffset;
+        else
+            this._shadow.offsetX = pOffset;
     }
     get ombreY() {
-        return this.bgTag._shadow.offsetY;
+        if (this.bgTag)
+            return this.bgTag._shadow.offsetY;
+        else
+            return this._shadow.offsetY;
     }
     set ombreY(pOffset) {
-        return this.bgTag._shadow.offsetY = pOffset;
+        if (this.bgTag)
+            this.bgTag._shadow.offsetY = pOffset;
+        else
+            this._shadow.offsetY = pOffset;
     }
     get ombreBlur() {
-        return this.bgTag._shadow.blur / 100;
+        if (this.bgTag)
+            return this.bgTag._shadow.blur / 100;
+        else
+            return this._shadow.blur / 100;
     }
     set ombreBlur(pBlur) {
-        return this.bgTag._shadow.blur = pBlur * 100;
+        if (this.bgTag)
+            this.bgTag._shadow.blur = pBlur * 100;
+        else
+            this._shadow.blur = pBlur * 100;
     }
     get ombreColor() {
-        return this.bgTag._shadow.color;
+        if (this.bgTag)
+            return this.bgTag._shadow.color;
+        else
+            return this._shadow.color;
     }
     set ombreColor(pColor) {
-        return this.bgTag._shadow.color = pColor;
+        if (this.bgTag)
+            this.bgTag._shadow.color = pColor;
+        else
+            this._shadow.color = pColor;
     }
     /* */
 
