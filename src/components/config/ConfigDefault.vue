@@ -19,7 +19,7 @@
 
         <!-- Grid -->
         <option-title class="mt-2" title="Grid"/>
-        <v-switch class="mt-2" v-model="isDisplayGrid" label="Affichage Grid`" @change="updateGrid" :loading="loadingGrid" />
+        <v-switch class="mt-2" v-model="isDisplayGrid" label="Affichage Grid" @change="updateGrid" :loading="loadingGrid" />
         
       </v-col>
     </v-row>
