@@ -1,20 +1,103 @@
 <template>
-  <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js Appppp"/> -->
-    <ThumbnailGen msg="Smash Thumbnail Generator"/>
-  </div>
+  <v-app>
+    <!-- TODO img bg en fonction du jeu ? src="..." -->
+    <v-app-bar app dense dark>
+      <v-toolbar-title>
+        <v-select style="width: 12em;" class="mr-2" v-model="game" :items="games" filled dense hide-details></v-select>
+      </v-toolbar-title>
+      <v-toolbar-title>Thumbnail Generator</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn dark color="primary" @click="exportPNG">
+        <v-icon dark left>mdi-image-move</v-icon>
+        PNG
+      </v-btn>
+
+      <v-spacer></v-spacer>
+
+      <!-- TODO components -->
+      <v-btn icon @click.stop="showCredits = true">
+        <v-icon>mdi-information-outline</v-icon>
+      </v-btn>
+      <v-dialog v-model="showCredits" max-width="500">
+        <v-card>
+          <v-card-title class="headline">Credits</v-card-title>
+          <v-divider class="ma-2"></v-divider>
+
+          <v-card-text style="height: 300px;">
+            <div class="text-h6">Renders</div> 
+            <v-divider class="ma-2"></v-divider>
+            <v-btn text small color="primary" href="https://www.spriters-resource.com/nintendo_switch/supersmashbrosultimate/" target="_blank">
+              <v-icon left>mdi-open-in-new</v-icon> Super Smash Bros Ultimate
+            </v-btn>
+
+            <div class="text-h6">Polices d'écritures</div>
+            <v-divider class="ma-2"></v-divider>
+            <v-btn text small color="primary" href="https://www.dafont.com/blacklisted.font" target="_blank" style="font-family: BlackListed">
+              <v-icon left>mdi-open-in-new</v-icon> BlackListed
+            </v-btn>
+            <v-btn text small color="primary" href="https://www.dafont.com/heroes-legend.font" target="_blank" style="font-family: Heroes Legend">
+              <v-icon left>mdi-open-in-new</v-icon> Heroes Legend
+            </v-btn>
+            <v-btn text small color="primary" href="https://www.dafont.com/android-assassin.font" target="_blank" style="font-family: Android Assassin">
+              <v-icon left>mdi-open-in-new</v-icon> Android Assassin
+            </v-btn>
+            <v-btn text small color="primary" href="https://fontsgeek.com/fonts/Gotham-Black-Regular" target="_blank" style="font-family: Gotham Black Regular">
+              <v-icon left>mdi-open-in-new</v-icon> Gotham Black
+            </v-btn>
+            <v-btn text small color="primary" href="https://www.dafontfree.net/freefonts-futura-f30.htm" target="_blank" style="font-family: Futura Bold">
+              <v-icon left>mdi-open-in-new</v-icon> Futura
+            </v-btn>
+            <v-btn text small color="primary" href="https://www.dafontfree.net/freefonts-impact-f129612.htm" target="_blank" style="font-family: Impact">
+              <v-icon left>mdi-open-in-new</v-icon> Impact
+            </v-btn>
+            <v-btn text small color="primary" href="https://www.dafont.com/blacklisted.font" target="_blank" style="font-family: BlackListed">
+              <v-icon left>mdi-open-in-new</v-icon> BlackListed
+            </v-btn>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+      <v-divider class="mx-1" inset vertical></v-divider>
+
+      <v-btn icon href="https://twitter.com/Kekwel_SSB" target="_blank">
+        <v-icon>mdi-twitter</v-icon>
+      </v-btn>
+      <v-btn icon href="https://discordapp.com/users/283681024360054785" target="_blank">
+        <v-icon>mdi-discord</v-icon>
+      </v-btn>
+
+      <v-divider class="mx-1" inset vertical></v-divider>
+
+      <v-btn icon href="https://github.com/Kekwel/SmashThumbnailGenerator" target="_blank">
+        <v-icon>mdi-github</v-icon>
+      </v-btn>
+      <!-- TODO autres icon ? langage ? -->
+    </v-app-bar>
+    <v-main style="background-color:black">
+      <thumbnail ref="main" msg="Smash Thumbnail Generator" v-on:export="exportPNG($event)"/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import ThumbnailGen from './views/ThumbnailGen.vue'
-// import HelloWorld from './components/HelloWorld.vue'
+import Thumbnail from './components/Thumbnail.vue';
 
 export default {
   name: 'App',
-  components: {
-    // HelloWorld,
-    ThumbnailGen
+  components: { Thumbnail },
+  data() {
+    return {
+      game: 'Smash Ultimate',
+      games: ['Smash Ultimate'],
+      showCredits: false,
+      panel: [0, 1]
+    }
+  },
+  methods: {
+    exportPNG() {
+      this.$refs.main.exportPNG();
+    }
   }
 }
 </script>

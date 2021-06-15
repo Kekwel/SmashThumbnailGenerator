@@ -1,96 +1,74 @@
 <template>
   <div>
-    <option-title :title="'Joueur ' + i"/>
-    <!-- <hr /> TODO HR -->
-    <!-- TODO padding -->
-    <div class="columns is-gapless">
-      <div class="column">
-        Taille <input size="3" v-model="player.size" /> <br />
-        <input type="color" id="head" name="head" v-model="player.color" />
+    <option-title class="pb-4" :title="title"/>
+    <v-row no-gutters>
+      <v-col cols="5">
+        <v-text-field style="width: 3.5em;" v-model="player.size" label="Taille" dense hide-details />
+        <!-- <v-color-picker hide-canvas></v-color-picker> -->
+
+        <input type="color" id="head" name="head" v-model="player.color" /> <br />
         <label for="head"> {{ player.color }}</label><br />
-        <input type="checkbox" :id="idBold" v-model="player.bold" />
-        <label :for="idBold"> Gras </label>
-        <br />
-        <input type="checkbox" :id="idItalic" v-model="player.italic" />
-        <label :for="idItalic"> Italique </label><br />
-      </div>
-      <div class="column">
+        <!-- <v-color-picker hide-canvas hide-sliders mode="hexa"></v-color-picker> -->
+      </v-col>
+
+      <v-col cols="7">
         <!-- TODO component CustomButton ? -->
-        <button @click="player.align(null, 'top'); activeV = 'top';" class="button is-small" :class="{'is-primary': isActiveV('top')}">
-          <span class="icon">
-            <svg-icon type="mdi" :path="icon.top"></svg-icon>
-          </span>
-        </button>
-        <button @click="player.align(null, 'middle'); activeV = 'middle';" class="button is-small" :class="{'is-primary': isActiveV('middle')}">
-          <span class="icon">
-            <svg-icon type="mdi" :path="icon.middle"></svg-icon>
-          </span>
-        </button>
-        <button @click="player.align(null, 'bottom'); activeV = 'bottom';" class="button is-small" :class="{'is-primary': isActiveV('bottom')}">
-          <span class="icon">
-            <svg-icon type="mdi" :path="icon.bottom"></svg-icon>
-          </span>
-        </button>
-        <br />
-        <button @click="player.align('left'); activeH = 'left';" class="button is-small" :class="{'is-primary': isActiveH('left')}">
-          <span class="icon">
-            <svg-icon type="mdi" :path="icon.left"></svg-icon>
-          </span>
-        </button>
-        <button @click="player.align('center'); activeH = 'center';" class="button is-small" :class="{'is-primary': isActiveH('center')}">
-          <span class="icon">
-            <svg-icon type="mdi" :path="icon.center"></svg-icon>
-          </span>
-        </button>
-        <button @click="player.align('right'); activeH = 'right';" class="button is-small" :class="{'is-primary': isActiveH('right')}">
-          <span class="icon">
-            <svg-icon type="mdi" :path="icon.right"></svg-icon>
-          </span>
-        </button>
-      </div>
-    </div>
+        <v-btn-toggle dense mandatory v-model="activeV" color="primary">
+          <!-- <v-btn @click="player.align(null, 'top'); activeV = 'top';" class="pa-1 no-min-width" :color="isActiveV('top') ? 'primary' : ''" :dark="isActiveV('top')" small> -->
+          <v-btn @click="player.align(null, 'top');" class="btn-min-width" small>
+            <v-icon dense dark>mdi-format-align-top</v-icon>
+          </v-btn>
+          <v-btn @click="player.align(null, 'middle');" class="btn-min-width" small>
+            <v-icon dense dark>mdi-format-vertical-align-center</v-icon>
+          </v-btn>
+          <v-btn @click="player.align(null, 'bottom');" class="btn-min-width" small>
+            <v-icon dense dark>mdi-format-align-bottom</v-icon>
+          </v-btn>
+        </v-btn-toggle>
+
+        <v-divider class="my-2"/>
+        
+        <v-btn-toggle dense mandatory v-model="activeH" color="primary">
+          <v-btn @click="player.align('left');" class="btn-min-width" small>
+            <v-icon dense dark>mdi-format-align-left</v-icon>
+          </v-btn>
+          <v-btn @click="player.align('center');" class="btn-min-width" small>
+            <v-icon dense dark>mdi-format-align-center</v-icon>
+          </v-btn>
+          <v-btn @click="player.align('right');" class="btn-min-width" small>
+            <v-icon dense dark>mdi-format-align-right</v-icon>
+          </v-btn>
+        </v-btn-toggle>
+      </v-col>
+
+      <v-col>
+        <v-checkbox v-model="player.bold" label="Gras" hide-details dense append-icon="mdi-format-bold"></v-checkbox>
+        <v-checkbox v-model="player.italic" label="Italique" hide-details dense append-icon="mdi-format-italic"></v-checkbox>
+        <v-slider v-model="player.angle" label="Angle" :thumb-size="24" thumb-label="always" min="0" max="360" step="5" dense hide-details></v-slider>
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
-import SvgIcon from "@jamescoyle/vue-icon";
-import {
-  mdiFormatAlignCenter,
-  mdiFormatAlignLeft,
-  mdiFormatAlignRight,
-  mdiFormatVerticalAlignBottom,
-  mdiFormatVerticalAlignCenter,
-  mdiFormatVerticalAlignTop,
-} from "@mdi/js";
 import OptionTitle from '../ui/OptionTitle.vue';
 export default {
-  components: { SvgIcon, OptionTitle },
+  components: { OptionTitle },
   props: {
     player: Object,
-    i: Number,
+    title: String,
   },
   data() {
     return {
-      activeV: 'middle',
-      activeH: 'center',
-      idBold: "italicPlayer" + this.i,
-      idItalic: "boldPlayer" + this.i,
-      icon: {
-        left: mdiFormatAlignLeft,
-        center: mdiFormatAlignCenter,
-        right: mdiFormatAlignRight,
-        top: mdiFormatVerticalAlignTop,
-        middle: mdiFormatVerticalAlignCenter,
-        bottom: mdiFormatVerticalAlignBottom,
-      },
+      activeV: 1,
+      activeH: 1,
     };
   },
-  methods: {
-    isActiveV(val) {
-      return this.activeV === val;
-    },
-    isActiveH(val) {
-      return this.activeH === val;
-    },
-  }
+  methods: {}
 };
 </script>
+
+<style>
+.btn-min-width {
+  min-width: 20px !important;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
-  <h3 class="title is-4 ml-2 mt-1 mb-2 title-overflow">
+  <div class="text-h6 ml-4 title-overflow">
     {{ title }}
-  </h3>
+  </div>
 </template>
 
 <script>

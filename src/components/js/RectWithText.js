@@ -65,7 +65,6 @@ fabric.RectWithText = fabric.util.createClass(fabric.Rect, {
         })
         this.on('scaling', () => {
             this.recalcTextPosition()
-            console.log(this.width);
         })
         this.on('added', () => {
             this.canvas.add(this.text)

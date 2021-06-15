@@ -15,9 +15,10 @@ class CustomRect {
     _y = 0;
     _index = 0;
 
-	_shadow = new Shadow();
+    _shadow = new Shadow();
 
     _grad;
+    _direction;
 
     constructor(pCanvas, bgOptions) {
         this._canvas = pCanvas;
@@ -39,14 +40,14 @@ class CustomRect {
 
         this._index = bgOptions.index || this._index;
 
-        var rectPoints = [ {x: this._x, y: this._y}, {x: this._x, y: this._y + this._height}, 
+        /*var rectPoints = [ {x: this._x, y: this._y}, {x: this._x, y: this._y + this._height}, 
                             {x: this._x + this._width, y: this._y + this._height}, {x: this._x + this._width, y: this._y} ];
         this.rect = new fabric.Polygon(rectPoints, {
             strokeWidth: 0,
-        });
+        });*/
         /* this.canvas.add(poly); */
 
-        /* this.rect = new fabric.Rect({
+        this.rect = new fabric.Rect({
             left: this._x,
             top: this._y,
             width: this._width,
@@ -54,7 +55,7 @@ class CustomRect {
             originX: "left",
             originY: "top",
             strokeWidth: 0,
-        }); */
+        });
         this._grad = new CustomColor(this.canvas, {
             colors: this._colors,
             origin: this._origin,
@@ -65,6 +66,19 @@ class CustomRect {
             this.colors = this._grad.colors;
 
         this.rect.moveTo(this._index);
+    }
+
+    toJSON() {
+        var item = {};
+        item.index = this.index;
+        item.width = this.width;
+        item.height = this.height;
+        item.x = this.x;
+        item.y = this.y;
+
+        item.gradient = this._grad;
+        item.colorDirection = this._direction;
+        return item;
     }
 
     get canvas() {
@@ -97,39 +111,40 @@ class CustomRect {
         return dir;
     }
     set colorDirection(dirLib) {
+        this._direction = dirLib;
         var x1, y1, x2, y2;
         switch (dirLib) {
             case 'topleft':
-                x1 = this._width; y1 = this._height;
+                x1 = this.width; y1 = this.height;
                 x2 = 0; y2 = 0;
                 break;
             case 'up':
-                x1 = this._width / 2; y1 = this._height;
-                x2 = this._width / 2; y2 = 0;
+                x1 = this.width / 2; y1 = this.height;
+                x2 = this.width / 2; y2 = 0;
                 break;
             case 'topright':
-                x1 = 0; y1 = this._height;
-                x2 = this._width; y2 = 0;
+                x1 = 0; y1 = this.height;
+                x2 = this.width; y2 = 0;
                 break;
             case 'left':
-                x1 = this._width; y1 = this._height / 2;
-                x2 = 0; y2 = this._height / 2;
+                x1 = this.width; y1 = this.height / 2;
+                x2 = 0; y2 = this.height / 2;
                 break;
             case 'right':
-                x1 = 0; y1 = this._height / 2;
-                x2 = this._width; y2 = this._height / 2;
+                x1 = 0; y1 = this.height / 2;
+                x2 = this.width; y2 = this.height / 2;
                 break;
             case 'bottomleft':
-                x1 = this._width; y1 = 0;
-                x2 = 0; y2 = this._height;
+                x1 = this.width; y1 = 0;
+                x2 = 0; y2 = this.height;
                 break;
             case 'down':
-                x1 = this._width / 2; y1 = 0;
-                x2 = this._width / 2; y2 = this._height;
+                x1 = this.width / 2; y1 = 0;
+                x2 = this.width / 2; y2 = this.height;
                 break;
             case 'bottomright':
                 x1 = 0; y1 = 0;
-                x2 = this._width; y2 = this._height;
+                x2 = this.width; y2 = this.height;
                 break;
             default:
                 break;
@@ -140,8 +155,37 @@ class CustomRect {
         return dirLib;
     }
 
+		get x() {
+			return this.rect.left;
+		}
+		set x(pX) {
+			this.rect.set('left', pX);
+			this.canvas.renderAll();
+		}
+		get y() {
+			return this.rect.top;
+		}
+		set y(pY) {
+			this.rect.set('top', pY);
+			this.canvas.renderAll();
+		}
+		get width() {
+			return this.rect.getScaledWidth();
+		}
+		set width(pW) {
+			this.rect.set('width', pW);
+			this.canvas.renderAll();
+		}
+		get height() {
+			return this.rect.getScaledHeight();
+		}
+		set height(pH) {
+			this.rect.set('height', pH);
+			this.canvas.renderAll();
+		}
+
     /* OMBRE */
-    get ombre() {
+    /* get ombre() {
         return this._shadow.active;
     }
     set ombre(pOmbre) {
@@ -158,7 +202,7 @@ class CustomRect {
     }
     set ombreY(pOffset) {
         return this._shadow.offsetY = pOffset;
-    }
+    } */
     /* */
 
     updateColor() {

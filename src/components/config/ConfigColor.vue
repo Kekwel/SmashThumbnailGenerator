@@ -1,7 +1,8 @@
 <template>
-  <div class="columns is-gapless">
-    <div class="column">
+  <v-row no-gutters>
+    <v-col>
       <h3>{{title}}</h3>
+      
       <div class="colors" v-if="obj">
         <div v-for="color in obj.colors" :key="idColor + color.id">
           <input
@@ -14,6 +15,7 @@
           <label :for="idColor + color.id"> {{ color.hex }}</label>
         </div>
       </div>
+
       <div class="colors" v-if="objs && objs[0]">
         <div v-for="color in objs[0].colors" :key="idColor + color.id">
           <input
@@ -26,75 +28,60 @@
           <label :for="idColor + color.id"> {{ color.hex }}</label>
         </div>
       </div>
-    </div>
-    <div class="column">
+    </v-col>
+
+    <v-col>
       <h3>Direction</h3>
-      <div>
-        <!-- TODO component button direction -->
-        <button @click="changeDirection('topleft'); active = 'topleft';" class="button is-small" :class="{'is-primary': isActive('topleft')}">
-          <span class="icon is-small">
-            <svg-icon type="mdi" :path="icon.top.left"></svg-icon>
-          </span>
-        </button>
-        <button @click="changeDirection('up'); active = 'up';" class="button is-small" :class="{'is-primary': isActive('up')}">
-          <span class="icon is-small">
-            <svg-icon type="mdi" :path="icon.up"></svg-icon>
-          </span>
-        </button>
-        <button @click="changeDirection('topright'); active = 'topright';" class="button is-small" :class="{'is-primary': isActive('topright')}">
-          <span class="icon is-small">
-            <svg-icon type="mdi" :path="icon.top.right"></svg-icon>
-          </span>
-        </button>
-        <br />
-        <button @click="changeDirection('left'); active = 'left';" class="button is-small" :class="{'is-primary': isActive('left')}">
-          <span class="icon is-small">
-            <svg-icon type="mdi" :path="icon.left"></svg-icon>
-          </span>
-        </button>
-        <button class="button is-small">
-          <span class="icon is-small"> </span>
-        </button>
-        <button @click="changeDirection('right'); active = 'right';" class="button is-small" :class="{'is-primary': isActive('right')}">
-          <span class="icon is-small">
-            <svg-icon type="mdi" :path="icon.right"></svg-icon>
-          </span>
-        </button>
-        <br />
-        <button @click="changeDirection('bottomleft'); active = 'bottomleft';" class="button is-small" :class="{'is-primary': isActive('bottomleft')}">
-          <span class="icon is-small">
-            <svg-icon type="mdi" :path="icon.bottom.left"></svg-icon>
-          </span>
-        </button>
-        <button @click="changeDirection('down'); active = 'down';" class="button is-small" :class="{'is-primary': isActive('down')}">
-          <span class="icon is-small">
-            <svg-icon type="mdi" :path="icon.down"></svg-icon>
-          </span>
-        </button>
-        <button @click="changeDirection('bottomright'); active = 'bottomright';" class="button is-small" :class="{'is-primary': isActive('bottomright')}">
-          <span class="icon is-small">
-            <svg-icon type="mdi" :path="icon.bottom.right"></svg-icon>
-          </span>
-        </button>
-      </div>
-    </div>
-  </div>
+      <v-row class="center" no-gutters style="width: 80px; margin: auto;">
+        <v-col>
+          <!-- TODO component button direction -->
+          <v-btn-toggle dense v-model="activeT" color="primary" @change="resetActive('T')">
+            <v-btn @click="changeDirection('topleft');" small elevation="1" class="btn-min-width" >
+              <v-icon small dense dark>mdi-arrow-top-left-thick</v-icon>
+            </v-btn>
+            <v-btn @click="changeDirection('up');" class="btn-min-width" small elevation="1">
+              <v-icon small dense dark>mdi-arrow-up-thick</v-icon>
+            </v-btn>
+            <v-btn @click="changeDirection('topright');" class="btn-min-width" small elevation="1">
+              <v-icon small dense dark>mdi-arrow-top-right-thick</v-icon>
+            </v-btn>
+          </v-btn-toggle>
+        </v-col>
+
+        <v-col>
+          <v-btn-toggle dense v-model="activeM" color="primary" @change="resetActive('M')">
+            <v-btn @click="changeDirection('left');" small elevation="1" class="btn-min-width" >
+              <v-icon small dense dark>mdi-arrow-left-thick</v-icon>
+            </v-btn>
+            <v-btn class="btn-min-width" small elevation="1">
+              <v-icon small dense dark>mdi-crop-square</v-icon>
+            </v-btn>
+            <v-btn @click="changeDirection('right');" class="btn-min-width" small elevation="1">
+              <v-icon small dense dark>mdi-arrow-right-thick</v-icon>
+            </v-btn>
+          </v-btn-toggle>
+        </v-col>
+
+        <v-col>
+          <v-btn-toggle dense v-model="activeB" color="primary" @change="resetActive('B')">
+            <v-btn @click="changeDirection('bottomleft');" small elevation="1" class="btn-min-width" >
+              <v-icon small dense dark>mdi-arrow-bottom-left-thick</v-icon>
+            </v-btn>
+            <v-btn @click="changeDirection('down');" class="btn-min-width" small elevation="1">
+              <v-icon small dense dark>mdi-arrow-down-thick</v-icon>
+            </v-btn>
+            <v-btn @click="changeDirection('bottomright');" class="btn-min-width" small elevation="1">
+              <v-icon small dense dark>mdi-arrow-bottom-right-thick</v-icon>
+            </v-btn>
+          </v-btn-toggle>
+        </v-col>
+      </v-row>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
-import SvgIcon from "@jamescoyle/vue-icon";
-import {
-  mdiArrowBottomLeftThick,
-  mdiArrowBottomRightThick,
-  mdiArrowDownThick,
-  mdiArrowLeftThick,
-  mdiArrowRightThick,
-  mdiArrowTopLeftThick,
-  mdiArrowTopRightThick,
-  mdiArrowUpThick,
-} from "@mdi/js";
 export default {
-  components: { SvgIcon },
   props: {
     obj: Object,
     objs: Array,
@@ -104,22 +91,10 @@ export default {
   },
   data() {
     return {
-      active: '',
+      activeT: 0,
+      activeM: undefined,
+      activeB: undefined,
       idColor: "idColor-" + this.id,
-      icon: {
-        up: mdiArrowUpThick,
-        down: mdiArrowDownThick,
-        left: mdiArrowLeftThick,
-        right: mdiArrowRightThick,
-        top: {
-          right: mdiArrowTopRightThick,
-          left: mdiArrowTopLeftThick,
-        },
-        bottom: {
-          right: mdiArrowBottomRightThick,
-          left: mdiArrowBottomLeftThick,
-        },
-      },
     };
   },
   methods: {
@@ -146,6 +121,27 @@ export default {
     isActive(val) {
       return this.active === val;
     },
+    resetActive(val) {
+      if (val === 'T') {
+        this.activeM = undefined;
+        this.activeB = undefined;
+      } else if (val === 'M') {
+        this.activeT = undefined;
+        this.activeB = undefined;
+      } else if (val === 'B') {
+        this.activeT = undefined;
+        this.activeM = undefined;
+      }
+    },
+    setActive(val, index) {
+      if (val === 'T') {
+        this.activeT = index;
+      } else if (val === 'M') {
+        this.activeM = index;
+      } else if (val === 'B') {
+        this.activeB = index;
+      }
+    }
   },
 };
 </script>

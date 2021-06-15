@@ -1,50 +1,51 @@
 <template>
-  <div style="width: 100%;">
-    <div class="columns is-gapless is-vcentered is-centered" style="margin-top: 0.5em; margin-bottom: 0.25em;">
-      <div class="column">
-        <v-select style="width: 20em; margin: auto" :options="characters" label="_name" @input="updateChar($event, player)" v-model="crtCharacter">
-          <template #selected-option="{ _name, _firstStockUrl }">
-            <div class="stock-icon-selected">
-              <stock-icon :width="32" :src="_firstStockUrl" /> {{ _name }}
-            </div>
-          </template>
-          <template #option="option">
-            <div class="stock-icon-selected">
-              <stock-icon :width="32" :src="option._firstStockUrl" />{{ option._name }}
-            </div>
-          </template>
-        </v-select>
-      </div>
-      <div class="column">
-        <button title="Flip" class="button" style="margin-left: 0.5em;" @click="player.flipChar(); activeFlip = !activeFlip" :class="{'is-primary': activeFlip}">
-          <span class="icon is-small">
-            <svg-icon type="mdi" :path="icon.flip"></svg-icon>
-          </span></button>
-      </div>
-    </div>
+  <v-container class="pa-0">
+    <v-row no-gutters>
+      <v-col>
+        <v-row no-gutters>
+          <v-col cols="10">
+            <!-- TODO v-autocomplete ? -->
+            <v-select class="my-2" style="width: 15.5em" :options="characters" label="_name" @input="updateChar($event, player)" v-model="crtCharacter">
+              <template #selected-option="{ _name, _firstStockUrl }">
+                <div class="stock-icon-selected">
+                  <stock-icon :width="28" :src="_firstStockUrl" /> {{ _name }}
+                </div>
+              </template>
+              <template #option="option">
+                <div class="stock-icon-selected">
+                  <stock-icon :width="28" :src="option._firstStockUrl" />{{ option._name }}
+                </div>
+              </template>
+            </v-select>
+          </v-col>
+          <v-col cols="2" align-self="center" class="d-flex justify-end">
+            <v-btn @click="player.flipChar(); updateActive(); activeFlip = !activeFlip" :color="activeFlip ? 'primary' : ''" :dark="activeFlip" elevation="2" small>
+              <v-icon dark left>mdi-flip-horizontal</v-icon> Flip
+            </v-btn>
+          </v-col>
+        </v-row>
 
-    <div v-if="crtCharacter">
-      <div class="row-stock-icon my-1" v-for="(row, i) in crtCharacter.maxRow" :key="row" >
-        <div  v-for="(col, j) in crtCharacter.maxCol" :key="col" 
-              :id="getIdStock(i, j)"
-              class="stock-icon"
-              :class="playerClass" 
-              :style="stockStyles(i, j)" 
-              @click="setCurrentChar(player, i, j)"></div>
-      </div>
-    </div>
-  </div>
+        <div v-if="crtCharacter">
+          <div class="row-stock-icon my-1" v-for="(row, i) in crtCharacter.maxRow" :key="row" >
+            <div  v-for="(col, j) in crtCharacter.maxCol" :key="col" 
+                  :id="getIdStock(i, j)"
+                  class="stock-icon"
+                  :class="playerClass" 
+                  :style="stockStyles(i, j)" 
+                  @click="setCurrentChar(player, i, j)">
+            </div>
+          </div>
+        </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import vSelect from "vue-select";
 import StockIcon from '../ui/StockIcon.vue';
-import SvgIcon from "@jamescoyle/vue-icon";
-import {
-  mdiFlipHorizontal
-} from "@mdi/js";
 export default {
-  components: { vSelect, StockIcon, SvgIcon },
+  components: { vSelect, StockIcon },
   props: {
     player: Object,
     characters: Array,
@@ -54,30 +55,60 @@ export default {
       crtCharacter: {_name: ''},
       stockIconDivs: [],
       activeFlip: false,
-      icon: {
-        flip: mdiFlipHorizontal
-      }
     };
   },
   updated() {
     this.updateActive();
   },
   computed: {
-    // a computed getter
+    maxColWidth() {
+      return this.crtCharacter.maxCol * this.maxWidth;
+    },
     maxWidth() {
-      return this.crtCharacter.maxCol * 48;
+      var widthscrencan = screen.width;
+      var maxW = 48;
+      if (widthscrencan <= 1264) // md
+        maxW = 36;
+      else if (widthscrencan <= 1500) // md bis
+        maxW = 42;
+      else if (widthscrencan <= 1904) // lg
+        maxW = 48;
+      else // xl
+        maxW = 48;
+      return maxW;
     },
     playerClass() {
       return this.player.number;
-    }
+    },
+    size () {
+      const size = {xs:'x-small', sm:'small', md:'small', lg:'small', xl:'small'}[this.$vuetify.breakpoint.name];
+      return size ? { [size]: true } : {}
+    },
   },
   methods: {
     stockStyles(row, col) {
+      /*var maxW = this.maxWidth();*/
       return {
         'background-image': `url(${this.crtCharacter.getAllStocksUrl()})`,
-        'background-size' : `${this.maxWidth}px ${(this.crtCharacter.maxRow) * 48}px`,
-        'background-position': `${col * -48}px ${row * -48}px`
+        'background-size' : `${this.maxColWidth}px ${(this.crtCharacter.maxRow) * this.maxWidth}px`,
+        'background-position': `${col * -this.maxWidth}px ${row * -this.maxWidth}px`,
+        'height' : `${this.maxWidth}px`,
+        'width' : `${this.maxWidth}px`
       }
+    },
+    maxWidth2() {
+      var widthscrencan = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+      var maxW = 48;
+      if (widthscrencan <= 1264) { // md
+        maxW = 36;
+      } else if (widthscrencan <= 1500) { // md bis
+        maxW = 42;
+      } else if (widthscrencan <= 1904) { // lg
+        maxW = 48;
+      } else { // xl
+        maxW = 48;
+      }
+      return maxW;
     },
     updateChar(character) {
       this.resetActive();
@@ -145,10 +176,6 @@ export default {
 </script>
 
 <style>
-.center {
-  text-align: center;
-}
-
 .row-stock-icon {
   display: flex;
   height: 48px;

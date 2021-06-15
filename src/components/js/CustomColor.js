@@ -53,6 +53,13 @@ class CustomColor {
         });
     }
 
+    toJSON() {
+        // colors
+        var item = {};
+        item.colors = this._colors;
+        return item;
+    }
+
     get canvas() {
         return this._canvas;
     }
@@ -68,7 +75,6 @@ class CustomColor {
         this._colors = pColors;
         return this._colors;
     }
-    // TODO getter setter 
 
 }
 

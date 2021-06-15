@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrapper-dropdown">
+    <div class="wrapper-dropdown" style="width: 100%">
       <span @click="toggleDropdown()" v-html="selector"></span>
       <ul class="dropdown" v-show="active">
         <li v-if="emptyOption" @click="setColor()">
@@ -67,7 +67,6 @@ export default {
       this.active = false;
       this.noSelection = false;
       this.$emit("input", this.selectedColor);
-      console.log('set color ' + this.selectedColor);
       this.updateColors(color, color2);
     },
     toggleDropdown() {

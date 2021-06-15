@@ -32,7 +32,7 @@ class Player {
     }
 
     align(alignmentH, alignmentV) {
-		console.log(".. align tag", alignmentH ? alignmentH : alignmentV, this.tag);
+        console.log(".. align tag", alignmentH ? alignmentH : alignmentV, this.tag);
         this.myTag.align(alignmentH, alignmentV);
     }
 
@@ -43,6 +43,15 @@ class Player {
 
     renderAll() {
         this.canvas.renderAll();
+    }
+
+    toJSON() {
+        return {
+            player: this._number,
+            tag: this.myTag,
+						bg: this.bg,
+            characters: this.characters
+        }
     }
 
     get canvas() {
@@ -109,6 +118,12 @@ class Player {
     set ombreBlur(pOmbre) {
         return this.characters.blur = pOmbre;
     }
+    get ombreOpacity() {
+        return this.characters.opacity;
+    }
+    set ombreOpacity(pOpac) {
+        return this.characters.opacity = pOpac;
+    }
 
     get ombreTag() {
         return this.myTag.ombre;
@@ -168,6 +183,12 @@ class Player {
     set font(pFont) {
         return this.myTag.font = pFont;
     }
+    get angle() {
+        return this.myTag.angle;
+    }
+    set angle(pAngle) {
+        return this.myTag.angle = pAngle;
+    }
 
     get colorsTagBg() {
         return this.myTag.colors;
@@ -189,6 +210,9 @@ class Player {
     set color(pColor) {
         return this.myTag.color = pColor;
     }
+
+		/* IMPORT */
+
 }
 
 export {

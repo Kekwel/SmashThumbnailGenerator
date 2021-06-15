@@ -3,9 +3,9 @@
     <option-title :title="'Joueur ' + i" />
     <color-picker-select ref="bgpicker" :color-options="colors" label="Choix couleur..." input-id="color" v-model="selectedColorHex" :obj="player.bg" />
 
-    <config-color :id="'fondj' + i" :title="'Fond'" :obj="player.bg" :lockTag="lockTag" />
+    <config-color :ref="'color-bg-' + i" :id="'fondj' + i" :title="'Fond'" :obj="player.bg" :lockTag="lockTag" />
     <div v-if="!lockTag">
-      <config-color :id="'tagj' + i" :title="'Tag'" :obj="player.myTag" :lockTag="lockTag" />
+      <config-color :ref="'color-tag-' + i" :id="'tagj' + i" :title="'Tag'" :obj="player.myTag" :lockTag="lockTag" />
     </div>
   </div>
 </template>
@@ -74,6 +74,16 @@ export default {
       this.selectedColorHex = rand;
       this.$refs.bgpicker.setColor(rand.hex, rand.hex2, rand.name);
     },
+    setActiveDirectionTag(val, index) {
+      if (!this.lockTag) {
+        this.$refs['color-tag-' + this.i].resetActive('M');
+        this.$refs['color-tag-' + this.i].setActive(val, index);
+      }
+    },
+    setActiveDirectionBG(val, index) {
+      this.$refs['color-bg-' + this.i].resetActive('B');
+      this.$refs['color-bg-' + this.i].setActive(val, index);
+    }
   },
 };
 </script>

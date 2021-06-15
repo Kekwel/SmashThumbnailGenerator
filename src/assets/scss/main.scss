@@ -1,11 +1,11 @@
 // Customizations Here (Optional)
 
 // Bulma Import
-@import '~bulma';
+// @import '~bulma';
 
 /* Custom fonts */
 @font-face {
-    font-family: 'BlackLister';
+    font-family: 'BlackListed';
     /*IE*/
     src: url('../fonts/blacklisted.ttf');
     /*Non-IE*/
@@ -72,4 +72,8 @@
     src: url('../fonts/gotham_black_regular.ttf');
     /*Non-IE*/
     src: url('../fonts/gotham_black_regular.ttf') format('truetype');
+}
+
+html {
+    overflow-y: hidden;
 }

@@ -1,19 +1,23 @@
 <template>
-  <div>
-    <!-- TODO Composant avec offset x, offset y, opacité, couleur ombre -->
-    <input type="checkbox" :id="idShadow" v-model="obj.ombre" />
-    <label :for="idShadow"> {{ title }}</label><br />
+  <v-row no-gutters>
+    <v-col>
+      <!-- TODO Composant avec offset x, offset y, opacité, couleur ombre -->
+      <v-checkbox v-model="obj.ombre" :label="title" hide-details dense></v-checkbox>
 
-		<input type="range" min="-50" max="50" v-model="obj.ombreX" class="slider" :id="'offsetX' + i">
-		<label :id="'offsetX' + i"> X {{ obj.ombreX }}</label><br />
-		<input type="range" min="-50" max="50" v-model="obj.ombreY" class="slider" :id="'offsetY' + i">
-		<label :id="'offsetY' + i"> Y {{ obj.ombreY }}</label><br />
+      <v-subheader style="height: 20px" class="pl-0">X</v-subheader>
+      <v-slider dense v-model="obj.ombreX" :thumb-size="24" thumb-label="always" min="-50" hide-details></v-slider>
+      <v-subheader style="height: 20px" class="pl-0">Y</v-subheader>
+      <v-slider dense v-model="obj.ombreY" :thumb-size="24" thumb-label="always" min="-50" hide-details></v-slider>
 
-    <input type="range" min="0" max="1" step="0.1" v-model="obj.ombreBlur" class="slider" :id="'offsetY' + i">
-		<label :id="'offsetY' + i"> Flou {{ obj.ombreBlur }}</label><br />
-    <input type="color" id="head" name="head" v-model="obj.ombreColor" />
-    <label for="head"> Couleur {{ obj.ombreColor }} </label><br />
-  </div>
+<!--       <v-subheader style="height: 20px" class="pl-0">Opacité {{ obj.ombreOpacity }}</v-subheader>
+      <v-slider dense v-model="obj.ombreOpacity" :thumb-size="24" thumb-label="always" min="0" max="1" step="0.1" hide-details></v-slider>
+ -->      <v-subheader style="height: 20px" class="pl-0">Flou {{ obj.ombreBlur }}</v-subheader>
+      <v-slider dense v-model="obj.ombreBlur" :thumb-size="24" thumb-label="always" min="0" max="1" step="0.1" hide-details></v-slider>
+
+      <input type="color" id="head" name="head" v-model="obj.ombreColor" />
+      <label for="head"> Couleur {{ obj.ombreColor }} </label><br />
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -22,13 +26,6 @@ export default {
     obj: Object,
     title: String,
     i: Number,
-  },
-  data() {
-    return {
-      idShadow: "idShadow" + this.i,
-			offsetX: -10,
-			offsetY: 10,
-    };
-  },
+  }
 };
 </script>

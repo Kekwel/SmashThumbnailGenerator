@@ -17,6 +17,7 @@ class CustomImage {
 	shadowActive = true;
 	_shadowX = -10;
 	_shadowY = 10;
+	_shadowOpacity = 1;
 	_shadowBlur = 0;
 	_shadowColor = '#000000';
 
@@ -46,7 +47,41 @@ class CustomImage {
             this.clipPath = clipPath;
 		}
 
+		this.group.perPixelTargetFind = true;
 		// this.addImg();
+	}
+
+	toJSON() {
+        var item = {};
+		item.index = this._index;
+		item.url = this.filename;
+		
+		item.x = this.x;
+		item.y = this.y;
+		item.width = this._width;
+		item.height = this._height;
+		item.flipX = this._image.get('flipX');
+
+		item.angle = this.group.angle;
+		item.scale = {};
+		item.scale.x = this.group.scaleX;
+		item.scale.y = this.group.scaleY;
+		item.width = this.group.width * this.group.scaleX;
+		item.height = this.group.height * this.group.scaleY;
+
+		// TODO clippath
+		
+		item.character = this._character;
+
+		item.shadow = {};
+		item.shadow.active = this.shadowActive;
+		item.shadow.url = this.filename;
+		item.shadow.x = this.ombreX;
+		item.shadow.y = this.ombreY;
+		item.shadow.blur = this.blur;
+		item.shadow.color = this.ombreColor;
+
+		return item;
 	}
 
 	addImg() {
@@ -57,9 +92,10 @@ class CustomImage {
 		fabric.Image.fromURL(newUrl, function (oImg) {
 			self.initImageShadow(oImg);
 			
-			self._y = self.canvas.height - oImg.getScaledHeight();
+			//self._y = self.canvas.height - oImg.getScaledHeight();
 			//oImg.set('top', self._y);
 			oImg.moveTo(self._index - 1);
+			oImg.perPixelTargetFind = true;
 
 			// self.addImgToGroup(oImg, true);
 			self.group.addWithUpdate(oImg);
@@ -71,9 +107,10 @@ class CustomImage {
 		fabric.Image.fromURL(newUrl, function (oImg) {
 			self.initImage(oImg);
 			
-			self._y = self.canvas.height - oImg.getScaledHeight();
+			//self._y = self.canvas.height - oImg.getScaledHeight();
 			oImg.set('top', self._y);
 			oImg.moveTo(self._index);
+			oImg.perPixelTargetFind = true;
 
 			// on l'ajout qu'une fois l'ombre ajouté
 			self.addImgToGroup(oImg, self._imageShadowLoaded)
@@ -168,6 +205,14 @@ class CustomImage {
 		this._imageShadow.applyFilters();
 		this.canvas.renderAll();
 	}
+	get opacity() {
+		return this._shadowOpacity;
+	}
+	set opacity(pOpac) {
+		this._shadowOpacity = pOpac;
+		this._imageShadow.set('opacity', pOpac);
+		this.canvas.renderAll();
+	}
 	get ombreColor() {
 		return this._shadowColor;
 	}
@@ -185,6 +230,21 @@ class CustomImage {
 		this.canvas.renderAll();
 	}
 	/* */
+
+	get x() {
+		return this.group.left;
+	}
+	set x(pX) {
+		this.group.set('left', pX);
+		this.canvas.renderAll();
+	}
+	get y() {
+		return this.group.top;
+	}
+	set y(pY) {
+		this.group.set('top', pY);
+		this.canvas.renderAll();
+	}
 
 	initImage(newImg) {
 		this._image = newImg;

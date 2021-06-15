@@ -1,87 +1,54 @@
 <template>
-  <div style="margin: 1em auto;">
-    <!-- Joueurs -->
-    <div class="box" style="width: 28em">
-      <option-title :title="'Match'" />
-      <div>
-        <div class="columns is-centered">
-          <div class="column input-tag">
-            <input class="input is-danger" style="" v-model="j1.tag" onClick="this.select();" />
-            <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" />  
-            <span class="versus">VS</span>
-            <input class="input is-link" style="text-align: end;"  v-model="j2.tag" onClick="this.select();" />
-            <stock-icon-picker ref="charJ2" :characters="characters" :player="j2" />
-          </div>
-        </div>
-        <!-- TODO Colonne pour aligner + facilement le VS ? -->
-        <!-- <div class="input-tag">
-          Joueur 1 : <input class="input is-danger" style="width: 15em;" v-model="j1.tag" /> <br />
-          <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" />
-        </div>
-        <span class="input-tag versus">VS</span> <br />
-        <div class="input-tag">
-          Joueur 2 : <input class="input is-link" style="width: 15em;"  v-model="j2.tag" /> <br />
-        </div> -->
-      </div>
-      <!-- J1 -->
-      <!-- J2 -->
-      <!-- <stock-icon-picker ref="charJ2" :characters="characters" :player="j2" /> -->
-    </div>
+  <!-- Joueurs -->
+  <v-container>
+    <v-row no-gutters>
+      <v-col>
+        <option-title :title="'Match'" />
+        <v-text-field v-model="j1.tag" color="red" background-color="red lighten-5" dense shaped filled hide-details onClick="this.select();" />
+        <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" />  
 
-    <!-- Phase TODO component -->
-    <div id="info-phase" class="box">
-      <option-title :title="'Phase'" />
-      <div class="control">
-        <label class="radio">
-          <input type="radio" name="phase1" value="Pools" v-model="phase1.txt" @change="focusPhase1()" />
-          Pools
-        </label>
-        <label class="radio">
-          <input type="radio" name="phase1" value="Winners" v-model="phase1.txt" @change="focusPhase1()" checked />
-          Winners
-        </label>
-        <label class="radio">
-          <input type="radio" name="phase1" value="Losers" v-model="phase1.txt" @change="focusPhase1()" />
-          Losers
-        </label>
-        <label class="radio">
-          <input type="radio" name="phase1" value="Grand" v-model="phase1.txt" @change="focusPhase1()" />
-          Grand
-        </label>
-      </div>
-      Custom 1 <input ref="phase1Input" v-model="phase1.txt" /><br />
-      <div class="control">
-        <label class="radio">
-          <input type="radio" name="phase2" value="Round " v-model="phase2.txt" @change="focusPhase2()" checked />
-          Round
-        </label>
-        <label class="radio">
-          <input type="radio" name="phase2" value="Quarters" v-model="phase2.txt" @change="focusPhase2()" />
-          Quarters
-        </label>
-        <label class="radio">
-          <input type="radio" name="phase2" value="Semis" v-model="phase2.txt" @change="focusPhase2()" />
-          Semis
-        </label>
-        <label class="radio">
-          <input type="radio" name="phase2" value="Finals" v-model="phase2.txt" @change="focusPhase2()" />
-          Finals
-        </label>
-      </div>
-      Custom 2 <input ref="phase2Input" v-model="phase2.txt" /><br />
-    </div>
-    <div class="box">
-      <option-title :title="'Options'" />
-      <input type="checkbox" id="clipPathJ1" v-model="j1.isTagClipPath" />
-      <label for="clipPathJ1"> ClipPath J1 </label>
-      <input type="checkbox" id="clipPathJ2" v-model="j2.isTagClipPath" />
-      <label for="clipPathJ2"> ClipPath J2 </label><br />
-      <input type="checkbox" id="clipPathPhase1" v-model="phase1.isClipPath" />
-      <label for="clipPathPhase1"> ClipPath Phase 1 </label>
-      <input type="checkbox" id="clipPathPhase2" v-model="phase2.isClipPath" />
-      <label for="clipPathPhase2"> ClipPath Phase 2 </label>
-    </div>
-  </div>
+        <p class="text-center versus ma-2">VS</p>
+
+        <v-text-field v-model="j2.tag" color="blue" background-color="blue lighten-5" dense shaped filled hide-details onClick="this.select();" />
+        <stock-icon-picker ref="charJ2" :characters="characters" :player="j2" />
+
+        <v-divider />
+
+        <!-- Phase TODO component -->
+        <option-title :title="'Phase'" />
+        <v-radio-group v-model="phase1.txt" row @change="focusPhase1()" hide-details>
+          <v-radio label="Pools" value="Pools" />
+          <v-radio label="Winners" value="Winners" />
+          <v-radio label="Losers" value="Losers" />
+          <v-radio label="Grand" value="Grand" />
+        </v-radio-group>
+        <v-text-field ref="phase1Input" class="pa-0" label="" v-model="phase1.txt" single-line hide-details />
+        
+        <v-radio-group v-model="phase2.txt" row @change="focusPhase2()" hide-details>
+          <v-radio label="Round" value="Round " />
+          <v-radio label="Quarters" value="Quarters" />
+          <v-radio label="Semis" value="Semis" />
+          <v-radio label="Finals" value="Finals" />
+        </v-radio-group>
+        <v-text-field ref="phase2Input" class="pa-0" label="" v-model="phase2.txt" single-line hide-details/>
+
+        <v-divider />
+
+        <option-title title="Options" />
+
+        <v-row no-gutters>
+          <v-col>
+            <v-checkbox v-model="j1.isTagClipPath" label="ClipPath J1" hide-details />
+            <v-checkbox v-model="j2.isTagClipPath" label="ClipPath J2" hide-details />
+          </v-col>
+          <v-col>
+            <v-checkbox v-model="phase1.isClipPath" label="ClipPath Phase 1" hide-details />
+            <v-checkbox v-model="phase2.isClipPath" label="ClipPath Phase 2" hide-details />
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -131,19 +98,14 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-/* .input-tag {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-} */
 .input-tag {
   display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
 .versus {
   font-weight: bold;
-  font-size: larger;
+  font-size: x-large;
 }
 </style>

@@ -2,16 +2,27 @@ class Shadow {
     _parent;
     canvas;
     data = {
-		color: '#000000',
-		blur: 0,
-		offsetX: -10,
-		offsetY: 10,
-		opacity: 0.8
-	};
+			color: '#000000',
+			blur: 0,
+			offsetX: -10,
+			offsetY: 10,
+			opacity: 1
+		};
     _active = true;
     
     constructor(parent) {
         this._parent = parent;
+    }
+
+    toJSON() {
+        var item = {};
+        item.color = this.data.color;
+        item.blur = this.data.blur;
+        item.offsetX = this.data.offsetX;
+        item.offsetY = this.data.offsetY;
+        item.opacity = this.data.opacity;
+
+        return item;
     }
 
     set parent(pParent) {
@@ -40,6 +51,13 @@ class Shadow {
         this.data.blur = pBlur;
         this.update();
     }
+    get opacity() {
+			return this.data.opacity;
+    }
+    set opacity(pOpac) {
+        this.data.opacity = pOpac;
+        this.update();
+    }
     get offsetX() {
         return this.data.offsetX;
     }
@@ -58,7 +76,7 @@ class Shadow {
     update() {
         this._parent.set('shadow', this.active ? this.data : '');
         //if (this.canvas)
-                this.canvas.requestRenderAll();
+					this.canvas.requestRenderAll();
     }
 }
 

@@ -28,17 +28,23 @@ class Character {
         this._allStockUrl = this.getAllStocksUrl();
     }
 
+    toJSON() {
+        var item = {};
+        // TODO ?
+        return item;
+    }
+
     // img/stock/$GAME/$CHARNAME.png
     getRoot() {
         return process.env.NODE_ENV === 'production'
-                ? '/SmashThumbnailGenerator/'
-                : '/'
+                        ? '/SmashThumbnailGenerator/'
+                        : '/'
     }
 
     getfirstStockUrl() {
         var stockUrl = this.getRoot() + "img/stock/" + this._game + "/"  + this._formatName + ".png";
-		return stockUrl;
-	}
+        return stockUrl;
+    }
     // img/stock/$GAME/$CHARNAME_all.png
     getAllStocksUrl() {
         var stocksUrl = this.getRoot() + "img/stock/" + this._game + "/"  + this._formatName + "_all.png";

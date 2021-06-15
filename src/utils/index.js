@@ -1,7 +1,7 @@
 /* FONTS */
 const customFonts = [{name: 'Futura Bold'}, 
                      {name: 'Impact'},
-                     {name: 'BlackLister'},
+                     {name: 'BlackListed'},
                      {name: 'Android Assassin'},
                      {name: 'Gotham Black Regular'},
                      {name: 'Heroes Legend'},
