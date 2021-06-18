@@ -34,6 +34,12 @@ class Player {
         this.bg = bg;
     }
 
+    reverseCharacter() {
+        let tmp = this.charArray[0];
+        this.charArray[0] = this.charArray[1];
+        this.charArray[1] = tmp;
+    }
+
     addToCanvas() {
         // console.log(".. add to canvas", this.tag);
         this.canvas.add(this.bg.rect);
