@@ -68,7 +68,7 @@
 <script>
 import OptionTitle from "../ui/OptionTitle.vue";
 import FontPicker from 'font-picker-vue';
-import CustomFonts from "../../utils"
+import CustomFonts from "../../utils/fonts"
 import ConfigTextPlayer from "./ConfigTextPlayer.vue";
 export default {
   components: { ConfigTextPlayer, FontPicker, OptionTitle },

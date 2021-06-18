@@ -68,13 +68,16 @@ import { CustomRect } from "./js/CustomRect";
 import { Player } from "./js/Player";
 import { CustomText } from "./js/CustomText";
 import { CustomImage } from "./js/CustomImage";
+
 import ConfPlayer from "./config/ConfigPlayer";
 import ConfText from "./config/ConfigText";
 import ConfBackground from "./config/ConfigBackground";
 import ConfDefault from "./config/ConfigDefault";
-import Ultimate from "../utils/ultimate"
 import ConfigShadow from './config/ConfigShadow.vue';
 import ConfigCustomImg from './config/ConfigCustomImg.vue';
+
+import Ultimate from "../utils/ultimate"
+import Utils from "../utils"
 
 export default {
   name: "Thumbnail",
@@ -112,7 +115,7 @@ export default {
     var tagOptions = { tag: "Joueur X", x: 0, y: 20, size: 40, color: "#000000" };
     // TODO Character unique, là on a un character pour tous les joueurs
     this.charJ1 = this.getRandomChar();
-    var imgOpt = { character: this.charJ1, x: 0, y: 85 };
+    var imgOpt = { number: 'j1', character: this.charJ1, x: 0, y: 85 };
     // TODO class ?
     var clipPathJ1 = new fabric.Rect({ width: 640, height: 720, top: 0, left: 0, absolutePositioned: true, strokeWidth: 0 });
     // tag
@@ -127,7 +130,7 @@ export default {
     bgTagOptions = { width: 640, height: 75, x: 640, y: 0, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ]};
     tagOptions = { tag: "Joueur Y", x: 640, y: 20, size: 40, color: "#000000" };
     this.charJ2 = this.getRandomChar();
-    imgOpt = { character: this.charJ2, x: 640, y: 85 };
+    imgOpt = { number: 'j2', character: this.charJ2, x: 640, y: 85 };
   // TODO class ?
     var clipPathJ2 = new fabric.Rect({ width: 640, height: 720, top: 0, left: 640, absolutePositioned: true, strokeWidth: 0 });
     // tag
@@ -297,23 +300,7 @@ export default {
       }
     },
     getRandomChar() {
-      var rand = this.characters[this.getRandomInt(this.characters.length)];
-      // tant que random
-      while(rand._id === '?') {
-        rand = this.getRandomChar();
-      }
-      // -- random costume
-      var randCostum = this.pad(this.getRandomInt(rand.maxCol), 2);
-      rand.col = randCostum;
-      return rand;
-    },
-    /* TODO UTILS */
-    pad(num, size) {
-        var s = "000000000" + num;
-        return s.substr(s.length - size);
-    },
-    getRandomInt(max) {
-      return Math.floor(Math.random() * max);
+      return Utils.getRandomCharUlt();
     },
     resizeCanvas() {
       var widthscrencan = (window.innerWidth > 0) ? window.innerWidth : screen.width; // capture width screen onload
@@ -400,6 +387,13 @@ export default {
       reader.readAsText(file);
     },
     importInfos(jsonObj) {
+      // TODO import avec plusieurs characters
+      // on remove si plusieurs characters
+      if (this.j1.charArray.length > 1)
+        this.j1.removeImg();
+      if (this.j2.charArray.length > 1)
+        this.j2.removeImg();
+
       // j1
       if (jsonObj.j1)
         this.setPlayerInfo(this.j1, jsonObj.j1);
@@ -432,7 +426,7 @@ export default {
       if (infoPlayer.characters) {
         if (infoPlayer.characters.url)
           player.filename = infoPlayer.characters.url;
-        this.setCharInfos(player.characters, infoPlayer.characters);
+        this.setCharInfos(player.firstCharacter, infoPlayer.characters);
       }
     },
     setTextInfos(text, infoText) {

@@ -2,6 +2,8 @@ import { fabric } from "fabric";
 import { Shadow } from "./Shadow";
 
 class CustomImage {
+	number = '';
+
 	_canvas;
 	group = new fabric.Group();
 	clipPath;
@@ -28,7 +30,7 @@ class CustomImage {
 	_height = 720;
 	_x = 0;
 	_y = 0;
-	_index = -4;
+	_index = 100;
 
 	constructor(canvas, imgOpt, clipPath) {
 		this.canvas = canvas;
@@ -41,6 +43,7 @@ class CustomImage {
 		this._y = imgOpt.y || this._y;
 		this._width = imgOpt.width || this._width;
 		this._height = imgOpt.height || this._height;
+		this.number = imgOpt.number || this.number;
 
 		if (clipPath) {
 			this.group.clipPath = clipPath;
@@ -114,7 +117,7 @@ class CustomImage {
 
 			// on l'ajout qu'une fois l'ombre ajouté
 			self.addImgToGroup(oImg, self._imageShadowLoaded)
-			self._imageLoaded = true;
+			self._imgLoaded = true;
 		});
 		
 		this._canvas.add(this.group).renderAll();
@@ -128,6 +131,7 @@ class CustomImage {
 			return;
 		}
 		this.group.addWithUpdate(oImg);
+		this.group.moveTo(100);
 		this.canvas.requestRenderAll();
 	}
 
@@ -158,6 +162,7 @@ class CustomImage {
 		this.canvas.renderAll();
 		return this._filename;
 	}
+	// TODO setter _character
 
 	/* ombre */
 	get ombre() {
@@ -270,7 +275,7 @@ class CustomImage {
 
 		newImg.scaleToWidth(this._width);
 
-		var newY = this.canvas.height - newImg.getScaledHeight()
+		var newY = this.canvas.height - newImg.getScaledHeight();
 		newImg.set({
 			left: this._x + this._shadowX,
 			top: newY + this._shadowY,

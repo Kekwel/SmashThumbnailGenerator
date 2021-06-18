@@ -38,7 +38,7 @@ class CustomText {
 
   _bold = false;
   _italic = false;
-  _index = 1;
+  _index = 2;
 
   constructor(canvas, tagOptions, bgTagOptions, clipPath) {
     var self = this;

@@ -5,7 +5,7 @@
         <v-row no-gutters>
           <v-col cols="10">
             <!-- TODO v-autocomplete ? -->
-            <v-select class="my-2" style="width: 15.5em" :options="characters" label="_name" @input="updateChar($event, player)" v-model="crtCharacter">
+            <v-select class="my-2" style="width: 15.5em" :options="characters" label="_name" @input="updateChar($event, image)" v-model="crtCharacter">
               <template #selected-option="{ _name, _firstStockUrl }">
                 <div class="stock-icon-selected">
                   <stock-icon :width="28" :src="_firstStockUrl" /> {{ _name }}
@@ -19,7 +19,7 @@
             </v-select>
           </v-col>
           <v-col cols="2" align-self="center" class="d-flex justify-end">
-            <v-btn @click="player.flipChar(); updateActive(); activeFlip = !activeFlip" :color="activeFlip ? 'primary' : ''" :dark="activeFlip" elevation="2" small>
+            <v-btn @click="image.flip(); updateActive(); activeFlip = !activeFlip" :color="activeFlip ? 'primary' : ''" :dark="activeFlip" elevation="2" small>
               <v-icon dark left>mdi-flip-horizontal</v-icon> Flip
             </v-btn>
           </v-col>
@@ -32,7 +32,7 @@
                   class="stock-icon"
                   :class="playerClass" 
                   :style="stockStyles(i, j)" 
-                  @click="setCurrentChar(player, i, j)">
+                  @click="setCurrentChar(image, i, j)">
             </div>
           </div>
         </div>
@@ -48,6 +48,7 @@ export default {
   components: { vSelect, StockIcon },
   props: {
     player: Object,
+    image: Object,
     characters: Array,
   },
   data() {
@@ -78,7 +79,7 @@ export default {
       return maxW;
     },
     playerClass() {
-      return this.player.number;
+      return this.image.number;
     },
     size () {
       const size = {xs:'x-small', sm:'small', md:'small', lg:'small', xl:'small'}[this.$vuetify.breakpoint.name];
@@ -112,20 +113,20 @@ export default {
     },
     updateChar(character) {
       this.resetActive();
-      console.log("update", character ? character.formatName : 'null', "for player", this.player.number, "..");
+      console.log("update", character ? character.formatName : 'null', "for player", this.image.number, "..");
       if (character)
-        this.player.filename = character.getCharUrl();
+        this.image.filename = character.getCharUrl();
       else
-        this.player.filename = '';
+        this.image.filename = '';
       this.crtCharacter = character;
 
       this.initStockIconDivsArray();
       this.updateActive();
     },
-    setCurrentChar(player, row, col) {
+    setCurrentChar(image, row, col) {
       this.crtCharacter.row = row;
       this.crtCharacter.col = this.pad(col, 2);
-      this.updateChar(this.crtCharacter, player);
+      this.updateChar(this.crtCharacter, image);
     },
     initStockIconDivsArray() {
       var divArray = [];
@@ -145,20 +146,20 @@ export default {
         var crtDivId = this.stockIconDivs[this.pad(this.crtCharacter.col, 1)];
         var crtDiv = document.getElementById(crtDivId);
         if (crtDiv)
-          crtDiv.classList.toggle('active-' + this.player.number);
+          crtDiv.classList.toggle('active-' + this.image.number);
       }
     },
     resetActive() {
       for (let d of this.stockIconDivs) {
         var crt = document.getElementById(d);
         if (crt)
-          crt.classList.remove('active-' + this.player.number);
+          crt.classList.remove('active-' + this.image.number);
       }
     },
     getIdStock(row, col) {
       // TODO ajouter player dans id
       // TODO ajouter dans Character ?
-      return this.player.number + '-' + this.crtCharacter.formatName + '-' + row + '-' + this.pad(col, 2);
+      return this.image.number + '-' + this.crtCharacter.formatName + '-' + row + '-' + this.pad(col, 2);
     },
     selectChar(char) {
       this.updateChar(char);

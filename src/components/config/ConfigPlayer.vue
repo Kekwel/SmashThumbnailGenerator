@@ -5,7 +5,14 @@
       <v-col>
         <option-title :title="'Match'" />
         <v-text-field v-model="j1.tag" color="red" background-color="red lighten-5" dense shaped filled hide-details onClick="this.select();" />
-        <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" />  
+        <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" :image="j1.firstCharacter" />
+        <stock-icon-picker v-if="j1.charArray.length > 1" ref="charJ1bis" :characters="characters" :player="j1" :image="j1.secondCharacter" />
+        <v-btn v-if="j1.charArray.length == 1" @click="addImgJ1" color="primary" dark elevation="2" small>
+          <v-icon dark>mdi-plus-box</v-icon>
+        </v-btn>
+        <v-btn v-if="j1.charArray.length > 1" @click="j1.removeImg();" color="error" dark elevation="2" small>
+          <v-icon dark>mdi-minus-box</v-icon>
+        </v-btn>
 
         <v-row no-gutters>
           <v-col cols="10">
@@ -19,7 +26,14 @@
         </v-row>
 
         <v-text-field v-model="j2.tag" color="blue" background-color="blue lighten-5" dense shaped filled hide-details onClick="this.select();" />
-        <stock-icon-picker ref="charJ2" :characters="characters" :player="j2" />
+        <stock-icon-picker ref="charJ2" :characters="characters" :player="j2" :image="j2.firstCharacter" />
+        <stock-icon-picker v-if="j2.charArray.length > 1" ref="charJ2bis" :characters="characters" :player="j2" :image="j2.secondCharacter" />
+        <v-btn v-if="j2.charArray.length == 1" @click="j2.addImg();" color="primary" dark elevation="2" small>
+          <v-icon dark>mdi-plus-box</v-icon>
+        </v-btn>
+        <v-btn v-if="j2.charArray.length > 1" @click="j2.removeImg();" color="error" dark elevation="2" small>
+          <v-icon dark>mdi-minus-box</v-icon>
+        </v-btn>
 
         <v-divider />
 
@@ -80,6 +94,16 @@ export default {
   data() {
     return {};
   },
+  updated() {
+    this.$nextTick(function () {
+      if (this.$refs.charJ1bis) {
+        this.$refs.charJ1bis.updateChar(this.j1.secondCharacter._character);
+      }
+      if (this.$refs.charJ2bis) {
+        this.$refs.charJ2bis.updateChar(this.j2.secondCharacter._character);
+      }
+    })
+  },
   methods: {
     focusPhase1() {
       this.$refs.phase1Input.focus();
@@ -109,6 +133,9 @@ export default {
       this.$refs.charJ1.selectChar(char2);
       this.$refs.charJ2.selectChar(char1);
       // TODO flip ?
+    },
+    addImgJ1() {
+      this.j1.addImg();
     }
   },
   mounted() {

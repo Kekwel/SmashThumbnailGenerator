@@ -60,11 +60,9 @@ export default {
       var self = this;
       // eslint-disable-next-line no-unused-vars
       let myPromise = new Promise(resolve => {
-        console.log('yo', val);
         self.loadingGrid = true;
         setTimeout(() => {
           self.$emit('display-grid', val);
-          console.log('coucou');
           self.loadingGrid = false
         }, 1000);
       });
