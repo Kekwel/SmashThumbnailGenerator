@@ -44,7 +44,7 @@
             Listing
           </v-tab-item> -->
           <v-tab-item eager>
-            <conf-default ref="confSdw" :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2" :versus="versus" 
+            <conf-default ref="confSdw" :canvas="canvas"
               v-on:export-json="exportJSON" 
               v-on:import-json="importJSON" 
               v-on:import-infos="importInfos"

@@ -155,34 +155,34 @@ class CustomRect {
         return dirLib;
     }
 
-		get x() {
-			return this.rect.left;
-		}
-		set x(pX) {
-			this.rect.set('left', pX);
-			this.canvas.renderAll();
-		}
-		get y() {
-			return this.rect.top;
-		}
-		set y(pY) {
-			this.rect.set('top', pY);
-			this.canvas.renderAll();
-		}
-		get width() {
-			return this.rect.getScaledWidth();
-		}
-		set width(pW) {
-			this.rect.set('width', pW);
-			this.canvas.renderAll();
-		}
-		get height() {
-			return this.rect.getScaledHeight();
-		}
-		set height(pH) {
-			this.rect.set('height', pH);
-			this.canvas.renderAll();
-		}
+    get x() {
+        return this.rect.left;
+    }
+    set x(pX) {
+        this.rect.set('left', pX);
+        this.canvas.renderAll();
+    }
+    get y() {
+        return this.rect.top;
+    }
+    set y(pY) {
+        this.rect.set('top', pY);
+        this.canvas.renderAll();
+    }
+    get width() {
+        return this.rect.getScaledWidth();
+    }
+    set width(pW) {
+        this.rect.set('width', pW);
+        this.canvas.renderAll();
+    }
+    get height() {
+        return this.rect.getScaledHeight();
+    }
+    set height(pH) {
+        this.rect.set('height', pH);
+        this.canvas.renderAll();
+    }
 
     /* OMBRE */
     /* get ombre() {

@@ -17,10 +17,15 @@
 
         <v-select class="mt-4" :items="layouts" item-text="name" item-value="layout" label="Layouts" dense hide-details v-model="crtLayout" @change="updateLayout"></v-select>
 
+        <v-divider class="mt-4"/>
+
         <!-- Grid -->
         <option-title class="mt-2" title="Grid"/>
         <v-switch class="mt-2" v-model="isDisplayGrid" label="Affichage Grid" @change="updateGrid" :loading="loadingGrid" />
         
+        <v-divider class="mt-4"/>
+        <option-title class="mt-2" title="TimeStamp"/>
+        <v-switch class="mt-2" v-model="isDisplayTS" label="Affichage Timestamp Youtube" @change="updateTimestamp" />
       </v-col>
     </v-row>
   </v-container>
@@ -29,20 +34,37 @@
 <script>
 import OptionTitle from '../ui/OptionTitle.vue';
 import Layouts from "../../utils/layouts"
+import { CustomText } from "../js/CustomText";
 export default {
   components: { OptionTitle },
-  props: {},
+  props: {
+    canvas: Object
+  },
   data() {
     return {
       isSelecting: false,
       layouts: [],
       crtLayout: null,
       isDisplayGrid: false,
-      loadingGrid: false
+      loadingGrid: false,
+      isDisplayTS: false,
+      rectTS: null
     };
   },
   created() {
     this.layouts = Layouts.LAYOUTS;
+    
+    var tagOptions = { tag: "42:00", x: 935, y: 560, size: 120, color: "#ffffff" };
+    var bgTagOptions = { width: 335, height: 150, x: 935, y: 560, colors: [ { id: 0, hex: "#000000" }, { id: 1, hex: "#000000" } ]};
+    this.rectTS = new CustomText(this.canvas, tagOptions, bgTagOptions);
+    this.rectTS.bgTag.rect.set('opacity', 0.75);
+    this.rectTS.bgTag.rect.set('rx', 10);
+    this.rectTS.bgTag.rect.set('ry', 10);
+    this.rectTS.group.set('lockMovementX', true);
+    this.rectTS.group.set('lockMovementY', true);
+    this.rectTS.group.set('lockScalingX', true);
+    this.rectTS.group.set('lockScalingY', true);
+    this.rectTS.group.set('lockRotation', true);
   },
   methods: {
     onButtonClick() {
@@ -66,6 +88,13 @@ export default {
           self.loadingGrid = false
         }, 1000);
       });
+    },
+    updateTimestamp(val) {
+      if (val) {
+        this.canvas.add(this.rectTS.group);
+      } else {
+        this.canvas.remove(this.rectTS.group);
+      }
     }
   }
 };
