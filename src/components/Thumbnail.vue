@@ -2,12 +2,6 @@
   <v-container fluid class="pa-0" style="max-width: 100% !important;">
     <v-row no-gutters justify="center">
       <v-col cols="5" md="4" lg="3" class="b-r">
-        <!-- <button @click="exportPNG">PNG</button> -->
-<!--         <v-btn small dark color="primary" @click="$emit('export', canvas)">
-          <v-icon dark left>mdi-image-move</v-icon>
-          PNG
-        </v-btn> -->
-
         <v-tabs dark show-arrows v-model="tab">
           <v-tab><v-icon small>mdi-account-multiple-outline</v-icon></v-tab>
           <!-- Icone VS ou "account" -->
@@ -76,8 +70,9 @@ import ConfDefault from "./config/ConfigDefault";
 import ConfigShadow from './config/ConfigShadow.vue';
 import ConfigCustomImg from './config/ConfigCustomImg.vue';
 
-import Ultimate from "../utils/ultimate"
+import Stocks from "../utils/stocks"
 import Utils from "../utils"
+import Games from "../utils/games"
 
 export default {
   name: "Thumbnail",
@@ -95,6 +90,7 @@ export default {
       gridLines: [],
       grid: 20,
       canvas: null,
+      game: null,
       j1: {},
       charJ1: {},
       charJ2: {},
@@ -107,7 +103,8 @@ export default {
   },
   created() {
     // par defaut Ultimate
-    this.characters = Ultimate.STOCKS;
+    this.game = Games.ULT;
+    this.characters = Stocks.ULT;
 
     // -- J1
     var bgOptions = { width: 640, height: 720, x: 0, y: 0 };
@@ -216,8 +213,7 @@ export default {
     this.canvas.add(this.phase1.group);
     this.canvas.add(this.phase2.group);
 
-    // TODO pouvoir toggle le timestamp YT (pour voir ce qui va etre caché)
-    this.$refs.confPlayer.selectChar(this.charJ1, this.charJ2);
+    this.$refs.confPlayer.selectChar(this.game, this.charJ1, this.charJ2);
     this.$refs.confBG.randomColor();
     this.$refs.confTxt.updateCustomFont();
     console.log(this.$options.name + ' component succesfully mounted');
@@ -300,7 +296,7 @@ export default {
       }
     },
     getRandomChar() {
-      return Utils.getRandomCharUlt();
+      return Utils.getRandomChar(this.game);
     },
     resizeCanvas() {
       var widthscrencan = (window.innerWidth > 0) ? window.innerWidth : screen.width; // capture width screen onload
@@ -558,6 +554,25 @@ export default {
 
         document.getElementById('tmp-img').remove();
       }
+    },
+    updateGame(game) {
+      if (this.j1.charArray.length > 1)
+        this.j1.removeImg();
+      if (this.j2.charArray.length > 1)
+        this.j2.removeImg();
+      
+      this.game = game;
+      switch (game.id) {
+        case 0:
+          this.characters = Stocks.ULT;
+          break;
+        case 1:
+          this.characters = Stocks.MELEE
+          break;
+        case 2:
+          this.characters = Stocks.PPLUS
+      }
+      this.$refs.confPlayer.updateGame(game);
     }
   },
 };

@@ -1,5 +1,5 @@
 
-import Ultimate from "../utils/ultimate"
+import Stocks from "./stocks"
 
 const utils = {
     pad(num, size) {
@@ -9,17 +9,33 @@ const utils = {
     getRandomInt(max) {
       return Math.floor(Math.random() * max);
     },
-    getRandomCharUlt() {
-        let characters = Ultimate.STOCKS;
+    getRandomChar(game) {
+        let characters = Stocks.ULT;
+        switch (game.id) {
+            case 0:
+                characters = Stocks.ULT;
+                break;
+            case 1:
+                characters = Stocks.MELEE;
+                break;
+            case 2:
+                characters = Stocks.PPLUS;
+                break;
+        }
         var rand = characters[this.getRandomInt(characters.length)];
         // tant que random
         while (rand._id === '?') {
-            rand = this.getRandomCharUlt();
+            rand = this.getRandomChar(game);
         }
         // -- random costume
         var randCostum = this.pad(this.getRandomInt(rand.maxCol), 2);
         rand.col = randCostum;
         return rand;
+    },
+    getRoot() {
+        return process.env.NODE_ENV === 'production'
+                        ? '/SmashThumbnailGenerator/'
+                        : '/'
     }
 }
 

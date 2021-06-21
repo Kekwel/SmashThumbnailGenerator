@@ -133,27 +133,31 @@ export default {
       var i, j;
       if (this.crtCharacter) {
         for (i = 0; i < this.crtCharacter.maxRow; i++) {
+          var divRow = [];
           for (j = 0; j < this.crtCharacter.maxCol; j++) {
             // TODO push directement la div ?
-            divArray.push(this.getIdStock(i, j));
+            divRow.push(this.getIdStock(i, j));
           }
+          divArray.push(divRow);
         }
       }
       this.stockIconDivs = divArray;
     },
     updateActive() {
       if (this.crtCharacter) {
-        var crtDivId = this.stockIconDivs[this.pad(this.crtCharacter.col, 1)];
+        var crtDivId = this.stockIconDivs[this.crtCharacter.row][this.pad(this.crtCharacter.col, 1)];
         var crtDiv = document.getElementById(crtDivId);
         if (crtDiv)
           crtDiv.classList.toggle('active-' + this.image.number);
       }
     },
     resetActive() {
-      for (let d of this.stockIconDivs) {
-        var crt = document.getElementById(d);
-        if (crt)
-          crt.classList.remove('active-' + this.image.number);
+      for (let row of this.stockIconDivs) {
+        for (let d of row) {
+          var crt = document.getElementById(d);
+          if (crt)
+            crt.classList.remove('active-' + this.image.number);
+        }
       }
     },
     getIdStock(row, col) {

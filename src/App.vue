@@ -1,15 +1,25 @@
 <template>
   <v-app>
     <!-- TODO img bg en fonction du jeu ? src="..." -->
-    <v-app-bar app dense dark>
+    <v-app-bar app dense dark :src="game.bgSrc">
       <v-toolbar-title>
-        <v-select style="width: 12em;" class="mr-2" v-model="game" :items="games" filled dense hide-details></v-select>
+        <v-select style="width: 12em;" class="mr-2" 
+            @change="updateGame"
+            v-model="game" :items="games" item-text="name" item-value="id"
+            filled dense dark hide-details color="light-blue" item-color="blue">
+          <template v-slot:selection="{ item }">
+            <img :src="item.src" class="mr-2" width="32" height="32"> {{ item.name }}
+          </template>
+          <template v-slot:item="{ item }">
+            <img :src="item.src" class="mr-2" width="32" height="32"> {{ item.name }}
+          </template>
+        </v-select>
       </v-toolbar-title>
       <v-toolbar-title>Thumbnail Generator</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn dark color="primary" @click="exportPNG">
+      <v-btn dark color="light-blue" @click="exportPNG">
         <v-icon dark left>mdi-image-move</v-icon>
         PNG
       </v-btn>
@@ -74,7 +84,7 @@
       </v-btn>
       <!-- TODO autres icon ? langage ? -->
     </v-app-bar>
-    <v-main style="background-color:black">
+    <v-main style="background-color: black">
       <thumbnail ref="main" msg="Smash Thumbnail Generator" v-on:export="exportPNG($event)"/>
     </v-main>
   </v-app>
@@ -82,21 +92,31 @@
 
 <script>
 import Thumbnail from './components/Thumbnail.vue';
+import Games from "./utils/games"
 
 export default {
   name: 'App',
   components: { Thumbnail },
   data() {
     return {
-      game: 'Smash Ultimate',
+      game: null,
       games: ['Smash Ultimate'],
       showCredits: false,
       panel: [0, 1]
     }
   },
+  created() {
+    this.games = Games.GAMES;
+    this.game = this.games[0];
+  },
   methods: {
     exportPNG() {
       this.$refs.main.exportPNG();
+    },
+    updateGame(id) {
+      this.game = this.games[id];
+      console.log('.. change game', this.game.name);
+      this.$refs.main.updateGame(this.game);
     }
   }
 }
@@ -108,5 +128,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+.v-toolbar__image {
+  opacity: 0.15;
 }
 </style>

@@ -63,7 +63,7 @@ class Player {
         this.canvas.renderAll();
     }
 
-    addImg() {
+    addImg(game) {
         // separator
         this.canvas.add(this.tmpCharSeparator);
         this.tmpCharSeparator.moveTo(125);
@@ -71,7 +71,7 @@ class Player {
         let img0 = this.charArray[0];
 
         // random char
-        var char1 = Utils.getRandomCharUlt();
+        var char1 = Utils.getRandomChar(game);
         let newX1 = -100, newY1 = 205;
         var imgOpt;
         var clipPath, clipPath0;

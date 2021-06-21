@@ -7,7 +7,7 @@
         <v-text-field v-model="j1.tag" color="red" background-color="red lighten-5" dense shaped filled hide-details onClick="this.select();" />
         <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" :image="j1.firstCharacter" />
         <stock-icon-picker v-if="j1.charArray.length > 1" ref="charJ1bis" :characters="characters" :player="j1" :image="j1.secondCharacter" />
-        <v-btn v-if="j1.charArray.length == 1" @click="addImgJ1" color="light-blue" dark elevation="2" small>
+        <v-btn v-if="j1.charArray.length == 1" @click="j1.addImg(game)" color="light-blue" dark elevation="2" small>
           <v-icon dark>mdi-plus</v-icon>
         </v-btn>
         <v-row no-gutters v-if="j1.charArray.length > 1">
@@ -39,7 +39,7 @@
         <v-text-field v-model="j2.tag" color="blue" background-color="blue lighten-5" dense shaped filled hide-details onClick="this.select();" />
         <stock-icon-picker ref="charJ2" :characters="characters" :player="j2" :image="j2.firstCharacter" />
         <stock-icon-picker v-if="j2.charArray.length > 1" ref="charJ2bis" :characters="characters" :player="j2" :image="j2.secondCharacter" />
-        <v-btn v-if="j2.charArray.length == 1" @click="j2.addImg();" color="light-blue" dark elevation="2" small>
+        <v-btn v-if="j2.charArray.length == 1" @click="j2.addImg(game);" color="light-blue" dark elevation="2" small>
           <v-icon dark>mdi-plus</v-icon>
         </v-btn>
         <v-row no-gutters v-if="j2.charArray.length > 1">
@@ -96,6 +96,8 @@
 import OptionTitle from "../ui/OptionTitle.vue";
 import "vue-select/dist/vue-select.css";
 import StockIconPicker from "../ui/StockIconPicker.vue";
+
+import Utils from "../../utils"
 export default {
   components: { OptionTitle, StockIconPicker },
   props: {
@@ -110,7 +112,9 @@ export default {
     characters: Array,
   },
   data() {
-    return {};
+    return {
+      game: null
+    };
   },
   updated() {
     this.$nextTick(function () {
@@ -129,9 +133,13 @@ export default {
     focusPhase2() {
       this.$refs.phase2Input.focus();
     },
-    selectChar(charJ1, charJ2){
+    selectChar(game, charJ1, charJ2){
+      this.game = game;
+
       this.$refs.charJ1.selectChar(charJ1);
       this.$refs.charJ2.selectChar(charJ2);
+      this.j1.filename = charJ1.getCharUrl();
+      this.j2.filename = charJ2.getCharUrl();
     },
     reversePlayer() {
       // TAG
@@ -141,26 +149,26 @@ export default {
       this.j2.tag = tagJ1;
 
       // CHAR
-      let charJ1 = this.j1.filename;
-      let charJ2 = this.j2.filename;
+      /* let charJ1 = this.j1.filename;
+      let charJ2 = this.j2.filename; */
       let char1 = this.$refs.charJ1.crtCharacter;
       let char2 = this.$refs.charJ2.crtCharacter;
 
-      this.j1.filename = charJ2;
-      this.j2.filename = charJ1;
+      /* this.j1.filename = charJ2;
+      this.j2.filename = charJ1; */
       this.$refs.charJ1.selectChar(char2);
       this.$refs.charJ2.selectChar(char1);
       // TODO flip ?
     },
     reverseCharacter(player) {
-      let charJ1 = player.filename;
-      let charJ2 = player.filename;
+      /* let charJ1 = player.filename;
+      let charJ2 = player.filename; */
 
       let char1 = player === this.j1 ? this.$refs.charJ1.crtCharacter : this.$refs.charJ2.crtCharacter;
       let char2 = player === this.j1 ? this.$refs.charJ1bis.crtCharacter : this.$refs.charJ2bis.crtCharacter;
 
-      player.filename = charJ2;
-      player.filename = charJ1;
+      /* player.filename = charJ2;
+      player.filename = charJ1; */
       if (player === this.j1) {
         this.$refs.charJ1.selectChar(char2);
         this.$refs.charJ1bis.selectChar(char1);
@@ -169,8 +177,16 @@ export default {
         this.$refs.charJ2bis.selectChar(char1);
       }
     },
-    addImgJ1() {
-      this.j1.addImg();
+    updateGame(game) {
+      this.game = game;
+
+      let charJ1 = Utils.getRandomChar(game);
+      let charJ2 = Utils.getRandomChar(game);
+
+      this.j1.filename = charJ1.getCharUrl();
+      this.j2.filename = charJ2.getCharUrl();
+      this.$refs.charJ1.selectChar(charJ1);
+      this.$refs.charJ2.selectChar(charJ2);
     }
   },
   mounted() {

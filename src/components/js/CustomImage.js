@@ -290,6 +290,8 @@ class CustomImage {
 			this._image.setSrc(url, function () {
 				self.canvas.requestRenderAll();
 			});
+			/* this._image.scaleToWidth(this._width);
+			this._image.scaleToHeight(this._height); */
 		}
 	}
 	updateShadow(url) {
@@ -298,6 +300,8 @@ class CustomImage {
 			this._imageShadow.setSrc(url, function () {
 				self.canvas.requestRenderAll();
 			});
+			/* this._imageShadow.scaleToWidth(this._width);
+			this._imageShadow.scaleToHeight(this._height); */
 		}
 	}
 
