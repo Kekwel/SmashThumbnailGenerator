@@ -562,15 +562,19 @@ export default {
         this.j2.removeImg();
       
       this.game = game;
-      switch (game.id) {
-        case 0:
+      switch (game.code) {
+        case 'ult':
           this.characters = Stocks.ULT;
           break;
-        case 1:
+        case 'melee':
           this.characters = Stocks.MELEE
           break;
-        case 2:
+        case 'pplus':
           this.characters = Stocks.PPLUS
+          break;
+        case 'roa':
+          this.characters = Stocks.ROA
+          break;
       }
       this.$refs.confPlayer.updateGame(game);
     }

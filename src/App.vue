@@ -107,13 +107,14 @@ export default {
   },
   created() {
     this.games = Games.GAMES;
-    this.game = this.games[0];
+    this.game = Games.ULT;
   },
   methods: {
     exportPNG() {
       this.$refs.main.exportPNG();
     },
     updateGame(id) {
+      console.log(id, this.games);
       this.game = this.games[id];
       console.log('.. change game', this.game.name);
       this.$refs.main.updateGame(this.game);

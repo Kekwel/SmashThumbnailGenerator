@@ -173,6 +173,23 @@ const pplus = [new Character('pplus', '1', 'Mario', 'mario', THREE_ROW, SIX_COL)
                 new Character('pplus', '42', 'Knuckles', 'knuckles', THREE_ROW, SIX_COL),
         ].sort(compareId);
 
+// --- RoA
+const roa = [new Character('roa', '1', 'Clairen', 'clairen', ONE_ROW, SIX_COL),
+            new Character('roa', '2', 'Forsburn', 'forsburn', ONE_ROW, SIX_COL),
+            new Character('roa', '3', 'Zetterburn', 'zetterburn', ONE_ROW, SIX_COL),
+            new Character('roa', '4', 'Wrastor', 'wrastor', ONE_ROW, SIX_COL),
+            new Character('roa', '5', 'Absa', 'absa', ONE_ROW, SIX_COL),
+            new Character('roa', '6', 'Elliana', 'elliana', ONE_ROW, SIX_COL),
+            new Character('roa', '7', 'Sylvanos', 'sylvanos', ONE_ROW, SIX_COL),
+            new Character('roa', '8', 'Maypul', 'maypul', ONE_ROW, SIX_COL),
+            new Character('roa', '9', 'Kragg', 'kragg', ONE_ROW, SIX_COL),
+            new Character('roa', '10', 'Ori and Sein', 'ori', ONE_ROW, SIX_COL),
+            new Character('roa', '11', 'Shovel Knight', 'shovelknight', ONE_ROW, SIX_COL),
+            new Character('roa', '12', 'Orcane', 'orcane', ONE_ROW, SIX_COL),
+            new Character('roa', '13', 'Etalus', 'etalus', ONE_ROW, SIX_COL),
+            new Character('roa', '14', 'Ranno', 'ranno', ONE_ROW, SIX_COL),
+        ].sort(compareId);
+
 // eslint-disable-next-line no-unused-vars
 function compareName(a, b) {
     var nameA = a.name.toUpperCase(); // ignore upper and lowercase
@@ -195,5 +212,6 @@ function compareId(a, b) {
 export default {
     ULT: ultimate,
     MELEE: melee,
-    PPLUS: pplus
+    PPLUS: pplus,
+    ROA: roa
 }

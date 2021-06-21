@@ -11,15 +11,18 @@ const utils = {
     },
     getRandomChar(game) {
         let characters = Stocks.ULT;
-        switch (game.id) {
-            case 0:
+        switch (game.code) {
+            case 'ult':
                 characters = Stocks.ULT;
                 break;
-            case 1:
+            case 'melee':
                 characters = Stocks.MELEE;
                 break;
-            case 2:
+            case 'pplus':
                 characters = Stocks.PPLUS;
+                break;
+            case 'roa':
+                characters = Stocks.ROA;
                 break;
         }
         var rand = characters[this.getRandomInt(characters.length)];
