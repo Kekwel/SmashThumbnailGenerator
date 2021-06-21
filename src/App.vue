@@ -43,15 +43,14 @@
       <v-btn icon @click.stop="showCredits = true">
         <v-icon>mdi-information-outline</v-icon>
       </v-btn>
-      <v-dialog v-model="showCredits" max-width="500">
+      <v-dialog v-model="showCredits" max-width="700">
         <v-card>
           <v-card-title class="headline">Credits</v-card-title>
           <v-divider class="ma-2"></v-divider>
 
-          <v-card-text style="height: 350px;">
+          <v-card-text>
             <div class="text-h6">Renders</div> 
             <!-- TODO icone jeu ? -->
-            <v-divider class="ma-2"></v-divider>
             <v-btn text small color="primary" href="https://www.deviantart.com/rapbattleeditor0510/art/Logos-Super-Smash-Bros-Logo-Icons-737799238" target="_blank">
               <v-icon left>mdi-open-in-new</v-icon> {{ $t("credits.icon") }}
             </v-btn><br/>
@@ -69,10 +68,12 @@
             </v-btn><br/>
             <v-btn text small color="primary" href="https://drive.google.com/drive/folders/1SMjNgynt7c-VdKJJ9_wTcKSasS2NcVSF" target="_blank">
               <v-icon left>mdi-open-in-new</v-icon> Rivals of Aether
-            </v-btn>{{ $t("credits.custom") }}
+            </v-btn>{{ $t("credits.custom") }}<br />
+            {{ $t("credits.characters") }}
 
-            <div class="text-h6">{{ $t("credits.fonts") }}</div>
             <v-divider class="ma-2"></v-divider>
+            <div class="text-h6">{{ $t("credits.fonts") }}</div>
+
             <v-btn text small color="primary" href="https://www.dafontfree.net/freefonts-futura-f30.htm" target="_blank" style="font-family: Futura Bold">
               <v-icon left>mdi-open-in-new</v-icon> Futura
             </v-btn>
@@ -91,6 +92,10 @@
             <v-btn text small color="primary" href="https://www.dafont.com/heroes-legend.font" target="_blank" style="font-family: Heroes Legend">
               <v-icon left>mdi-open-in-new</v-icon> Heroes Legend
             </v-btn>
+
+            <v-divider class="ma-2"></v-divider>
+            Made with <a href="https://vuejs.org/" target="_blank"><img :src="getVuejsSVG()" width="16" height="16"/>VueJS</a> 
+            and <a href="https://v2.vuetifyjs.com/" target="_blank"><img :src="getVuetifySVG()" width="16" height="16"/>Vuetify</a>
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -119,6 +124,7 @@
 <script>
 import Thumbnail from './components/Thumbnail.vue';
 import Games from "./utils/games"
+import Utils from "./utils"
 import CountryFlag from 'vue-country-flag'
 
 export default {
@@ -158,6 +164,12 @@ export default {
       if (this.$i18n.locale !== locale) {
         this.$i18n.locale = locale;
       }
+    },
+    getVuejsSVG() {
+      return Utils.getRoot() + 'img/icons/vuejs.svg';
+    },
+    getVuetifySVG() {
+      return Utils.getRoot() + 'img/icons/vuetify.svg';
     }
   }
 }

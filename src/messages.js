@@ -3,7 +3,8 @@ const messages = {
     credits: {
       icon: 'Icônes Smash Bros',
       custom: '- custom stock icones RoA par moi-même',
-      fonts: 'Polices d\'écriture'
+      fonts: 'Polices d\'écriture',
+      characters: 'Tous les éléments des jeux appartiennent à leurs créateurs respectifs'
     },
     button: {
       export: 'EXPORT',
@@ -58,7 +59,8 @@ const messages = {
     credits: {
       icon: 'Smash Bros Icons',
       custom: '- custom stock icones RoA made by myself',
-      fonts: 'Fonts'
+      fonts: 'Fonts',
+      characters: 'All game assets belong to their respective creators'
     },
     button: {
       export: 'EXPORT',
