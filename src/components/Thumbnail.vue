@@ -575,6 +575,8 @@ export default {
         case 'roa':
           this.characters = Stocks.ROA
           break;
+        default:
+          this.characters = [];
       }
       this.$refs.confPlayer.updateGame(game);
     }

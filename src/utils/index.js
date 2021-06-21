@@ -24,15 +24,21 @@ const utils = {
             case 'roa':
                 characters = Stocks.ROA;
                 break;
+            default:
+                characters = [];
+                break;
         }
         var rand = characters[this.getRandomInt(characters.length)];
-        // tant que random
-        while (rand._id === '?') {
-            rand = this.getRandomChar(game);
+
+        if (rand) {
+            // tant que random
+            while (rand._id === '?') {
+                rand = this.getRandomChar(game);
+            }
+            // -- random costume
+            var randCostum = this.pad(this.getRandomInt(rand.maxCol), 2);
+            rand.col = randCostum;
         }
-        // -- random costume
-        var randCostum = this.pad(this.getRandomInt(rand.maxCol), 2);
-        rand.col = randCostum;
         return rand;
     },
     getRoot() {

@@ -183,9 +183,17 @@ export default {
       let charJ1 = Utils.getRandomChar(game);
       let charJ2 = Utils.getRandomChar(game);
 
-      this.j1.filename = charJ1.getCharUrl();
-      this.j2.filename = charJ2.getCharUrl();
+      if (charJ1) {
+        this.j1.filename = charJ1.getCharUrl();
+      } else {
+        this.j1.filename = '';
+      }
       this.$refs.charJ1.selectChar(charJ1);
+      if (charJ2) {
+        this.j2.filename = charJ2.getCharUrl();
+      } else {
+        this.j2.filename = '';
+      }
       this.$refs.charJ2.selectChar(charJ2);
     }
   },

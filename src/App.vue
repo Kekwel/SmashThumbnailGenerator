@@ -8,10 +8,10 @@
             v-model="game" :items="games" item-text="name" item-value="id"
             filled dense dark hide-details color="light-blue" item-color="blue">
           <template v-slot:selection="{ item }">
-            <img :src="item.src" class="mr-2" width="32" height="32"> {{ item.name }}
+            <img :src="item.src" class="mr-2" width="32" height="32" :style="item.id == 0 ? 'opacity: 0;' : ''"> {{ item.name }}
           </template>
           <template v-slot:item="{ item }">
-            <img :src="item.src" class="mr-2" width="32" height="32"> {{ item.name }}
+            <img :src="item.src" class="mr-2" width="32" height="32" :style="item.id == 0 ? 'opacity: 0;' : ''"> {{ item.name }}
           </template>
         </v-select>
       </v-toolbar-title>
@@ -159,28 +159,17 @@ export default {
     },
     randomPNG() {
       this.updateGame(this.game.id);
-
       // spin icon
-      /* let icon = document.getElementById('refresh-icon')
-      if (this.spin){
-        icon.className = 'refresh';  
-      } else{
-        icon.className = 'refresh spin';
-      } */
-
       this.spin = !this.spin;
     },
     updateGame(id) {
-      console.log(id, this.games);
       this.game = this.games[id];
       console.log('.. change game', this.game.name);
       this.$refs.main.updateGame(this.game);
     },
     updateLocale(locale) {
-      console.log('lang', locale);
-      if (this.$i18n.locale !== locale) {
+      if (this.$i18n.locale !== locale)
         this.$i18n.locale = locale;
-      }
     },
     getVuejsSVG() {
       return Utils.getRoot() + 'img/icons/vuejs.svg';
