@@ -35,12 +35,28 @@
           <v-card-title class="headline">Credits</v-card-title>
           <v-divider class="ma-2"></v-divider>
 
-          <v-card-text style="height: 300px;">
+          <v-card-text style="height: 350px;">
             <div class="text-h6">Renders</div> 
+            <!-- TODO icone jeu ? -->
             <v-divider class="ma-2"></v-divider>
+            <v-btn text small color="primary" href="https://www.deviantart.com/rapbattleeditor0510/art/Logos-Super-Smash-Bros-Logo-Icons-737799238" target="_blank">
+              <v-icon left>mdi-open-in-new</v-icon> Icônes Smash Bros
+            </v-btn><br/>
             <v-btn text small color="primary" href="https://www.spriters-resource.com/nintendo_switch/supersmashbrosultimate/" target="_blank">
               <v-icon left>mdi-open-in-new</v-icon> Super Smash Bros Ultimate
-            </v-btn>
+            </v-btn><br/>
+            <v-btn text small color="primary" href="https://www.reddit.com/r/smashbros/comments/4khef3/melee_full_classic_mode_poses_good_for_streams/" target="_blank">
+              <v-icon left>mdi-open-in-new</v-icon> Super Smash Bros Melee Classic mode poses
+            </v-btn><br/>
+            <v-btn text small color="primary" href="https://assets.melee.tv/" target="_blank">
+              <v-icon left>mdi-open-in-new</v-icon> Super Smash Bros Melee HD
+            </v-btn><br/>
+            <v-btn text small color="primary" href="https://projectplusgame.com/download/" target="_blank">
+              <v-icon left>mdi-open-in-new</v-icon> Project +
+            </v-btn><br/>
+            <v-btn text small color="primary" href="https://drive.google.com/drive/folders/1SMjNgynt7c-VdKJJ9_wTcKSasS2NcVSF" target="_blank">
+              <v-icon left>mdi-open-in-new</v-icon> Rivals of Aether
+            </v-btn>- custom stock icones by me
 
             <div class="text-h6">Polices d'écritures</div>
             <v-divider class="ma-2"></v-divider>
