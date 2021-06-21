@@ -17,6 +17,9 @@
       </v-toolbar-title>
       <v-toolbar-title>Thumbnail Generator</v-toolbar-title>
 
+      <v-btn class="ml-2" dark x-small fab color="lime" @click="randomPNG();">
+        <v-icon id="refresh-icon" :class="spin ? 'refresh' : 'refresh spin'" color="black">mdi-autorenew</v-icon>
+      </v-btn>
       <v-spacer></v-spacer>
 
       <v-btn dark color="light-blue" @click="exportPNG">
@@ -142,7 +145,8 @@ export default {
       }, {
         locale: 'en',
         flag: 'gb'
-      }]
+      }],
+      spin: false
     }
   },
   created() {
@@ -152,6 +156,19 @@ export default {
   methods: {
     exportPNG() {
       this.$refs.main.exportPNG();
+    },
+    randomPNG() {
+      this.updateGame(this.game.id);
+
+      // spin icon
+      /* let icon = document.getElementById('refresh-icon')
+      if (this.spin){
+        icon.className = 'refresh';  
+      } else{
+        icon.className = 'refresh spin';
+      } */
+
+      this.spin = !this.spin;
     },
     updateGame(id) {
       console.log(id, this.games);
@@ -170,7 +187,7 @@ export default {
     },
     getVuetifySVG() {
       return Utils.getRoot() + 'img/icons/vuetify.svg';
-    }
+    },
   }
 }
 </script>
@@ -184,5 +201,13 @@ export default {
 }
 .v-toolbar__image {
   opacity: 0.15;
+}
+.refresh{
+  transform: rotate(0deg);
+  transition: transform 0.5s linear;
+}
+.refresh.spin{
+  transform: rotate(360deg);
+  transition: transform 0.5s linear;
 }
 </style>
