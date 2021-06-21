@@ -3,29 +3,29 @@
     <v-row no-gutters>
       <v-col>
         <!-- Export / Import -->
-        <option-title :title="'Export/Import layout'"/>
+        <option-title :title="$t('title.export')"/>
 
         <v-btn dark color="primary" @click="$emit('export-json')">
           <v-icon dark left>mdi-download</v-icon>
-          EXPORT
+          {{ $t('button.export') }}
         </v-btn>
         <v-btn :loading="isSelecting" @click="onButtonClick">
           <v-icon dark left>mdi-upload</v-icon>
-          IMPORT
+          {{ $t('button.import') }}
         </v-btn>
         <input ref="uploader" class="d-none" type="file" accept="text/plain" @change="$emit('import-json', $event.target.files[0])">
 
-        <v-select class="mt-4" :items="layouts" item-text="name" item-value="layout" label="Layouts" dense hide-details v-model="crtLayout" @change="updateLayout"></v-select>
+        <v-select class="mt-4" :items="layouts" item-text="name" item-value="layout" :label="$t('label.layouts')" dense hide-details v-model="crtLayout" @change="updateLayout"></v-select>
 
         <v-divider class="mt-4"/>
 
         <!-- Grid -->
-        <option-title class="mt-2" title="Grid"/>
-        <v-switch class="mt-2" v-model="isDisplayGrid" label="Affichage Grid" @change="updateGrid" :loading="loadingGrid" />
+        <option-title class="mt-2" :title="$t('title.grid')"/>
+        <v-switch class="mt-2" v-model="isDisplayGrid" :label="$t('label.grid')" @change="updateGrid" :loading="loadingGrid" />
         
         <v-divider class="mt-4"/>
-        <option-title class="mt-2" title="TimeStamp"/>
-        <v-switch class="mt-2" v-model="isDisplayTS" label="Affichage Timestamp Youtube" @change="updateTimestamp" />
+        <option-title class="mt-2" :title="$t('title.timestamp')"/>
+        <v-switch class="mt-2" v-model="isDisplayTS" :label="$t('label.timestamp')" @change="updateTimestamp" />
       </v-col>
     </v-row>
   </v-container>

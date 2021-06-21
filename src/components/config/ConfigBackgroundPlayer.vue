@@ -1,11 +1,11 @@
 <template>
   <div>
-    <option-title :title="'Joueur ' + i" />
-    <color-picker-select ref="bgpicker" :color-options="colors" label="Choix couleur..." input-id="color" v-model="selectedColorHex" :obj="player.bg" />
+    <option-title :title="$t('title.player', { nb: i })" />
+    <color-picker-select ref="bgpicker" :color-options="colors" :label="$t('label.color')" input-id="color" v-model="selectedColorHex" :obj="player.bg" />
 
-    <config-color :ref="'color-bg-' + i" :id="'fondj' + i" :title="'Fond'" :obj="player.bg" :lockTag="lockTag" />
+    <config-color :ref="'color-bg-' + i" :id="'fondj' + i" :title="$t('title.fond')" :obj="player.bg" :lockTag="lockTag" />
     <div v-if="!lockTag">
-      <config-color :ref="'color-tag-' + i" :id="'tagj' + i" :title="'Tag'" :obj="player.myTag" :lockTag="lockTag" />
+      <config-color :ref="'color-tag-' + i" :id="'tagj' + i" :title="$t('title.tag')" :obj="player.myTag" :lockTag="lockTag" />
     </div>
   </div>
 </template>
@@ -28,42 +28,42 @@ export default {
         {
           hex: "#d41619",
           hex2: "#f66e25",
-          name: "Joueur 1",
+          name: `${this.$t('title.player', { nb: 1 })}`,
         },
         {
           hex: "#0049b9",
           hex2: "#0086ea",
-          name: "Joueur 2",
+          name: `${this.$t('title.player', { nb: 2 })}`,
         },
         {
           hex: "#e39802",
           hex2: "#ffc603",
-          name: "Joueur 3",
+          name: `${this.$t('title.player', { nb: 3 })}`,
         },
         {
           hex: "#038223",
           hex2: "#1cc13e",
-          name: "Joueur 4",
+          name: `${this.$t('title.player', { nb: 4 })}`,
         },
         {
           hex: "#a24a11",
           hex2: "#ff6e36",
-          name: "Joueur 5",
+          name: `${this.$t('title.player', { nb: 5 })}`,
         },
         {
           hex: "#0cb7b0",
           hex2: "#63c7e3",
-          name: "Joueur 6",
+          name: `${this.$t('title.player', { nb: 6 })}`,
         },
         {
           hex: "#df2c87",
           hex2: "#b17084",
-          name: "Joueur 7",
+          name: `${this.$t('title.player', { nb: 7 })}`,
         },
         {
           hex: "#552ead",
           hex2: "#726eba",
-          name: "Joueur 8",
+          name: `${this.$t('title.player', { nb: 8 })}`,
         },
       ],
     };

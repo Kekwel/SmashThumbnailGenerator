@@ -6,9 +6,9 @@
           id="imgUpload"
           @change="addImg"
           accept="image/png, image/jpeg, image/bmp" 
-          placeholder="Choisissez une image" 
+          :placeholder="$t('placeholder.image')" 
           prepend-icon="mdi-image-plus" 
-          label="Nouvel image"></v-file-input>
+          :label="$t('label.img.new')"></v-file-input>
 
         <div v-for="img in orderedImages" :key="img.id">
           <v-card class="mx-auto" max-width="344">

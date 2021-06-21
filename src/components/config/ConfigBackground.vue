@@ -4,12 +4,12 @@
       <v-col>
         <!-- use same color/gradient -->
         <!-- TODO explication -->
-        <v-checkbox v-model="isLockTag" @change="lockTag($event)" label="Couleur bandeau lié (Tag, Phases)" hide-details dense></v-checkbox>
+        <v-checkbox v-model="isLockTag" @change="lockTag($event)" :label="$t('label.bindTag')" hide-details dense></v-checkbox>
 
         <v-row class="center" no-gutters v-if="isLockTag">
           <v-col>
-            <option-title title="Tag & Phases" />
-            <config-color ref="allBandeau" :title="'Fond'" :objs="[j1.myTag, j2.myTag, phase1, phase2]" :lockTag="isLockTag" />
+            <option-title :title="$t('title.tagAndPhases')" />
+            <config-color ref="allBandeau" :title="$t('title.fond')" :objs="[j1.myTag, j2.myTag, phase1, phase2]" :lockTag="isLockTag" />
           </v-col>
         </v-row>
 
@@ -30,13 +30,13 @@
 
         <v-row class="center" no-gutters v-if="!isLockTag">
           <v-col md="6" sm="12">
-            <option-title :title="'Phase 1'" />
-            <config-color ref="p1BG" :id="'phase1'" :title="'Fond'" :obj="phase1" :lockTag="isLockTag" />
+            <option-title :title="$t('title.phase', { nb: '1' })" />
+            <config-color ref="p1BG" :id="'phase1'" :title="$t('title.fond')" :obj="phase1" :lockTag="isLockTag" />
           </v-col>
 
           <v-col md="6" sm="12">
-            <option-title :title="'Phase 2'" />
-            <config-color ref="p2BG" :id="'phase2'" :title="'Fond'" :obj="phase2" :lockTag="isLockTag" />
+            <option-title :title="$t('title.phase', { nb: '2' })" />
+            <config-color ref="p2BG" :id="'phase2'" :title="$t('title.fond')" :obj="phase2" :lockTag="isLockTag" />
           </v-col>
         </v-row>
       </v-col>

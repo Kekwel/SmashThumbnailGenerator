@@ -27,6 +27,19 @@
       <v-spacer></v-spacer>
 
       <!-- TODO components -->
+      <v-select style="width: 5em; flex: none;" class="mr-2" 
+        @change="updateLocale"
+        v-model="$i18n.locale" :items="locales" item-text="locale" item-value="locale"
+        filled dense dark hide-details color="light-red" item-color="red">
+        <template v-slot:selection="{ item }">
+          <country-flag :country='item.flag'/>
+        </template>
+        <template v-slot:item="{ item }">
+          <country-flag :country='item.flag'/>
+        </template>
+      </v-select>
+      <v-divider class="mx-1" inset vertical></v-divider>
+
       <v-btn icon @click.stop="showCredits = true">
         <v-icon>mdi-information-outline</v-icon>
       </v-btn>
@@ -40,7 +53,7 @@
             <!-- TODO icone jeu ? -->
             <v-divider class="ma-2"></v-divider>
             <v-btn text small color="primary" href="https://www.deviantart.com/rapbattleeditor0510/art/Logos-Super-Smash-Bros-Logo-Icons-737799238" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Icônes Smash Bros
+              <v-icon left>mdi-open-in-new</v-icon> {{ $t("credits.icon") }}
             </v-btn><br/>
             <v-btn text small color="primary" href="https://www.spriters-resource.com/nintendo_switch/supersmashbrosultimate/" target="_blank">
               <v-icon left>mdi-open-in-new</v-icon> Super Smash Bros Ultimate
@@ -56,22 +69,10 @@
             </v-btn><br/>
             <v-btn text small color="primary" href="https://drive.google.com/drive/folders/1SMjNgynt7c-VdKJJ9_wTcKSasS2NcVSF" target="_blank">
               <v-icon left>mdi-open-in-new</v-icon> Rivals of Aether
-            </v-btn>- custom stock icones by me
+            </v-btn>{{ $t("credits.custom") }}
 
-            <div class="text-h6">Polices d'écritures</div>
+            <div class="text-h6">{{ $t("credits.fonts") }}</div>
             <v-divider class="ma-2"></v-divider>
-            <v-btn text small color="primary" href="https://www.dafont.com/blacklisted.font" target="_blank" style="font-family: BlackListed">
-              <v-icon left>mdi-open-in-new</v-icon> BlackListed
-            </v-btn>
-            <v-btn text small color="primary" href="https://www.dafont.com/heroes-legend.font" target="_blank" style="font-family: Heroes Legend">
-              <v-icon left>mdi-open-in-new</v-icon> Heroes Legend
-            </v-btn>
-            <v-btn text small color="primary" href="https://www.dafont.com/android-assassin.font" target="_blank" style="font-family: Android Assassin">
-              <v-icon left>mdi-open-in-new</v-icon> Android Assassin
-            </v-btn>
-            <v-btn text small color="primary" href="https://fontsgeek.com/fonts/Gotham-Black-Regular" target="_blank" style="font-family: Gotham Black Regular">
-              <v-icon left>mdi-open-in-new</v-icon> Gotham Black
-            </v-btn>
             <v-btn text small color="primary" href="https://www.dafontfree.net/freefonts-futura-f30.htm" target="_blank" style="font-family: Futura Bold">
               <v-icon left>mdi-open-in-new</v-icon> Futura
             </v-btn>
@@ -80,6 +81,15 @@
             </v-btn>
             <v-btn text small color="primary" href="https://www.dafont.com/blacklisted.font" target="_blank" style="font-family: BlackListed">
               <v-icon left>mdi-open-in-new</v-icon> BlackListed
+            </v-btn>
+            <v-btn text small color="primary" href="https://www.dafont.com/android-assassin.font" target="_blank" style="font-family: Android Assassin">
+              <v-icon left>mdi-open-in-new</v-icon> Android Assassin
+            </v-btn>
+            <v-btn text small color="primary" href="https://fontsgeek.com/fonts/Gotham-Black-Regular" target="_blank" style="font-family: Gotham Black Regular">
+              <v-icon left>mdi-open-in-new</v-icon> Gotham Black
+            </v-btn>
+            <v-btn text small color="primary" href="https://www.dafont.com/heroes-legend.font" target="_blank" style="font-family: Heroes Legend">
+              <v-icon left>mdi-open-in-new</v-icon> Heroes Legend
             </v-btn>
           </v-card-text>
         </v-card>
@@ -109,16 +119,24 @@
 <script>
 import Thumbnail from './components/Thumbnail.vue';
 import Games from "./utils/games"
+import CountryFlag from 'vue-country-flag'
 
 export default {
   name: 'App',
-  components: { Thumbnail },
+  components: { Thumbnail, CountryFlag },
   data() {
     return {
       game: null,
       games: ['Smash Ultimate'],
       showCredits: false,
-      panel: [0, 1]
+      panel: [0, 1],
+      locales: [{
+        locale: 'fr',
+        flag: 'fr'
+      }, {
+        locale: 'en',
+        flag: 'gb'
+      }]
     }
   },
   created() {
@@ -134,6 +152,12 @@ export default {
       this.game = this.games[id];
       console.log('.. change game', this.game.name);
       this.$refs.main.updateGame(this.game);
+    },
+    updateLocale(locale) {
+      console.log('lang', locale);
+      if (this.$i18n.locale !== locale) {
+        this.$i18n.locale = locale;
+      }
     }
   }
 }

@@ -109,7 +109,7 @@ export default {
     // -- J1
     var bgOptions = { width: 640, height: 720, x: 0, y: 0 };
     var bgTagOptions = { width: 640, height: 75, x: 0, y: 0, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ]};
-    var tagOptions = { tag: "Joueur X", x: 0, y: 20, size: 40, color: "#000000" };
+    var tagOptions = { tag: this.$t('title.player', {nb: 'X'}), x: 0, y: 20, size: 40, color: "#000000" };
     // TODO Character unique, là on a un character pour tous les joueurs
     this.charJ1 = this.getRandomChar();
     var imgOpt = { number: 'j1', character: this.charJ1, x: 0, y: 85 };
@@ -125,7 +125,7 @@ export default {
     // -- J2
     bgOptions = { width: 640, height: 720, x: 640, y: 0, colors: [{id: 0, hex: "#0049b9"}, {id: 1, hex: "#0086ea"}]};
     bgTagOptions = { width: 640, height: 75, x: 640, y: 0, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ]};
-    tagOptions = { tag: "Joueur Y", x: 640, y: 20, size: 40, color: "#000000" };
+    tagOptions = { tag: this.$t('title.player', {nb: 'Y'}), x: 640, y: 20, size: 40, color: "#000000" };
     this.charJ2 = this.getRandomChar();
     imgOpt = { number: 'j2', character: this.charJ2, x: 640, y: 85 };
   // TODO class ?

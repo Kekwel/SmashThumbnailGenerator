@@ -3,7 +3,7 @@
   <v-container>
     <v-row no-gutters>
       <v-col>
-        <option-title :title="'Match'" />
+        <option-title :title="$t('title.match')" />
         <v-text-field v-model="j1.tag" color="red" background-color="red lighten-5" dense shaped filled hide-details onClick="this.select();" />
         <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" :image="j1.firstCharacter" />
         <stock-icon-picker v-if="j1.charArray.length > 1" ref="charJ1bis" :characters="characters" :player="j1" :image="j1.secondCharacter" />
@@ -56,7 +56,7 @@
         <v-divider class="mt-2" />
 
         <!-- Phase TODO component -->
-        <option-title :title="'Phase'" />
+        <option-title :title="$t('title.phase', {nb: ''})" />
         <v-radio-group v-model="phase1.txt" row @change="focusPhase1()" hide-details>
           <v-radio label="Pools" value="Pools" />
           <v-radio label="Winners" value="Winners" />
@@ -75,16 +75,16 @@
 
         <v-divider />
 
-        <option-title title="Options" />
+        <option-title :title="$t('title.options')" />
 
         <v-row no-gutters>
           <v-col>
-            <v-checkbox v-model="j1.isTagClipPath" label="ClipPath J1" hide-details />
-            <v-checkbox v-model="j2.isTagClipPath" label="ClipPath J2" hide-details />
+            <v-checkbox v-model="j1.isTagClipPath" :label="$t('label.clippath.player', {opt: '1'})" hide-details />
+            <v-checkbox v-model="j2.isTagClipPath" :label="$t('label.clippath.player', {opt: '2'})" hide-details />
           </v-col>
           <v-col>
-            <v-checkbox v-model="phase1.isClipPath" label="ClipPath Phase 1" hide-details />
-            <v-checkbox v-model="phase2.isClipPath" label="ClipPath Phase 2" hide-details />
+            <v-checkbox v-model="phase1.isClipPath" :label="$t('label.clippath.phase', {opt: '1'})" hide-details />
+            <v-checkbox v-model="phase2.isClipPath" :label="$t('label.clippath.phase', {opt: '2'})" hide-details />
           </v-col>
         </v-row>
       </v-col>

@@ -2,15 +2,15 @@
   <v-container class="pa-2">
     <v-row no-gutters>
       <v-col>
-        <option-title class="pb-4" title="Par défaut" />
+        <option-title class="pb-4" :title="$t('title.default')" />
         <v-row no-gutters>
           <v-col>
-            <v-text-field style="width: 3.5em;" v-model="text.size" label="Taille" dense hide-details />
+            <v-text-field style="width: 3.5em;" v-model="text.size" :label="$t('label.size')" dense hide-details />
             <input type="color" id="head" name="head" v-model="text.HEX" />
             <label for="head"> {{ text.HEX }} </label><br />
 
-            <v-checkbox v-model="text.bold" label="Gras" hide-details dense></v-checkbox>
-            <v-checkbox v-model="text.italic" label="Italique" hide-details dense></v-checkbox>
+            <v-checkbox v-model="text.bold" :label="$t('label.bold')" hide-details dense></v-checkbox>
+            <v-checkbox v-model="text.italic" :label="$t('label.italic')" hide-details dense></v-checkbox>
           </v-col>
 
           <v-col>
@@ -21,7 +21,7 @@
               <v-icon dense dark>mdi-refresh</v-icon>FORCE UPDATE
             </v-btn>
             
-            <v-select class="mt-4" :items="customFonts" item-text="name" label="Custom Font" dense hide-details v-model="customFontFamily" @change="updateCustomFont"></v-select>
+            <v-select class="mt-4" :items="customFonts" item-text="name" :label="$t('label.font.custom')" dense hide-details v-model="customFontFamily" @change="updateCustomFont"></v-select>
           </v-col>
         </v-row>
 
@@ -29,13 +29,13 @@
 
         <v-row no-gutters>
           <v-col>
-            <config-text-player :title="'Joueur 1'" :player="j1" />
+            <config-text-player :title="$t('title.player', {nb: 1})" :player="j1" />
           </v-col>
 
           <v-divider inset vertical class="mx-1"/>
 
           <v-col>
-            <config-text-player :title="'Joueur 2'" :player="j2" />
+            <config-text-player :title="$t('title.player', {nb: 2})" :player="j2" />
           </v-col>
         </v-row>
 
@@ -43,13 +43,13 @@
 
         <v-row no-gutters>
           <v-col>
-            <config-text-player :title="'Phase 1'" :player="phase1" />
+            <config-text-player :title="$t('title.phase', {nb: 1})" :player="phase1" />
           </v-col>
 
           <v-divider inset vertical class="mx-1"/>
 
           <v-col>
-            <config-text-player :title="'Phase 2'" :player="phase2" />
+            <config-text-player :title="$t('title.phase', {nb: 2})" :player="phase2" />
           </v-col>
         </v-row>
 
@@ -57,7 +57,7 @@
 
         <v-row no-gutters>
           <v-col>
-            <config-text-player :title="'Versus'" :player="versus" />
+            <config-text-player :title="$t('title.versus')" :player="versus" />
           </v-col>
         </v-row>
       </v-col>

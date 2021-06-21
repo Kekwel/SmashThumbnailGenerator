@@ -3,7 +3,7 @@
     <option-title class="pb-4" :title="title"/>
     <v-row no-gutters>
       <v-col cols="5">
-        <v-text-field style="width: 3.5em;" v-model="player.size" label="Taille" dense hide-details />
+        <v-text-field style="width: 3.5em;" v-model="player.size" :label="$t('label.size')" dense hide-details />
         <!-- <v-color-picker hide-canvas></v-color-picker> -->
 
         <input type="color" id="head" name="head" v-model="player.color" /> <br />
@@ -42,9 +42,9 @@
       </v-col>
 
       <v-col>
-        <v-checkbox v-model="player.bold" label="Gras" hide-details dense append-icon="mdi-format-bold"></v-checkbox>
-        <v-checkbox v-model="player.italic" label="Italique" hide-details dense append-icon="mdi-format-italic"></v-checkbox>
-        <v-slider v-model="player.angle" label="Angle" :thumb-size="24" thumb-label="always" min="0" max="360" step="5" dense hide-details></v-slider>
+        <v-checkbox v-model="player.bold" :label="$t('label.bold')" hide-details dense append-icon="mdi-format-bold"></v-checkbox>
+        <v-checkbox v-model="player.italic" :label="$t('label.italic')" hide-details dense append-icon="mdi-format-italic"></v-checkbox>
+        <v-slider v-model="player.angle" :label="$t('label.angle')" :thumb-size="24" thumb-label="always" min="0" max="360" step="5" dense hide-details></v-slider>
       </v-col>
     </v-row>
   </div>
