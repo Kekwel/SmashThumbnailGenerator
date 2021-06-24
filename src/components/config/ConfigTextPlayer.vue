@@ -8,7 +8,6 @@
 
         <input type="color" id="head" name="head" v-model="player.color" /> <br />
         <label for="head"> {{ player.color }}</label><br />
-        <!-- <v-color-picker hide-canvas hide-sliders mode="hexa"></v-color-picker> -->
       </v-col>
 
       <v-col cols="7">

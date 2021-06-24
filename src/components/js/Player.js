@@ -156,7 +156,7 @@ class Player {
             player: this._number,
             tag: this.myTag,
 						bg: this.bg,
-            characters: this.firstCharacter()
+            characters: this.firstCharacter
         }
     }
 

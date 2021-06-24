@@ -107,12 +107,12 @@ export default {
     this.characters = Stocks.ULT;
 
     // -- J1
-    var bgOptions = { width: 640, height: 720, x: 0, y: 0 };
+    var bgOptions = { width: 640, height: 720, x: 0, y: 0, index: 0 };
     var bgTagOptions = { width: 640, height: 75, x: 0, y: 0, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ]};
-    var tagOptions = { tag: this.$t('title.player', {nb: 'X'}), x: 0, y: 20, size: 40, color: "#000000" };
+    var tagOptions = { tag: this.$t('title.player', {nb: 'X'}), x: 0, y: 20, size: 40, color: "#000000", index: 4 };
     // TODO Character unique, là on a un character pour tous les joueurs
     this.charJ1 = this.getRandomChar();
-    var imgOpt = { number: 'j1', character: this.charJ1, x: 0, y: 85 };
+    var imgOpt = { number: 'j1', character: this.charJ1, x: 0, y: 85, index: 2 };
     // TODO class ?
     var clipPathJ1 = new fabric.Rect({ width: 640, height: 720, top: 0, left: 0, absolutePositioned: true, strokeWidth: 0 });
     // tag
@@ -123,11 +123,11 @@ export default {
     this.j1 = new Player('j1', this.canvas, tagJ1, imgJ1, bgJ1);
 
     // -- J2
-    bgOptions = { width: 640, height: 720, x: 640, y: 0, colors: [{id: 0, hex: "#0049b9"}, {id: 1, hex: "#0086ea"}]};
+    bgOptions = { width: 640, height: 720, x: 640, y: 0, index: 1};
     bgTagOptions = { width: 640, height: 75, x: 640, y: 0, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ]};
-    tagOptions = { tag: this.$t('title.player', {nb: 'Y'}), x: 640, y: 20, size: 40, color: "#000000" };
+    tagOptions = { tag: this.$t('title.player', {nb: 'Y'}), x: 640, y: 20, size: 40, color: "#000000", index: 5 };
     this.charJ2 = this.getRandomChar();
-    imgOpt = { number: 'j2', character: this.charJ2, x: 640, y: 85 };
+    imgOpt = { number: 'j2', character: this.charJ2, x: 640, y: 85, index: 3 };
   // TODO class ?
     var clipPathJ2 = new fabric.Rect({ width: 640, height: 720, top: 0, left: 640, absolutePositioned: true, strokeWidth: 0 });
     // tag
@@ -139,16 +139,16 @@ export default {
 
     // le VS
     bgTagOptions = { width: 1280, height: 720, x: 0, y: 0, colors: [ { id: 0, hex: "rgba(255, 0, 0, 0)" }, { id: 1, hex: "rgba(255, 0, 0, 0)" } ] };
-    tagOptions = { tag: "VS", size: 99, color: "#000000", bold: true, italic: true };
+    tagOptions = { tag: "VS", size: 99, color: "#000000", bold: true, italic: true, index: 8 };
     this.versus = new CustomText(this.canvas, tagOptions);
 
     // le ou les phases (WF, etc)
     bgTagOptions = { width: 640, height: 75, x: 0, y: 605, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ] };
-    tagOptions = { tag: "Winners", x: 0, y: 605, size: 40, color: "#000000" };
+    tagOptions = { tag: "Winners", x: 0, y: 605, size: 40, color: "#000000", index: 6 };
     this.phase1 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ1);
 
     bgTagOptions = { width: 640, height: 75, x: 640, y: 605, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ] };
-    tagOptions = { tag: "Round 1", x: 640, y: 605, size: 40, color: "#000000" };
+    tagOptions = { tag: "Round 1", x: 640, y: 605, size: 40, color: "#000000", index: 7 };
     this.phase2 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ2);
     
     window.addEventListener("resize", this.resizeCanvas);
@@ -182,8 +182,18 @@ export default {
       strokeWidth: 0,
     });
     // le canvas
-    this.initGridLines();
-    this.displayGrid(false);
+    this.canvas.on({
+      'object:moving': function(e) {
+        e.target.opacity = 0.5;
+      },
+      'object:modified': function(e) {
+        e.target.opacity = 1;
+      }
+    });
+    Utils.initCenteringGuidelines(this.canvas);
+    Utils.initAligningGuidelines(this.canvas);
+    //this.initGridLines();
+    ///this.displayGrid(false);
 
     this.j1.canvas = this.canvas;
     this.j2.canvas = this.canvas;

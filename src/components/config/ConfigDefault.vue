@@ -20,8 +20,8 @@
         <v-divider class="mt-4"/>
 
         <!-- Grid -->
-        <option-title class="mt-2" :title="$t('title.grid')"/>
-        <v-switch class="mt-2" v-model="isDisplayGrid" :label="$t('label.grid')" @change="updateGrid" :loading="loadingGrid" />
+        <!-- <option-title class="mt-2" :title="$t('title.grid')"/>
+        <v-switch class="mt-2" v-model="isDisplayGrid" :label="$t('label.grid')" @change="updateGrid" :loading="loadingGrid" /> -->
         
         <v-divider class="mt-4"/>
         <option-title class="mt-2" :title="$t('title.timestamp')"/>

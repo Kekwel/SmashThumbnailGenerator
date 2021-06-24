@@ -131,7 +131,7 @@ class CustomImage {
 			return;
 		}
 		this.group.addWithUpdate(oImg);
-		this.group.moveTo(100);
+		this.group.moveTo(this._index);
 		this.canvas.requestRenderAll();
 	}
 
