@@ -15,7 +15,7 @@
           </template>
         </v-select>
       </v-toolbar-title>
-      <v-toolbar-title>Thumbnail Generator</v-toolbar-title>
+      <v-toolbar-title>Thumbnail Generator v1.0.1</v-toolbar-title>
 
       <v-btn class="ml-2" dark x-small fab color="lime" @click="randomPNG();">
         <v-icon id="refresh-icon" :class="spin ? 'refresh' : 'refresh spin'" color="black">mdi-autorenew</v-icon>
