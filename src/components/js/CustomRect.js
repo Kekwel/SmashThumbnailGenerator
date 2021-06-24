@@ -20,8 +20,11 @@ class CustomRect {
     _grad;
     _direction;
 
+    _initOpt;
+
     constructor(pCanvas, bgOptions) {
         this._canvas = pCanvas;
+        this._initOpt = bgOptions;
 
         this._width = bgOptions.width || this._width;
         this._height = bgOptions.height || this._height;
@@ -222,6 +225,11 @@ class CustomRect {
         var s = new Option().style;
         s.color = strColor;
         return s.color == strColor;
+    }
+
+    reset() {
+        this.width = this._initOpt.width;
+        this.height = this._initOpt.height;
     }
 }
 

@@ -40,9 +40,15 @@ class CustomText {
   _italic = false;
   _index = 2;
 
+  _initOpt;
+  _initOptBg;
+
   constructor(canvas, tagOptions, bgTagOptions, clipPath) {
     var self = this;
     this._canvas = canvas;
+
+    this._initOpt = tagOptions;
+    this._initOptBg = bgTagOptions;
 
     this._index = tagOptions.index || this._index;
 
@@ -418,6 +424,24 @@ class CustomText {
     }
     if (this.canvas)
       this.canvas.renderAll();
+  }
+
+  reset() {
+    this.x = this._initOpt.x;
+    this.y = this._initOpt.y;
+    this.size = this._initOpt.size;
+    this.color = this._initOpt.color;
+    this.angle = 0;
+    this.text.scaleX = 1;
+    this.text.scaleY = 1;
+
+    if (this._initOptBg) {
+      this.group.scaleX = 1;
+      this.group.scaleY = 1;
+      this.bgTag.reset();
+    }
+
+    this.canvas.renderAll();
   }
 }
 
