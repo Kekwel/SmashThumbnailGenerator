@@ -168,7 +168,6 @@ initCenteringGuidelines(canvas) {
  *
  */
 initAligningGuidelines(canvas) {
-    console.log('salut', canvas);
     let ctx = canvas.getSelectionContext(),
         aligningLineOffset = 5,
         aligningLineMargin = 4,

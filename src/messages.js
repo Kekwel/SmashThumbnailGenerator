@@ -6,6 +6,15 @@ const messages = {
       fonts: 'Polices d\'écriture',
       characters: 'Tous les éléments des jeux appartiennent à leurs créateurs respectifs'
     },
+    component: {
+      player: {
+        background: 'Fond joueur {nb}',
+        tag: 'Bandeau pseudo joueur {nb}',
+        char: 'Personnage joueur {nb}'
+      },
+      versus: 'VS',
+      phase: 'Bandeau phase {nb}'
+    },
     button: {
       export: 'EXPORT',
       import: 'IMPORT'

@@ -438,7 +438,11 @@ class CustomText {
     if (this._initOptBg) {
       this.group.scaleX = 1;
       this.group.scaleY = 1;
-      this.bgTag.reset();
+      this.bgTag.resetSize();
+
+      this.align('center', 'middle');
+    } else {
+      this.text.center();
     }
 
     this.canvas.renderAll();

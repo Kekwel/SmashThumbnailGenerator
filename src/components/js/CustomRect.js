@@ -228,6 +228,13 @@ class CustomRect {
     }
 
     reset() {
+        this.x = this._initOpt.x;
+        this.y = this._initOpt.y;
+        this.rect.scaleX = 1;
+        this.rect.scaleY = 1;
+        this.resetSize();
+    }
+    resetSize() {
         this.width = this._initOpt.width;
         this.height = this._initOpt.height;
     }

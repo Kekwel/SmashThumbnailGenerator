@@ -31,9 +31,13 @@ class CustomImage {
 	_x = 0;
 	_y = 0;
 	_index = 100;
+	_angle = 0;
+
+	_initOpt;
 
 	constructor(canvas, imgOpt, clipPath) {
 		this.canvas = canvas;
+		this._initOpt = imgOpt;
 
 		//this._filename = imgOpt.filename || this._filename;
 		this._character = imgOpt.character || this._character;
@@ -250,6 +254,15 @@ class CustomImage {
 		this.group.set('top', pY);
 		this.canvas.renderAll();
 	}
+	get angle() {
+		return this.group.angle;
+	}
+	set angle(pAngle) {
+		this._angle = pAngle;
+		this.group.set('angle', pAngle);
+		this.canvas.renderAll();
+		return this._angle;
+	}
 
 	initImage(newImg) {
 		this._image = newImg;
@@ -308,6 +321,21 @@ class CustomImage {
 	flip() {
 		this._image.toggle("flipX");
 		this._imageShadow.toggle("flipX");
+		this.canvas.renderAll();
+	}
+
+	reset() {
+		this.x = this._initOpt.x;
+		this.y = this._initOpt.y;
+		this.angle = 0;
+		//this.initImage(this._image);
+		this.group.scaleX = 1;
+		this.group.scaleY = 1;
+		this.group.width = this._width;
+		//this.group.height = this._height;
+
+		this._image.scaleToWidth(this._width);
+		
 		this.canvas.renderAll();
 	}
 }

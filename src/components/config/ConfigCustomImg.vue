@@ -10,28 +10,34 @@
           prepend-icon="mdi-image-plus" 
           :label="$t('label.img.new')"></v-file-input>
 
-        <div v-for="img in orderedImages" :key="img.id">
-          <v-card class="mx-auto" max-width="344">
-            {{ canvas.getObjects().indexOf(img) }} - {{ img.name }}
-            <v-card-actions>
-              <v-btn @click="lowerImgToBottom(img)" dark small :disabled="crtIndex(img) === 0">
-                <v-icon dense>mdi-chevron-double-down</v-icon>
-              </v-btn>
-              <v-btn @click="lowerImg(img)" dark small :disabled="crtIndex(img) === 0">
-                <v-icon dense>mdi-chevron-down</v-icon>
-              </v-btn>
-              <v-btn @click="upperImg(img)" dark small :disabled="crtIndex(img) === maxIndex() - 1">
-                <v-icon dense>mdi-chevron-up</v-icon>
-              </v-btn>
-              <v-btn @click="upperImgToTop(img)" dark small :disabled="crtIndex(img) === maxIndex() - 1">
-                <v-icon dense>mdi-chevron-double-up</v-icon>
-              </v-btn>
-              <v-btn @click="deleteImg(img)" dark small color="error">
-                <v-icon dense>mdi-delete</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </div>        
+        <transition-group name="list" tag="div">
+          <div v-for="(img, idx) in orderedImages" :key="idx">
+            <v-card class="mx-auto" max-width="344">
+              {{ canvas.getObjects().indexOf(img) }} | {{ img.name }}
+              <v-card-actions>
+                <v-btn @click="lowerImgToBottom(img)" dark x-small :disabled="crtIndex(img) === 0">
+                  <v-icon dense>mdi-chevron-double-down</v-icon>
+                </v-btn>
+                <v-btn @click="lowerImg(img)" dark x-small :disabled="crtIndex(img) === 0" color="grey darken-1">
+                  <v-icon dense>mdi-chevron-down</v-icon>
+                </v-btn>
+                <v-btn @click="upperImg(img)" dark x-small :disabled="crtIndex(img) === maxIndex() - 1" color="grey darken-1">
+                  <v-icon dense>mdi-chevron-up</v-icon>
+                </v-btn>
+                <v-btn @click="upperImgToTop(img)" dark x-small :disabled="crtIndex(img) === maxIndex() - 1">
+                  <v-icon dense>mdi-chevron-double-up</v-icon>
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-btn @click="deleteImg(img)" dark small color="error" v-if="!img.customParent">
+                  <v-icon dense>mdi-delete</v-icon>
+                </v-btn>
+                <v-btn @click="img.customParent.reset()" dark small color="cyan" v-if="img.customParent">
+                  <v-icon dense>mdi-sync</v-icon>
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </div>
+        </transition-group>
       </v-col>
     </v-row>
   </v-container>
@@ -41,20 +47,23 @@
 import { fabric } from "fabric";
 import { orderBy } from 'lodash';
 export default {
-  props: {
-    canvas: Object
-  },
+  props: {},
   data() {
     return {
+      canvas: null,
       images: []
     }
-  }, 
+  },
   computed: {
     orderedImages() {
-      return orderBy(this.images, this.crtIndex, 'desc');
+      return this.canvas ? orderBy(this.canvas.getObjects(), this.crtIndex, 'desc') : [];
     }
   },
   methods: {
+    updateCanvas(canvas) {
+      this.canvas = canvas;
+      this.images = canvas ? orderBy(canvas.getObjects(), this.crtIndex, 'desc') : [];
+    },
     crtIndex(img) {
       return this.canvas.getObjects().indexOf(img);
     },
@@ -81,12 +90,16 @@ export default {
         });
       }
     },
+    putImage(img) {
+      this.images.push(img);
+    },
     deleteImg(img) {
       this.canvas.remove(img);
 
       var index = this.images.indexOf(img);
       this.images.splice(index, 1);
     },
+
     goToIndex(img, index) {
       img.moveTo(index);
     },
@@ -104,9 +117,18 @@ export default {
     upperImgToTop(img) {
       this.goToIndex(img, this.maxIndex());
     },
-    putImage(img) {
-      this.images.push(img);
-    }
   },
 };
 </script>
+
+<style scoped>
+.list-enter, .list-leave-to {
+  opacity: 0;
+}
+.list-enter-active, .list-leave-active {
+  transition: opacity 0.5s ease;
+}
+.list-move {
+  transition: transform 0.5s ease-out;
+}
+</style>

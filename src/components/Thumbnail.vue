@@ -11,7 +11,7 @@
           <!-- Icone background ou color -->
           <v-tab><v-icon>mdi-box-shadow</v-icon></v-tab>
           <!-- Image perso -->
-          <v-tab><v-icon>mdi-image-plus</v-icon></v-tab>
+          <v-tab><v-icon>mdi-playlist-plus</v-icon></v-tab>
           <!-- Liste composants -->
           <!-- <v-tab><v-icon>mdi-format-list-bulleted-square</v-icon></v-tab> -->
           <!-- icone cog -->
@@ -32,7 +32,7 @@
             <config-shadow ref="confDef" :j1="j1" :j2="j2" :phase1="phase1" :phase2="phase2" :versus="versus" />
           </v-tab-item>
           <v-tab-item eager>
-            <config-custom-img ref="confImg" :canvas="canvas"/>
+            <config-custom-img ref="confImg"/>
           </v-tab-item>
           <!-- <v-tab-item eager>
             Listing
@@ -117,8 +117,14 @@ export default {
     var clipPathJ1 = new fabric.Rect({ width: 640, height: 720, top: 0, left: 0, absolutePositioned: true, strokeWidth: 0 });
     // tag
     var bgJ1 = new CustomRect(this.canvas, bgOptions);
+    bgJ1.rect.name = this.$t('component.player.background', {nb: '1'});
+    bgJ1.rect.customParent = bgJ1;
     var tagJ1 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ1);
+    tagJ1.group.name = this.$t('component.player.tag', {nb: '1'});
+    tagJ1.group.customParent = tagJ1;
     var imgJ1 = new CustomImage(this.canvas, imgOpt, clipPathJ1);
+    imgJ1.group.name = this.$t('component.player.char', {nb: '1'});
+    imgJ1.group.customParent = imgJ1;
 
     this.j1 = new Player('j1', this.canvas, tagJ1, imgJ1, bgJ1);
 
@@ -132,8 +138,14 @@ export default {
     var clipPathJ2 = new fabric.Rect({ width: 640, height: 720, top: 0, left: 640, absolutePositioned: true, strokeWidth: 0 });
     // tag
     var bgJ2 = new CustomRect(this.canvas, bgOptions);
+    bgJ2.rect.name = this.$t('component.player.background', {nb: '2'});
+    bgJ2.rect.customParent = bgJ2;
     var tagJ2 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ2);
+    tagJ2.group.name = this.$t('component.player.tag', {nb: '2'});
+    tagJ2.group.customParent = tagJ2;
     var imgJ2 = new CustomImage(this.canvas, imgOpt, clipPathJ2);
+    imgJ2.group.name = this.$t('component.player.char', {nb: '2'});
+    imgJ2.group.customParent = imgJ2;
 
     this.j2 = new Player('j2', this.canvas, tagJ2, imgJ2, bgJ2);
 
@@ -141,15 +153,21 @@ export default {
     bgTagOptions = { width: 1280, height: 720, x: 0, y: 0, colors: [ { id: 0, hex: "rgba(255, 0, 0, 0)" }, { id: 1, hex: "rgba(255, 0, 0, 0)" } ] };
     tagOptions = { tag: "VS", size: 99, color: "#000000", bold: true, italic: true, index: 8 };
     this.versus = new CustomText(this.canvas, tagOptions);
+    this.versus.text.name = this.$t('component.versus');
+    this.versus.text.customParent = this.versus;
 
     // le ou les phases (WF, etc)
     bgTagOptions = { width: 640, height: 75, x: 0, y: 605, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ] };
     tagOptions = { tag: "Winners", x: 0, y: 605, size: 40, color: "#000000", index: 6 };
     this.phase1 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ1);
+    this.phase1.group.name = this.$t('component.phase', {nb: '1'});
+    this.phase1.group.customParent = this.phase1;
 
     bgTagOptions = { width: 640, height: 75, x: 640, y: 605, colors: [ { id: 0, hex: "#ffffff" }, { id: 1, hex: "#ffffff" } ] };
     tagOptions = { tag: "Round 1", x: 640, y: 605, size: 40, color: "#000000", index: 7 };
     this.phase2 = new CustomText(this.canvas, tagOptions, bgTagOptions, clipPathJ2);
+    this.phase2.group.name = this.$t('component.phase', {nb: '2'});
+    this.phase2.group.customParent = this.phase2;
     
     window.addEventListener("resize", this.resizeCanvas);
     
@@ -226,6 +244,7 @@ export default {
     this.$refs.confPlayer.selectChar(this.game, this.charJ1, this.charJ2);
     this.$refs.confBG.randomColor();
     this.$refs.confTxt.updateCustomFont();
+    this.$refs.confImg.updateCanvas(this.canvas);
     console.log(this.$options.name + ' component succesfully mounted');
   }, methods: {
     initGridLines() {
