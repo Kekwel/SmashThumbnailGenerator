@@ -28,7 +28,7 @@ class Player {
         else 
             this.tmpCharSeparator = new fabric.Polygon([{x: 1275, y: 0}, {x: 635, y: 720}, {x: 645, y: 720}, {x: 1280, y: 5}, {x: 1280, y: 0}], 
                 {absolutePositioned: true, strokeWidth: 0, perPixelTargetFind: true});
-
+        this.tmpCharSeparator.name = 'Separator ' + nb;
 
         // Background
         this.bg = bg;
@@ -64,11 +64,12 @@ class Player {
     }
 
     addImg(game) {
-        // separator
         this.canvas.add(this.tmpCharSeparator);
-        this.tmpCharSeparator.moveTo(125);
-
+        
         let img0 = this.charArray[0];
+        let idxImg0 = this.canvas.getObjects().indexOf(img0.group);
+        let idxTag = this.canvas.getObjects().indexOf(this.myTag.group);
+        console.log('idx', idxTag);
 
         // random char
         var char1 = Utils.getRandomChar(game);
@@ -81,21 +82,23 @@ class Player {
             clipPath0 = new fabric.Polygon([{x: 0, y: 0}, {x: 640, y: 0}, {x: 640, y: 720}], {absolutePositioned: true, strokeWidth: 0});
             
             clipPath = new fabric.Polygon([{x: 0, y: 0}, {x: 0, y: 720}, {x: 640, y: 720}], {absolutePositioned: true, strokeWidth: 0});
-            imgOpt = { number: this.number, character: char1, x: newX1, y: newY1 };
+            imgOpt = { number: this.number, character: char1, x: newX1, y: newY1, index: idxImg0 };
+            this.tmpCharSeparator.moveTo(idxTag);
         } else {
             img0.x = 640 - 100;
             img0.y = 0;
             clipPath0 = new fabric.Polygon([{x: 1280, y: 0}, {x: 640, y: 0}, {x: 640, y: 720}], {absolutePositioned: true, strokeWidth: 0});
 
             clipPath = new fabric.Polygon([{x: 1280, y: 0}, {x: 1280, y: 720}, {x: 640, y: 720}], {absolutePositioned: true, strokeWidth: 0});
-            imgOpt = {number: this.number, character: char1, x: 640 + 100, y: newY1 };
+            imgOpt = {number: this.number, character: char1, x: 640 + 100, y: newY1, index: idxImg0 };
+            this.tmpCharSeparator.moveTo(idxTag);
         }
         var img = new CustomImage(this.canvas, imgOpt, clipPath);
         img0.group.clipPath = clipPath0;
-
+        
         this.charArray.push(img);
         img.addImg();
-        img.group.moveTo(150);
+        img.group.name = 'Second char ' + this.number;
 
         // set ombre
         this.initNewShadow(img, img0);
