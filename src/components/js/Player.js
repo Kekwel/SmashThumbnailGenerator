@@ -69,7 +69,6 @@ class Player {
         let img0 = this.charArray[0];
         let idxImg0 = this.canvas.getObjects().indexOf(img0.group);
         let idxTag = this.canvas.getObjects().indexOf(this.myTag.group);
-        console.log('idx', idxTag);
 
         // random char
         var char1 = Utils.getRandomChar(game);

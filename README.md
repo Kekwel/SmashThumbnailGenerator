@@ -15,7 +15,8 @@
 [![Product Name Screen Shot][product-screenshot]](https://kekwel.github.io/SmashThumbnailGenerator/)
 
 **Youtube Thumbnail Generator** for Super Smash Bros Ultimate or other plateform versus games.\
-This project is for every person who manages VoDs and want to create a thumbnail quickly !\
+This project is for every person who manages VoDs and want to create a thumbnail quickly !
+
 ⚠️ this project won't replace a graphic designer work, but is here to help people who don't have one or can't afford one.
 
 The rendered picture size is 1280 * 720, the maximum format size for YT thumbnails.
@@ -28,7 +29,7 @@ You can try it there : https://kekwel.github.io/SmashThumbnailGenerator/
 * <a href="https://vuetifyjs.com/" target="_blank"><img src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-dark.svg" width="32" height="32" alt="Vuetify icon">  Vuetify</a>
 
 <!-- GETTING STARTED -->
-## Project setup
+## Project setup (local)
 ```
 npm install
 ```
@@ -61,9 +62,6 @@ npm run serve
 ## Contact
 
 Kekwel - [@Kekwel_SSB](https://twitter.com/Kekwel_SSB)
-
-Project Link: [https://github.com/Kekwel/SmashThumbnailGenerator](https://github.com/Kekwel/SmashThumbnailGenerator)
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
