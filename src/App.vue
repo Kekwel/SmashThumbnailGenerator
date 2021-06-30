@@ -17,9 +17,15 @@
       </v-toolbar-title>
       <v-toolbar-title>Thumbnail Generator v1.0.1</v-toolbar-title>
 
-      <v-btn class="ml-2" dark x-small fab color="lime" @click="randomPNG();">
-        <v-icon id="refresh-icon" :class="spin ? 'refresh' : 'refresh spin'" color="black">mdi-autorenew</v-icon>
-      </v-btn>
+      
+      <v-tooltip right>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="ml-2" dark x-small fab color="lime" @click="randomPNG();" v-bind="attrs" v-on="on">
+            <v-icon id="refresh-icon" :class="spin ? 'refresh' : 'refresh spin'" color="black">mdi-autorenew</v-icon>
+          </v-btn>
+        </template>
+        <span>{{ $t('tooltip.random') }}</span>
+      </v-tooltip>
       <v-spacer></v-spacer>
 
       <v-btn dark color="light-blue" @click="exportPNG">
@@ -43,9 +49,14 @@
       </v-select>
       <v-divider class="mx-1" inset vertical></v-divider>
 
-      <v-btn icon @click.stop="showCredits = true">
-        <v-icon>mdi-information-outline</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon @click.stop="showCredits = true" v-bind="attrs" v-on="on">
+            <v-icon>mdi-information-outline</v-icon>
+          </v-btn>
+        </template>
+        <span>{{ $t('tooltip.menu.credits') }}</span>
+      </v-tooltip>
       <v-dialog v-model="showCredits" max-width="700">
         <v-card>
           <v-card-title class="headline">Credits</v-card-title>
@@ -99,24 +110,40 @@
             <v-divider class="ma-2"></v-divider>
             Made with <a href="https://vuejs.org/" target="_blank"><img :src="getVuejsSVG()" width="16" height="16"/>VueJS</a> 
             and <a href="https://v2.vuetifyjs.com/" target="_blank"><img :src="getVuetifySVG()" width="16" height="16"/>Vuetify</a>
+            by Kekwel (c'est moi)
           </v-card-text>
         </v-card>
       </v-dialog>
       <v-divider class="mx-1" inset vertical></v-divider>
 
-      <v-btn icon href="https://twitter.com/Kekwel_SSB" target="_blank">
-        <v-icon>mdi-twitter</v-icon>
-      </v-btn>
-      <v-btn icon href="https://discordapp.com/users/283681024360054785" target="_blank">
-        <v-icon>mdi-discord</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon href="https://twitter.com/Kekwel_SSB" target="_blank" v-bind="attrs" v-on="on">
+            <v-icon>mdi-twitter</v-icon>
+          </v-btn>
+        </template>
+        <span>{{ $t('tooltip.menu.twitter') }}</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon href="https://discordapp.com/users/283681024360054785" target="_blank" v-bind="attrs" v-on="on">
+            <v-icon>mdi-discord</v-icon>
+          </v-btn>
+        </template>
+        <span>{{ $t('tooltip.menu.discord') }}</span>
+      </v-tooltip>
 
       <v-divider class="mx-1" inset vertical></v-divider>
 
-      <v-btn icon href="https://github.com/Kekwel/SmashThumbnailGenerator" target="_blank">
-        <v-icon>mdi-github</v-icon>
-      </v-btn>
-      <!-- TODO autres icon ? langage ? -->
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon href="https://github.com/Kekwel/SmashThumbnailGenerator" target="_blank" v-bind="attrs" v-on="on">
+            <v-icon>mdi-github</v-icon>
+          </v-btn>
+        </template>
+        <span>{{ $t('tooltip.menu.github') }}</span>
+      </v-tooltip>
+      <!-- TODO autres icon ? -->
     </v-app-bar>
     <v-main style="background-color: black">
       <thumbnail ref="main" msg="Smash Thumbnail Generator" v-on:export="exportPNG($event)"/>

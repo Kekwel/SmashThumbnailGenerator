@@ -7,7 +7,7 @@
         </div>
         <v-row no-gutters>
           <v-col>
-            <v-text-field type="number" style="width: 3.5em;" v-model="img.left" label="X" dense hide-details @change="updateX" />
+            <v-text-field style="width: 3.5em;" v-model="img.left" label="X" dense hide-details @change="updateX" />
           </v-col>
           <v-col>
             <v-text-field style="width: 3.5em;" v-model="img.top" label="Y" dense hide-details @change="updateY" />

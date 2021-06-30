@@ -62,6 +62,19 @@ const messages = {
     },
     placeholder: {
       image: 'Choisissez une image'
+    },
+    tooltip: {
+      random: 'Personnages aléatoires !',
+      clippath: 'Empêche un élément d\'être affiché sur une zone',
+      btn: {
+        reset: 'Réinitialisation'
+      },
+      menu: {
+        credits: 'Credits',
+        twitter: 'Twitter',
+        discord: 'ID Discord',
+        github: 'Github Repo'
+      }
     }
   },
   en: {
@@ -118,6 +131,19 @@ const messages = {
     },
     placeholder: {
       image: 'Choose a picture'
+    },
+    tooltip: {
+      random: 'Random characters !',
+      clippath: 'Prevents an element from being displayed on an area',
+      btn: {
+        reset: 'Reset'
+      },
+      menu: {
+        credits: 'Credits',
+        twitter: 'Twitter',
+        discord: 'Discord ID',
+        github: 'Github Repo'
+      }
     }
   }
 }

@@ -32,9 +32,14 @@
                   <v-btn @click="deleteImg(img)" dark small color="error" v-if="!img.customParent">
                     <v-icon dense>mdi-delete</v-icon>
                   </v-btn>
-                  <v-btn @click="img.customParent.reset()" dark small color="cyan" v-if="img.customParent">
-                    <v-icon dense>mdi-sync</v-icon>
-                  </v-btn>
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn @click="img.customParent.reset()" dark small color="cyan" v-if="img.customParent" v-bind="attrs" v-on="on">
+                        <v-icon dense>mdi-sync</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ $t('tooltip.btn.reset') }}</span>
+                  </v-tooltip>
                 </v-card-actions>
               </v-card>
             <!-- </div> -->

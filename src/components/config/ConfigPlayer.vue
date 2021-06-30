@@ -75,7 +75,7 @@
 
         <v-divider />
 
-        <option-title :title="$t('title.options')" />
+        <option-title :title="$t('title.options')" :tooltip="$t('tooltip.clippath')"/>
 
         <v-row no-gutters>
           <v-col>
@@ -113,7 +113,7 @@ export default {
   },
   data() {
     return {
-      game: null
+      game: null,
     };
   },
   updated() {
