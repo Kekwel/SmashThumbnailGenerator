@@ -199,6 +199,8 @@ export default {
       preserveObjectStacking: true,
       strokeWidth: 0,
     });
+    document.getElementById("can").fabric = this.canvas;
+    
     // le canvas
     this.canvas.on({
       'object:moving': function(e) {

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-2" style="height: 94vh;">
+  <v-container class="pa-2" style="height: 100%;">
     <v-row no-gutters>
       <v-col>
         <v-file-input 
@@ -10,34 +10,35 @@
           prepend-icon="mdi-image-plus" 
           :label="$t('label.img.new')"></v-file-input>
 
-        <transition-group name="list" tag="div">
-          <div v-for="(img, idx) in orderedImages" :key="idx">
-            <v-card class="mx-auto" max-width="344">
-              {{ canvas.getObjects().indexOf(img) }} | {{ img.name }}
-              <v-card-actions>
-                <v-btn @click="lowerImgToBottom(img)" dark x-small :disabled="crtIndex(img) === 0">
-                  <v-icon dense>mdi-chevron-double-down</v-icon>
-                </v-btn>
-                <v-btn @click="lowerImg(img)" dark x-small :disabled="crtIndex(img) === 0" color="grey darken-1">
-                  <v-icon dense>mdi-chevron-down</v-icon>
-                </v-btn>
-                <v-btn @click="upperImg(img)" dark x-small :disabled="crtIndex(img) === maxIndex() - 1" color="grey darken-1">
-                  <v-icon dense>mdi-chevron-up</v-icon>
-                </v-btn>
-                <v-btn @click="upperImgToTop(img)" dark x-small :disabled="crtIndex(img) === maxIndex() - 1">
-                  <v-icon dense>mdi-chevron-double-up</v-icon>
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn @click="deleteImg(img)" dark small color="error" v-if="!img.customParent">
-                  <v-icon dense>mdi-delete</v-icon>
-                </v-btn>
-                <v-btn @click="img.customParent.reset()" dark small color="cyan" v-if="img.customParent">
-                  <v-icon dense>mdi-sync</v-icon>
-                </v-btn>
-              </v-card-actions>
-            </v-card>
+          <div>
+            <!-- <div v-for="(img, idx) in orderedImages" :key="idx"> -->
+              <!-- TODO custom component pour watch IMG tranquil -->
+              <v-card v-for="(img, idx) in orderedImages" :key="idx" class="mx-auto mb-2" max-width="344" elevation="2">
+                <info-component :index="canvas.getObjects().indexOf(img)" :img="img" />
+                <v-card-actions>
+                  <v-btn @click="lowerImgToBottom(img)" dark x-small :disabled="crtIndex(img) === 0">
+                    <v-icon dense>mdi-chevron-double-down</v-icon>
+                  </v-btn>
+                  <v-btn @click="lowerImg(img)" dark x-small :disabled="crtIndex(img) === 0" color="grey darken-1">
+                    <v-icon dense>mdi-chevron-down</v-icon>
+                  </v-btn>
+                  <v-btn @click="upperImg(img)" dark x-small :disabled="crtIndex(img) === maxIndex() - 1" color="grey darken-1">
+                    <v-icon dense>mdi-chevron-up</v-icon>
+                  </v-btn>
+                  <v-btn @click="upperImgToTop(img)" dark x-small :disabled="crtIndex(img) === maxIndex() - 1">
+                    <v-icon dense>mdi-chevron-double-up</v-icon>
+                  </v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn @click="deleteImg(img)" dark small color="error" v-if="!img.customParent">
+                    <v-icon dense>mdi-delete</v-icon>
+                  </v-btn>
+                  <v-btn @click="img.customParent.reset()" dark small color="cyan" v-if="img.customParent">
+                    <v-icon dense>mdi-sync</v-icon>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            <!-- </div> -->
           </div>
-        </transition-group>
       </v-col>
     </v-row>
   </v-container>
@@ -46,8 +47,9 @@
 <script>
 import { fabric } from "fabric";
 import { orderBy } from 'lodash';
+import InfoComponent from '../ui/InfoComponent.vue';
 export default {
-  props: {},
+  components: { InfoComponent },
   data() {
     return {
       canvas: null,
