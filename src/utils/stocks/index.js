@@ -96,6 +96,7 @@ const ultimate = [new Character('ult', '1', 'Mario', 'mario', ONE_ROW, EIGHT_COL
         new Character('ult', '77', 'Steve', 'steve', ONE_ROW, EIGHT_COL),
         new Character('ult', '78', 'Sephiroth', 'edge', ONE_ROW, EIGHT_COL),
         new Character('ult', '79-80', 'Pyra/Mythra', 'pyra', TWO_ROW, EIGHT_COL),
+        new Character('ult', '81', 'Kazuya', 'kazuya', ONE_ROW, EIGHT_COL),
         new Character('ult', '?', 'Random', 'random'),
     ]
     .sort(compareId);
@@ -126,7 +127,7 @@ const melee = [new Character('melee', '1', 'Dr. Mario', 'mariod', TWO_ROW, FIVE_
                 new Character('melee', '24', 'Game & Watch', 'gamewatch', TWO_ROW, FOUR_COL),
                 new Character('melee', '25', 'Marth', 'marth', TWO_ROW, FIVE_COL),
                 new Character('melee', '26', 'Roy', 'roy', TWO_ROW, FIVE_COL),
-                new Character('melee', '?', 'Random', 'random')
+                /* new Character('melee', '?', 'Random', 'random') */
         ].sort(compareId);
 
 const pplus = [new Character('pplus', '1', 'Mario', 'mario', THREE_ROW, SIX_COL),
