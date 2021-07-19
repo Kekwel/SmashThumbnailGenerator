@@ -58,7 +58,8 @@ export default {
   data() {
     return {
       canvas: null,
-      images: []
+      images: [],
+      newImages: []
     }
   },
   computed: {
@@ -86,6 +87,7 @@ export default {
           oImg.name = file.name;
           oImg.id = Date.now();
           self.images.push(oImg);
+          self.newImages.push(oImg);
           
           //self._y = self.canvas.height - oImg.getScaledHeight();
           //oImg.set('top', self._y);
@@ -99,12 +101,15 @@ export default {
     },
     putImage(img) {
       this.images.push(img);
+      this.newImages.push(img);
     },
     deleteImg(img) {
       this.canvas.remove(img);
 
       var index = this.images.indexOf(img);
+      var newIndex = this.newImages.indexOf(img);
       this.images.splice(index, 1);
+      this.newImages.splice(newIndex, 1);
     },
 
     goToIndex(img, index) {

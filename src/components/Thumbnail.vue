@@ -359,9 +359,9 @@ export default {
       item.vs = this.versus.toJSON();
 
       // custom img
-      if (this.$refs.confImg.images) {
+      if (this.$refs.confImg.newImages) {
         item.images = [];
-        for (let img of this.$refs.confImg.images) {
+        for (let img of this.$refs.confImg.newImages) {
           let itemImg = {};
           itemImg.name = img.name;
           itemImg.index = this.$refs.confImg.crtIndex(img);
@@ -494,7 +494,6 @@ export default {
         //text.bgTag.y = infoText.bg.y; // pas besoin
         if (infoText.bg.gradient && infoText.bg.gradient.colors) text.bgTag.colors = infoText.bg.gradient.colors;
         if (infoText.bg.colorDirection) text.bgTag.colorDirection = infoText.bg.colorDirection.colorDirection;
-
         text.group.setCoords();
       } else {
         if (infoText.scale) {

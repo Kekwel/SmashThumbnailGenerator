@@ -146,10 +146,9 @@ class CustomRect {
                 x2 = this.width / 2; y2 = this.height;
                 break;
             case 'bottomright':
+            default:
                 x1 = 0; y1 = 0;
                 x2 = this.width; y2 = this.height;
-                break;
-            default:
                 break;
         }
         this._origin = {x: x1, y: y1};
