@@ -605,6 +605,9 @@ export default {
         case 'roa':
           this.characters = Stocks.ROA
           break;
+        case 'nasb':
+          this.characters = Stocks.NASB
+          break;
         default:
           this.characters = [];
       }

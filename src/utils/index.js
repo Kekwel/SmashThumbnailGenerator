@@ -1,4 +1,3 @@
-
 import Stocks from "./stocks"
 import { fabric } from "fabric";
 
@@ -24,6 +23,9 @@ const utils = {
                 break;
             case 'roa':
                 characters = Stocks.ROA;
+                break;
+            case 'nasb':
+                characters = Stocks.NASB;
                 break;
             default:
                 characters = [];

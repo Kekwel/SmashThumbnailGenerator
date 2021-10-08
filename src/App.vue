@@ -83,6 +83,12 @@
             <v-btn text small color="primary" href="https://drive.google.com/drive/folders/1SMjNgynt7c-VdKJJ9_wTcKSasS2NcVSF" target="_blank">
               <v-icon left>mdi-open-in-new</v-icon> Rivals of Aether
             </v-btn>{{ $t("credits.custom") }}<br />
+            <v-btn text small color="primary" href="https://github.com/joaorb64/StreamHelperAssets" target="_blank">
+              <v-icon left>mdi-open-in-new</v-icon> Nickelodeon All Star Brawl (and others..)
+            </v-btn>Thanks you João !<br/>
+            <v-btn text small color="primary" href="https://www.reddit.com/user/CandyDrop5/" target="_blank">
+              <v-icon left>mdi-open-in-new</v-icon> Nickelodeon All Star Brawl SSBU-like stock icons 
+            </v-btn><br/>
             {{ $t("credits.characters") }}
 
             <v-divider class="ma-2"></v-divider>
@@ -191,6 +197,7 @@ export default {
     },
     updateGame(id) {
       this.game = this.games[id];
+
       console.log('.. change game', this.game.name);
       this.$refs.main.updateGame(this.game);
     },

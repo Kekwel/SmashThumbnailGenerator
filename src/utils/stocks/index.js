@@ -6,6 +6,8 @@ const ONE_ROW = 1;
 const TWO_ROW = 2;
 const THREE_ROW = 3;
 
+const ZERO_COL = 0;
+const ONE_COL = 1;
 const FOUR_COL = 4;
 const FIVE_COL = 5;
 const SIX_COL = 6;
@@ -191,6 +193,30 @@ const roa = [new Character('roa', '1', 'Clairen', 'clairen', ONE_ROW, SIX_COL),
             new Character('roa', '14', 'Ranno', 'ranno', ONE_ROW, SIX_COL),
         ].sort(compareId);
 
+// --- NASB
+const nasb = [new Character('nasb', '1', 'Spongebob Squarepants', 'apple', ONE_ROW, ZERO_COL),
+                new Character('nasb', '2', 'Patrick Star', 'star', ONE_ROW, ZERO_COL),
+                new Character('nasb', '3', 'Sandy Cheeks', 'diver', ONE_ROW, ZERO_COL),
+                new Character('nasb', '4', 'Michelangelo', 'pizza', ONE_ROW, ZERO_COL),
+                new Character('nasb', '5', 'Leonardo', 'moon', ONE_ROW, ZERO_COL),
+                new Character('nasb', '6', 'April O\'Neil', 'reporter', ONE_ROW, ZERO_COL),
+                new Character('nasb', '7', 'Zim', 'alien', ONE_ROW, ZERO_COL),
+                new Character('nasb', '8', 'Aang', 'kite', ONE_ROW, ZERO_COL),
+                new Character('nasb', '9', 'Korra', 'athlete', ONE_ROW, ZERO_COL),
+                new Character('nasb', '10', 'Reptar', 'mascot', ONE_ROW, ZERO_COL),
+                new Character('nasb', '11', 'Nigel Thornberry', 'narrator', ONE_ROW, ZERO_COL),
+                new Character('nasb', '12', 'CatDog', 'chimera', ONE_ROW, ZERO_COL),
+                new Character('nasb', '13', 'Ren & Stimpy', 'duo', ONE_ROW, ZERO_COL),
+                new Character('nasb', '14', 'Powdered Toastman', 'hero', ONE_ROW, ZERO_COL),
+                new Character('nasb', '15', 'Lincoln Loud', 'rascal', ONE_ROW, ZERO_COL),
+                new Character('nasb', '16', 'Lucy Loud', 'goth', ONE_ROW, ZERO_COL),
+                new Character('nasb', '17', 'Danny Phantom', 'plasma', ONE_ROW, ZERO_COL),
+                new Character('nasb', '18', 'Oblina', 'snake', ONE_ROW, ZERO_COL),
+                new Character('nasb', '19', 'Helga', 'rival', ONE_ROW, ZERO_COL),
+                new Character('nasb', '20', 'Toph', 'clay', ONE_ROW, ZERO_COL),
+            ].sort(compareId);
+
+
 // eslint-disable-next-line no-unused-vars
 function compareName(a, b) {
     var nameA = a.name.toUpperCase(); // ignore upper and lowercase
@@ -214,5 +240,6 @@ export default {
     ULT: ultimate,
     MELEE: melee,
     PPLUS: pplus,
-    ROA: roa
+    ROA: roa,
+    NASB: nasb,
 }
