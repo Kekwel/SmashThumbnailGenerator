@@ -108,7 +108,7 @@ class CustomImage {
 			self.group.addWithUpdate(oImg);
 			self.canvas.requestRenderAll();
 			self._imageShadowLoaded = true;
-		});
+		}, {crossOrigin: 'Anonymous'});
 
 		// img
 		fabric.Image.fromURL(newUrl, function (oImg) {
@@ -122,7 +122,7 @@ class CustomImage {
 			// on l'ajout qu'une fois l'ombre ajouté
 			self.addImgToGroup(oImg, self._imageShadowLoaded)
 			self._imgLoaded = true;
-		});
+		}, {crossOrigin: 'Anonymous'});
 		
 		this._canvas.add(this.group).renderAll();
 	}
@@ -161,7 +161,7 @@ class CustomImage {
 		fabric.Image.fromURL(newUrl, function () {
 			self.updateImage(newUrl);
 			self.updateShadow(newUrl);
-		});
+		}, {crossOrigin: 'Anonymous'});
 
 		this.canvas.renderAll();
 		return this._filename;
@@ -302,7 +302,7 @@ class CustomImage {
 		if (this._image) {
 			this._image.setSrc(url, function () {
 				self.canvas.requestRenderAll();
-			});
+			}, {crossOrigin: 'Anonymous'});
 			/* this._image.scaleToWidth(this._width);
 			this._image.scaleToHeight(this._height); */
 		}
@@ -312,7 +312,7 @@ class CustomImage {
 		if (this._imageShadow) {
 			this._imageShadow.setSrc(url, function () {
 				self.canvas.requestRenderAll();
-			});
+			}, {crossOrigin: 'Anonymous'});
 			/* this._imageShadow.scaleToWidth(this._width);
 			this._imageShadow.scaleToHeight(this._height); */
 		}
