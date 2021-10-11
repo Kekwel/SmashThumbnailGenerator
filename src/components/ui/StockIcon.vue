@@ -1,5 +1,5 @@
 <template>
-  <img class="mr-2" :src="src" :alt="src" :width="width" :height="height" />
+  <img class="mr-1" :src="src" :alt="src" :width="width" :height="height" />
 </template>
 
 <script>

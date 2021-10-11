@@ -105,6 +105,8 @@ export default {
     // par defaut Ultimate
     this.game = Games.ULT;
     this.characters = Stocks.ULT;
+    
+    localStorage.characters = JSON.stringify({...this.characters});
 
     // -- J1
     var bgOptions = { width: 640, height: 720, x: 0, y: 0, index: 0 };
@@ -611,6 +613,7 @@ export default {
         default:
           this.characters = [];
       }
+      //localStorage.characters = this.characters;
       this.$refs.confPlayer.updateGame(game);
     }
   },

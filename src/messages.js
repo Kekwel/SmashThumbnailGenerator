@@ -70,6 +70,7 @@ const messages = {
         reset: 'Réinitialisation'
       },
       menu: {
+        quick: 'Ajout rapide',
         credits: 'Credits',
         twitter: 'Twitter',
         discord: 'ID Discord',
@@ -139,6 +140,7 @@ const messages = {
         reset: 'Reset'
       },
       menu: {
+        quick: 'Quick add',
         credits: 'Credits',
         twitter: 'Twitter',
         discord: 'Discord ID',

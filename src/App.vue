@@ -15,9 +15,8 @@
           </template>
         </v-select>
       </v-toolbar-title>
-      <v-toolbar-title>Thumbnail Generator v1.0.2</v-toolbar-title>
+      <v-toolbar-title>Thumbnail Generator v1.1.0</v-toolbar-title>
 
-      
       <v-tooltip right>
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="ml-2" dark x-small fab color="lime" @click="randomPNG();" v-bind="attrs" v-on="on">
@@ -26,6 +25,19 @@
         </template>
         <span>{{ $t('tooltip.random') }}</span>
       </v-tooltip>
+
+      <v-divider class="ml-2" inset vertical></v-divider>
+
+      <!-- TODO caption button !-->
+      <v-tooltip right>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="ml-2" dark x-small fab color="teal" @click.stop="showQuickAdd = true" v-bind="attrs" v-on="on">
+            <v-icon>mdi-format-list-numbered</v-icon>
+          </v-btn>
+        </template>
+        <span>{{ $t('tooltip.menu.quick') }}</span>
+      </v-tooltip>
+      <quick-add v-model="showQuickAdd"></quick-add>     
       <v-spacer></v-spacer>
 
       <v-btn dark color="light-blue" @click="exportPNG">
@@ -57,69 +69,7 @@
         </template>
         <span>{{ $t('tooltip.menu.credits') }}</span>
       </v-tooltip>
-      <v-dialog v-model="showCredits" max-width="700">
-        <v-card>
-          <v-card-title class="headline">Credits</v-card-title>
-          <v-divider class="ma-2"></v-divider>
-
-          <v-card-text>
-            <div class="text-h6">Renders</div> 
-            <!-- TODO icone jeu ? -->
-            <v-btn text small color="primary" href="https://www.deviantart.com/rapbattleeditor0510/art/Logos-Super-Smash-Bros-Logo-Icons-737799238" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> {{ $t("credits.icon") }}
-            </v-btn><br/>
-            <v-btn text small color="primary" href="https://www.spriters-resource.com/nintendo_switch/supersmashbrosultimate/" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Super Smash Bros Ultimate
-            </v-btn><br/>
-            <v-btn text small color="primary" href="https://www.reddit.com/r/smashbros/comments/4khef3/melee_full_classic_mode_poses_good_for_streams/" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Super Smash Bros Melee Classic mode poses
-            </v-btn><br/>
-            <v-btn text small color="primary" href="https://assets.melee.tv/" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Super Smash Bros Melee HD
-            </v-btn><br/>
-            <v-btn text small color="primary" href="https://projectplusgame.com/download/" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Project +
-            </v-btn><br/>
-            <v-btn text small color="primary" href="https://drive.google.com/drive/folders/1SMjNgynt7c-VdKJJ9_wTcKSasS2NcVSF" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Rivals of Aether
-            </v-btn>{{ $t("credits.custom") }}<br />
-            <v-btn text small color="primary" href="https://github.com/joaorb64/StreamHelperAssets" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Nickelodeon All Star Brawl (and others..)
-            </v-btn>Thanks you João !<br/>
-            <v-btn text small color="primary" href="https://www.reddit.com/user/CandyDrop5/" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Nickelodeon All Star Brawl SSBU-like stock icons 
-            </v-btn><br/>
-            {{ $t("credits.characters") }}
-
-            <v-divider class="ma-2"></v-divider>
-            <div class="text-h6">{{ $t("credits.fonts") }}</div>
-
-            <v-btn text small color="primary" href="https://www.dafontfree.net/freefonts-futura-f30.htm" target="_blank" style="font-family: Futura Bold">
-              <v-icon left>mdi-open-in-new</v-icon> Futura
-            </v-btn>
-            <v-btn text small color="primary" href="https://www.dafontfree.net/freefonts-impact-f129612.htm" target="_blank" style="font-family: Impact">
-              <v-icon left>mdi-open-in-new</v-icon> Impact
-            </v-btn>
-            <v-btn text small color="primary" href="https://www.dafont.com/blacklisted.font" target="_blank" style="font-family: BlackListed">
-              <v-icon left>mdi-open-in-new</v-icon> BlackListed
-            </v-btn>
-            <v-btn text small color="primary" href="https://www.dafont.com/android-assassin.font" target="_blank" style="font-family: Android Assassin">
-              <v-icon left>mdi-open-in-new</v-icon> Android Assassin
-            </v-btn>
-            <v-btn text small color="primary" href="https://fontsgeek.com/fonts/Gotham-Black-Regular" target="_blank" style="font-family: Gotham Black Regular">
-              <v-icon left>mdi-open-in-new</v-icon> Gotham Black
-            </v-btn>
-            <v-btn text small color="primary" href="https://www.dafont.com/heroes-legend.font" target="_blank" style="font-family: Heroes Legend">
-              <v-icon left>mdi-open-in-new</v-icon> Heroes Legend
-            </v-btn>
-
-            <v-divider class="ma-2"></v-divider>
-            Made with <a href="https://vuejs.org/" target="_blank"><img :src="getVuejsSVG()" width="16" height="16"/>VueJS</a> 
-            and <a href="https://v2.vuetifyjs.com/" target="_blank"><img :src="getVuetifySVG()" width="16" height="16"/>Vuetify</a>
-            by Kekwel (c'est moi)
-          </v-card-text>
-        </v-card>
-      </v-dialog>
+      <credits v-model="showCredits"></credits>
       <v-divider class="mx-1" inset vertical></v-divider>
 
       <v-tooltip bottom>
@@ -160,16 +110,18 @@
 <script>
 import Thumbnail from './components/Thumbnail.vue';
 import Games from "./utils/games"
-import Utils from "./utils"
 import CountryFlag from 'vue-country-flag'
+import QuickAdd from './components/ui/dialog/QuickAdd.vue';
+import Credits from './components/ui/dialog/Credits.vue';
 
 export default {
   name: 'App',
-  components: { Thumbnail, CountryFlag },
+  components: { Thumbnail, CountryFlag, QuickAdd, Credits },
   data() {
     return {
       game: null,
       games: ['Smash Ultimate'],
+      showQuickAdd: false,
       showCredits: false,
       panel: [0, 1],
       locales: [{
@@ -204,12 +156,6 @@ export default {
     updateLocale(locale) {
       if (this.$i18n.locale !== locale)
         this.$i18n.locale = locale;
-    },
-    getVuejsSVG() {
-      return Utils.getRoot() + 'img/icons/vuejs.svg';
-    },
-    getVuetifySVG() {
-      return Utils.getRoot() + 'img/icons/vuetify.svg';
     },
   }
 }
