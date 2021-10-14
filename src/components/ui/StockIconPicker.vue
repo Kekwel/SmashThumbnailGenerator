@@ -170,7 +170,8 @@ export default {
       this.updateChar(char);
     },
     selectQuickChar(j) {
-      console.log('select quick', j);
+      // TODO update quickchar lors changement skin
+      // ==> garder en localstorage ?
       let quickChar = new Character(j.characters.game, '1', j.characters.name, j.characters.formatName, j.characters.maxRow, j.characters.maxCol)
       this.updateChar(quickChar);
     },

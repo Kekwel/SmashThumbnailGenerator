@@ -64,13 +64,36 @@
         </v-container>
         <br/>
         
-        <div v-for="info in infos" :key="info.id">
-          {{ info.id }} | {{ info.j1.tag }} ({{ info.j1.characters.name }}) VS {{ info.j2.tag }} ({{ info.j2.characters.name }}) - {{ info.phase }}
-        </div>
+        <v-card class="ml-2" tile>
+          <v-list-item v-for="info in infos" :key="info.id">
+            <v-list-item-content>
+              <v-list-item-title>
+                <v-container class="pa-0" style="border-bottom: 1px solid black">
+                  <v-row no-gutters>
+                    <v-col>
+                        <div class="text-h6">{{ info.id }} | </div> 
+                    </v-col>
+                    <v-col cols="5">
+                        <span class="text-body-1 mx-2">{{ info.j1.tag }}</span> 
+                        <stock-icon :width="28" :src="info.j1.characters.firstStockUrl" /> 
+                    </v-col>
+                    <v-col>
+                      <div class="text-button ml-2">VS</div> 
+                    </v-col>
+                    <v-col cols="5">
+                        <span class="text-body-1 mx-2">{{ info.j2.tag }}</span> 
+                        <stock-icon :width="28" :src="info.j2.characters.firstStockUrl" />
+                    </v-col>
+                      <div class="text-button ml-2">- {{ info.phase }}</div> 
+                  </v-row>
+                </v-container>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
 
         <br/> TODO
         <br/>N° couleur (? recup stock icon ?) 
-        <br/>Créer boutons PREV et NEXT dans toolbar pour naviguer dans cette liste
       </v-card-text>
       <v-card-actions>
         <v-btn color="primary" @click.stop="show = false">Close</v-btn>
@@ -131,7 +154,6 @@ export default {
         this.newInfo = this.createNewInfo();
         this.$refs['quick-tag-j1'].focus();
 
-        // TODO "InvalidStateError: An attempt was made to use an object that is not, or is no longer, usable"
         this.$emit('quick-infos', this.infos);
       }
     },
