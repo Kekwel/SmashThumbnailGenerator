@@ -459,6 +459,10 @@ export default {
       }
     },
     setTextInfos(text, infoText) {
+      if ("string" === typeof infoText) {
+        text.txt = infoText
+      }
+
       text.index = infoText.index;
       // text.tag = infoText.text.value // pas besoin
       if (infoText.text) {
@@ -506,9 +510,9 @@ export default {
         }
       }
 
-      if (infoText.text.alignmentX) 
+      if (infoText.text?.alignmentX) 
         text.align(infoText.text.alignmentX);
-      if (infoText.text.alignmentY) 
+      if (infoText.text?.alignmentY) 
         text.align(null, infoText.text.alignmentY);
 
           // shadow
@@ -557,6 +561,7 @@ export default {
       } 
     },
     addCustomImages(images) {
+      console.log('..import custom images');
       for (let img of images) {
         let imgTag = document.createElement('img');
         imgTag.id = 'tmp-img'
@@ -613,7 +618,8 @@ export default {
         default:
           this.characters = [];
       }
-      //localStorage.characters = this.characters;
+      
+      localStorage.characters = JSON.stringify({...this.characters});
       this.$refs.confPlayer.updateGame(game);
     }
   },

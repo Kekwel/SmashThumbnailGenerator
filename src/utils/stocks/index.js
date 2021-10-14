@@ -99,6 +99,7 @@ const ultimate = [new Character('ult', '1', 'Mario', 'mario', ONE_ROW, EIGHT_COL
         new Character('ult', '78', 'Sephiroth', 'edge', ONE_ROW, EIGHT_COL),
         new Character('ult', '79-80', 'Pyra/Mythra', 'pyra', TWO_ROW, EIGHT_COL),
         new Character('ult', '81', 'Kazuya', 'kazuya', ONE_ROW, EIGHT_COL),
+        new Character('ult', '82', 'Sora', 'sora', ONE_ROW, EIGHT_COL),
         new Character('ult', '?', 'Random', 'random'),
     ]
     .sort(compareId);

@@ -141,6 +141,14 @@ export default {
       this.j1.filename = charJ1.getCharUrl();
       this.j2.filename = charJ2.getCharUrl();
     },
+    selectQuickChar(game, j1, j2){
+      this.game = game;
+
+      this.$refs.charJ1.selectQuickChar(j1);
+      this.$refs.charJ2.selectQuickChar(j2);
+      this.j1.filename = j1.url;
+      this.j2.filename = j2.url;
+    },
     reversePlayer() {
       // TAG
       let tagJ1 = this.j1.tag;

@@ -11,9 +11,9 @@
                   <stock-icon :width="28" :src="_firstStockUrl" /> {{ _name }}
                 </div>
               </template>
-              <template #option="option">
+              <template #option="{ _name, _firstStockUrl }">
                 <div class="stock-icon-selected">
-                  <stock-icon :width="28" :src="option._firstStockUrl" />{{ option._name }}
+                  <stock-icon :width="28" :src="_firstStockUrl" />{{ _name }}
                 </div>
               </template>
             </v-select>
@@ -43,6 +43,7 @@
 
 <script>
 import vSelect from "vue-select";
+import { Character } from '../js/Character';
 import StockIcon from '../ui/StockIcon.vue';
 export default {
   components: { vSelect, StockIcon },
@@ -90,7 +91,7 @@ export default {
     stockStyles(row, col) {
       /*var maxW = this.maxWidth();*/
       return {
-        'background-image': `url(${this.crtCharacter.getAllStocksUrl()})`,
+        'background-image': `url(${this.crtCharacter.allStocksUrl ?? this.crtCharacter.getAllStocksUrl()})`,
         'background-size' : `${this.maxColWidth}px ${(this.crtCharacter.maxRow) * this.maxWidth}px`,
         'background-position': `${col * -this.maxWidth}px ${row * -this.maxWidth}px`,
         'height' : `${this.maxWidth}px`,
@@ -115,7 +116,7 @@ export default {
       this.resetActive();
       console.log("update", character ? character.formatName : 'null', "for player", this.image.number, "..");
       if (character)
-        this.image.filename = character.getCharUrl();
+        this.image.filename = character.url ?? character.getCharUrl();
       else
         this.image.filename = '';
       this.crtCharacter = character;
@@ -167,6 +168,11 @@ export default {
     },
     selectChar(char) {
       this.updateChar(char);
+    },
+    selectQuickChar(j) {
+      console.log('select quick', j);
+      let quickChar = new Character(j.characters.game, '1', j.characters.name, j.characters.formatName, j.characters.maxRow, j.characters.maxCol)
+      this.updateChar(quickChar);
     },
     isActiveFlip(val) {
       return this.activeFlip === val;

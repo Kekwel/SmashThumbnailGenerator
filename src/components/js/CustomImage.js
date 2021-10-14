@@ -159,8 +159,10 @@ class CustomImage {
 
 		var newUrl = filename ? this._filename : '';
 		fabric.Image.fromURL(newUrl, function () {
-			self.updateImage(newUrl);
-			self.updateShadow(newUrl);
+			if (newUrl) {
+				self.updateImage(newUrl);
+				self.updateShadow(newUrl);
+			}
 		}, {crossOrigin: 'Anonymous'});
 
 		this.canvas.renderAll();
@@ -297,7 +299,7 @@ class CustomImage {
 	}
 
 	updateImage(url) {
-		console.log("update img " + url);
+		console.log("update img " + url + " .. ");
 		var self = this;
 		if (this._image) {
 			this._image.setSrc(url, function () {

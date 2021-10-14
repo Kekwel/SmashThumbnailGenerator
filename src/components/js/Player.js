@@ -157,7 +157,7 @@ class Player {
         return {
             player: this._number,
             tag: this.myTag,
-						bg: this.bg,
+            bg: this.bg,
             characters: this.firstCharacter
         }
     }

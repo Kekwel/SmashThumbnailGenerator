@@ -30,12 +30,18 @@ class Character {
 
     toJSON() {
         var item = {};
+        item.id = this.id;
         item.game = this.game;
         item.name = this.name;
         item.formatName = this.formatName;
         item.firstStockUrl = this.getfirstStockUrl();
         item.allStocksUrl = this.getAllStocksUrl();
-        item.charUrl = this.getCharUrl();
+        item.url = this.getCharUrl();
+
+        item.row = this.row;
+        item.col = this.col;
+        item.maxRow = this.maxRow;
+        item.maxCol = this.maxCol;
         return item;
     }
 
