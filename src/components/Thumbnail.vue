@@ -453,8 +453,8 @@ export default {
       
         // characters
       if (infoPlayer.characters) {
-        if (infoPlayer.characters.url)
-          player.filename = infoPlayer.characters.url;
+        // if (infoPlayer.characters.url)
+        //   player.filename = infoPlayer.characters.url;
         this.setCharInfos(player.firstCharacter, infoPlayer.characters);
       }
     },

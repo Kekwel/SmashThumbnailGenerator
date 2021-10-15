@@ -115,6 +115,31 @@ export default {
     updateChar(character) {
       this.resetActive();
       console.log("update", character ? character.formatName : 'null', "for player", this.image.number, "..");
+
+      //var qui = localStorage.quickCrt ? JSON.parse(localStorage.quickCrt) : '';
+      var quickList = localStorage.quickList ? JSON.parse(localStorage.quickList) : [];
+      var quickIdx = localStorage.quickCrtIdx ? JSON.parse(localStorage.quickCrtIdx) : '';
+      var qui = quickList[quickIdx];
+      // TODO a modifier
+
+      if (qui?.j1 && qui?.j2) {
+        // si j1
+        if (this.image.number === 'j1') {
+          qui.j1.characters.row = character.row;
+          qui.j1.characters.col = character.col;
+          qui.j1.characters.url = character.getCharUrl();
+        } else {
+          qui.j2.characters.row = character.row;
+          qui.j2.characters.col = character.col;
+          qui.j2.characters.url = character.getCharUrl();
+        }
+        // on maj le storage
+        quickList[quickIdx] = qui;
+        
+        localStorage.quickList = JSON.stringify(quickList);
+        //localStorage.quickCrt = JSON.stringify(qui);
+      }
+
       if (character)
         this.image.filename = character.url ?? character.getCharUrl();
       else
@@ -171,8 +196,10 @@ export default {
     },
     selectQuickChar(j) {
       // TODO update quickchar lors changement skin
-      // ==> garder en localstorage ?
       let quickChar = new Character(j.characters.game, '1', j.characters.name, j.characters.formatName, j.characters.maxRow, j.characters.maxCol)
+      quickChar.row = j.characters.row;
+      quickChar.col = j.characters.col;
+      
       this.updateChar(quickChar);
     },
     isActiveFlip(val) {
