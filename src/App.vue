@@ -156,22 +156,6 @@ export default {
       hasQuickNext: false,
     }
   },
- /*  computed: {
-    hasQuickPrev: function() {
-      var quickList = JSON.parse(localStorage.quickList);
-      // si l'index de l'item courant -1 existe
-      //return this.quickList.indexOf(this.quickCrt) - 1 >= 0;
-      console.log('has prev', this.crtIdx);
-      return quickList[this.crtIdx - 1];
-    },
-    hasQuickNext: function() {
-      var quickList = JSON.parse(localStorage.quickList);
-      // si l'index de l'item courant +1 existe
-      //return this.quickList.indexOf(this.quickCrt) + 1 < this.quickList.length;
-      console.log('has next', this.crtIdx);
-      return quickList[this.crtIdx + 1];
-    }
-  }, */
   created() {
     this.games = Games.GAMES;
     this.game = Games.ULT;
@@ -225,15 +209,12 @@ export default {
       var quickList = JSON.parse(localStorage.quickList);
       var crtidx = localStorage.quickCrtIdx;
       crtidx--;
-
-      console.log('J1 bfr', quickList);
       
       this.quickCrt = quickList[crtidx];
       localStorage.quickCrtIdx = crtidx;
       this.crtIdx = crtidx;
 
       this.$refs.main.importInfos(this.quickCrt);
-      //console.log('J1', this.quickCrt.j1.characters);
       // update char select
       this.$refs.main.$refs.confPlayer.selectQuickChar(this.quickCrt.j1.characters.game, this.quickCrt.j1, this.quickCrt.j2);
 
@@ -246,14 +227,12 @@ export default {
       var crtidx = localStorage.quickCrtIdx;
       crtidx++;
       
-      console.log('J1 bfr', quickList);
       this.quickCrt = quickList[crtidx];
       localStorage.quickCrtIdx = crtidx;
       this.crtIdx = crtidx;
 
       this.$refs.main.importInfos(this.quickCrt);
       // update char select
-      //console.log('J1', this.quickCrt.j1.characters);
       this.$refs.main.$refs.confPlayer.selectQuickChar(this.quickCrt.j1.characters.game, this.quickCrt.j1, this.quickCrt.j2);
 
       this.hasQuickPrev = quickList[this.crtIdx - 1];
