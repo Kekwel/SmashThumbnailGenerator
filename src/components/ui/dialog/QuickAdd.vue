@@ -7,7 +7,7 @@
       <v-card-text class="pa-1">
         <v-container>
           <v-row no-gutters>
-            <v-col cols="3" class="mr-2">
+            <v-col cols="3" class="mr-2 d-flex align-center">
               <!-- J1 TAG -->
               <v-text-field ref="quick-tag-j1" :rules="[() => !!newInfo.p1.tag || '']"
                 :label="$t('title.player', {nb: '1'})" v-model="newInfo.p1.tag" 
@@ -15,7 +15,8 @@
             </v-col>
             <v-col cols="1" class="mr-2">
               <!-- J1 CHAR -->
-              <v-select ref="quick-char-j1" :clearable=false selectOnTab class="player1 quick" :options="crtCharacters" label="name" v-model="newInfo.p1.characters">
+              <v-select ref="quick-char-j1" :clearable=false selectOnTab class="player1 quick" 
+                        :options="crtCharacters" label="name" v-model="newInfo.p1.characters">
                 <template #selected-option="{ firstStockUrl }">
                   <div class="stock-icon-selected">
                     <stock-icon :width="28" :src="firstStockUrl" />
@@ -27,11 +28,27 @@
                   </div>
                 </template>
               </v-select>
+
+              <!-- <div v-if="newInfo.p1.characters"> -->
+                <v-select ref="quick-color-j1" :clearable=false selectOnTab class="mt-2 player1 quick" 
+                          :options="playerColorChar(this.newInfo.p1)" label="name" v-model="newInfo.color.j1">
+                  <template #selected-option="{ row, col }">
+                    <div class="stock-icon-selected">
+                      <div :style="stockStyles(newInfo.p1.characters, row, col)"></div>
+                    </div>
+                  </template>
+                  <template #option="{ row, col }">
+                    <div class="stock-icon-selected">
+                      <div :style="stockStyles(newInfo.p1.characters, row, col)"></div>
+                    </div>
+                  </template>
+                </v-select>
+              <!-- </div> -->
             </v-col>
 
-            <div class="text-button" style="align-self: center;">VS</div>
+            <div class="text-button d-flex align-center">VS</div>
             
-            <v-col cols="3" class="mx-2">
+            <v-col cols="3" class="mx-2 d-flex align-center">
               <!-- J2 TAG -->
               <v-text-field ref="quick-tag-j2" :rules="[() => !!newInfo.p2.tag || '']"
                 :label="$t('title.player', {nb: '2'})" v-model="newInfo.p2.tag" 
@@ -47,11 +64,27 @@
                   <stock-icon :width="28" :src="option.firstStockUrl" />
                 </template>
               </v-select>
+
+              <!-- <div v-if="newInfo.p2.characters"> -->
+                <v-select ref="quick-color-j2" :clearable=false selectOnTab class="mt-2 player2 quick" 
+                          :options="this.playerColorChar(this.newInfo.p2)" label="name" v-model="newInfo.color.j2">
+                  <template #selected-option="{ row, col }">
+                    <div class="stock-icon-selected">
+                      <div :style="stockStyles(newInfo.p2.characters, row, col)"></div>
+                    </div>
+                  </template>
+                  <template #option="{ row, col }">
+                    <div class="stock-icon-selected">
+                      <div :style="stockStyles(newInfo.p2.characters, row, col)"></div>
+                    </div>
+                  </template>
+                </v-select>
+              <!-- </div> -->
             </v-col>
 
-            <div class="text-button" style="align-self: center;">|</div>
+            <div class="text-button d-flex align-center">|</div>
 
-            <v-col cols="2" class="ml-2">
+            <v-col cols="2" class="ml-2 d-flex align-center">
               <!-- Phase TODO select ? -->
               <v-text-field v-model="newInfo.phase" dense shaped filled hide-details onClick="this.select();" @keyup.enter="addInfo" />
             </v-col>
@@ -64,6 +97,7 @@
         </v-container>
         <br/>
         
+        <!-- RECAP -->
         <v-card class="ml-2" tile>
           <v-list-item v-for="info in infos" :key="info.id">
             <v-list-item-content>
@@ -73,16 +107,18 @@
                     <v-col>
                         <div class="text-h6">{{ info.id }} | </div> 
                     </v-col>
-                    <v-col cols="5">
-                        <span class="text-body-1 mx-2">{{ info.j1.tag }}</span> 
-                        <stock-icon :width="28" :src="info.j1.characters.firstStockUrl" /> 
+                    <v-col cols="5" class="d-flex align-center">
+                        <span class="text-body-1 mx-2">{{ info.j1.tag }}</span>
+                        <!-- <stock-icon :width="28" :src="info.j1.characters.firstStockUrl" />  -->
+                        <div :style="stockStyles(info.j1.characters, info.j1.characters.row, info.j1.characters.col)"></div>
                     </v-col>
                     <v-col>
                       <div class="text-button ml-2">VS</div> 
                     </v-col>
-                    <v-col cols="5">
-                        <span class="text-body-1 mx-2">{{ info.j2.tag }}</span> 
-                        <stock-icon :width="28" :src="info.j2.characters.firstStockUrl" />
+                    <v-col cols="5" class="d-flex align-center">
+                        <span class="text-body-1 mx-2">{{ info.j2.tag }}</span>
+                        <!-- <stock-icon :width="28" :src="info.j2.characters.firstStockUrl" /> -->
+                        <div :style="stockStyles(info.j2.characters, info.j2.characters.row, info.j2.characters.col)"></div>
                     </v-col>
                       <div class="text-button ml-2">- {{ info.phase }}</div> 
                   </v-row>
@@ -93,7 +129,7 @@
         </v-card>
 
         <br/> TODO
-        <br/>N° couleur (? recup stock icon ?) 
+        <br/>PHASE
       </v-card-text>
       <v-card-actions>
         <v-btn color="primary" @click.stop="show = false">Close</v-btn>
@@ -114,7 +150,8 @@ export default {
     return {
       newInfo: this.createNewInfo(),
       infos: [],
-      crtCharacters: []
+      crtCharacters: [],
+      crtColorChar: []
     }
   },
   computed: {
@@ -125,15 +162,7 @@ export default {
       set(value) {
         this.$emit("input", value);
       },
-    },
-    /* crtCharacters() {
-      var t = [];
-      var localChar = JSON.parse(localStorage.characters);
-      for (var i in localChar) {
-        t.push(localChar[i]);
-      }
-      return t;
-    } */
+    }
   },
   methods: {
     addInfo() {
@@ -144,13 +173,20 @@ export default {
         // TODO notif ou qqchose pour dire il manque info
       } else if (this.newInfo.p1.tag && this.newInfo.p2.tag) {
         console.log('.. add info ', this.newInfo);
-        this.infos.push({
+        let infoToPush = {
           id: this.infos.length + 1,
           j1: this.newInfo.p1,
           j2: this.newInfo.p2,
           // TODO phase1 & phase2
           phase: this.newInfo.phase,
-        });
+        }
+        infoToPush.j1.characters.row = this.newInfo.color.j1.row;
+        infoToPush.j1.characters.col = this.pad(this.newInfo.color.j1.col, 2);
+
+        infoToPush.j2.characters.row = this.newInfo.color.j2.row;
+        infoToPush.j2.characters.col = this.pad(this.newInfo.color.j2.col, 2);
+        
+        this.infos.push(infoToPush);
         this.newInfo = this.createNewInfo();
         this.$refs['quick-tag-j1'].focus();
 
@@ -159,9 +195,23 @@ export default {
     },
     createNewInfo() {
       return {
-        p1: {},
-        p2: {},
-        phase: ''
+        p1: {
+          tag: 'aaa'
+        },
+        color: {
+          j1: {
+            row: 0,
+            col: "00"
+          },
+          j2: {
+            row: 0,
+            col: "00"
+          }
+        },
+        p2: {
+          tag: 'aaa'
+        },
+        phase: 'qsd'
       }
     },
     updateCharacters() {
@@ -173,6 +223,35 @@ export default {
       for (var i in localChar) {
         this.crtCharacters.push(localChar[i]);
       }
+    },
+    stockStyles(crtChar, row, col) {
+      return crtChar ? {
+        'background-image': `url(${crtChar.allStocksUrl ?? crtChar.getAllStocksUrl()})`,
+        'background-size' : `${crtChar.maxCol * 32}px ${(crtChar.maxRow) * 32}px`,
+        'background-position': `${col * -32}px ${row * -32}px`,
+        'height' : `32px`,
+        'width' : `32px`
+      } : {}
+    },
+    playerColorChar(player) {
+      let colors = [];
+      if (player?.characters) {
+        for (let i = 0; i < player.characters.maxRow; i++) {
+          for (let j = 0; j < player.characters.maxCol; j++) {
+            colors.push({
+              name: i + " " + j,
+              row: i,
+              col: j
+            })
+          }
+        }
+      }
+      return colors;
+    },
+    /* TODO UTILS */
+    pad(num, size) {
+        var s = "000000000" + num;
+        return s.substr(s.length - size);
     }
   }
 };
@@ -189,7 +268,7 @@ export default {
   padding: 0;
   margin: 0;
 }
-.v-select.quick .vs__dropdown-toggle{
+.v-select.quick .vs__dropdown-toggle {
   min-height: 40px;
 }
 .v-select.quick .vs__dropdown-option {
