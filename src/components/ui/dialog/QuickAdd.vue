@@ -10,7 +10,7 @@
             <v-col cols="3" class="mr-2 d-flex align-center">
               <!-- J1 TAG -->
               <v-text-field ref="quick-tag-j1" :rules="[() => !!newInfo.p1.tag || '']"
-                :label="$t('title.player', {nb: '1'})" v-model="newInfo.p1.tag" 
+                :label="$t('title.player', {nb: '1'})" v-model="newInfo.p1.tag" autofocus
                 color="red" background-color="red lighten-5" dense outlined filled hide-details required onClick="this.select();" @keyup.enter="addInfo" />
             </v-col>
             <v-col cols="1" class="mr-2">
@@ -99,10 +99,10 @@
         
         <!-- RECAP -->
         <v-card class="ml-2" tile>
-          <v-list-item v-for="info in infos" :key="info.id">
-            <v-list-item-content>
+          <v-list-item v-for="info in infos" :key="info.id" dense>
+            <v-list-item-content class="py-1" style="border-top: 1px solid black">
               <v-list-item-title>
-                <v-container class="pa-0" style="border-bottom: 1px solid black">
+                <v-container class="pa-0">
                   <v-row no-gutters>
                     <v-col>
                         <div class="text-h6">{{ info.id }} | </div> 
@@ -141,6 +141,7 @@
 <script>
 import vSelect from "vue-select";
 import StockIcon from '../StockIcon.vue';
+import { cloneDeep } from 'lodash';
 export default {
   components: { vSelect, StockIcon },
   props: {
@@ -173,6 +174,7 @@ export default {
         // TODO notif ou qqchose pour dire il manque info
       } else if (this.newInfo.p1.tag && this.newInfo.p2.tag) {
         console.log('.. add info ', this.newInfo);
+
         let infoToPush = {
           id: this.infos.length + 1,
           j1: this.newInfo.p1,
@@ -185,8 +187,10 @@ export default {
 
         infoToPush.j2.characters.row = this.newInfo.color.j2.row;
         infoToPush.j2.characters.col = this.pad(this.newInfo.color.j2.col, 2);
-        
-        this.infos.push(infoToPush);
+
+        // clone deep
+        this.infos.push(cloneDeep(infoToPush));
+        //this.infos.push(infoToPush);
         this.newInfo = this.createNewInfo();
         this.$refs['quick-tag-j1'].focus();
 

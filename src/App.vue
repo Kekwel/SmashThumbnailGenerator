@@ -38,7 +38,7 @@
                 <v-icon>mdi-arrow-left-bold</v-icon>
               </v-btn>
               <!-- ITEM COURANT -->
-              <div class="quick-menu-vs" @click.stop="showQuickAdd = true" v-bind="attrs" v-on="on">
+              <div class="quick-menu-vs" @click.stop="showQuickAdd = true;" v-bind="attrs" v-on="on">
                 <stock-icon class="mx-1" :width="28" :src="quickCrt.j1.characters.firstStockUrl" /> <div class="text-button">VS</div> <stock-icon class="mx-1" :width="28" :src="quickCrt.j2.characters.firstStockUrl" />
               </div>
               <!-- BTN NEXT -->
@@ -46,7 +46,7 @@
                 <v-icon>mdi-arrow-right-bold</v-icon>
               </v-btn>
             </div>
-            <v-btn v-else class="ml-2" dark x-small fab color="teal" @click.stop="showQuickAdd = true" v-bind="attrs" v-on="on">
+            <v-btn v-else class="ml-2" dark x-small fab color="teal" @click.stop="showQuickAdd = true;" v-bind="attrs" v-on="on">
               <v-icon>mdi-format-list-numbered</v-icon>
             </v-btn>
           </div>
@@ -186,6 +186,7 @@ export default {
     },
     // ** QUICK LIST ** //
     updateQuickList(infos) {
+      console.log('.. update quick list');
       // infos = array -> id, p1 {tag, char}, p2 {...}, phase
       //this.quickList = infos;
       this.quickCrt = infos[0];
