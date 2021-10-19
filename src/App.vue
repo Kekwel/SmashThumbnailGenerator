@@ -207,6 +207,14 @@ export default {
       console.log('.. change game', this.game.name);
       this.$refs.main.updateGame(this.game);
       this.$refs.quickAdd.updateCharacters();
+
+      // reset list courante
+      this.quickCrt = null;
+      localStorage.quickList = '';
+      localStorage.quickCrtIdx = 0;
+      this.crtIdx = 0;
+      this.hasQuickPrev = false;
+      this.hasQuickNext = false;
     },
     updateLocale(locale) {
       if (this.$i18n.locale !== locale)
@@ -214,7 +222,6 @@ export default {
     },
     // ** QUICK LIST ** //
     showQuickList() {
-      console.log('HEY', this.showQuickAdd);
       this.showQuickAdd = !this.showQuickAdd;
     },
     updateQuickList(infos) {
