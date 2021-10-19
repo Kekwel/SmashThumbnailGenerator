@@ -34,24 +34,36 @@
           <div>
             <div v-if="quickCrt" class="ml-2 quick-menu">
               <!-- BTN PREV -->
-              <v-btn class="mx-2" dark x-small fab color="teal" :disabled="!hasQuickPrev" @click="quickPrev">
-                <v-icon>mdi-arrow-left-bold</v-icon>
-              </v-btn>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn class="mx-2" dark x-small fab color="teal" v-bind="attrs" v-on="on"
+                        :disabled="!hasQuickPrev" @click="quickPrev" v-hotkey="keymapprev">
+                    <v-icon>mdi-arrow-left-bold</v-icon>
+                  </v-btn>
+                </template>
+                <span><kbd>Ctrl</kbd> + <kbd>←</kbd></span>
+              </v-tooltip>
               <!-- ITEM COURANT -->
-              <div class="quick-menu-vs" @click.stop="showQuickAdd = true;" v-bind="attrs" v-on="on">
+              <div class="quick-menu-vs" @click.stop="showQuickAdd = true;" v-bind="attrs" v-on="on" v-hotkey="keymapquicklist">
                 <stock-icon class="mx-1" :width="28" :src="quickCrt.j1.characters.firstStockUrl" /> <div class="text-button">VS</div> <stock-icon class="mx-1" :width="28" :src="quickCrt.j2.characters.firstStockUrl" />
               </div>
               <!-- BTN NEXT -->
-              <v-btn class="mx-2" dark x-small fab color="teal" :disabled="!hasQuickNext" @click="quickNext">
-                <v-icon>mdi-arrow-right-bold</v-icon>
-              </v-btn>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn class="mx-2" dark x-small fab color="teal" v-bind="attrs" v-on="on"
+                        :disabled="!hasQuickNext" @click="quickNext" v-hotkey="keymapnext">
+                    <v-icon>mdi-arrow-right-bold</v-icon>
+                  </v-btn>
+                </template>
+                <span><kbd>Ctrl</kbd> + <kbd>→</kbd></span>
+              </v-tooltip>
             </div>
-            <v-btn v-else class="ml-2" dark x-small fab color="teal" @click.stop="showQuickAdd = true;" v-bind="attrs" v-on="on">
+            <v-btn v-else class="ml-2" dark x-small fab color="teal" @click.stop="showQuickAdd = true;" v-bind="attrs" v-on="on" v-hotkey="keymapquicklist">
               <v-icon>mdi-format-list-numbered</v-icon>
             </v-btn>
           </div>
         </template>
-        <span>{{ $t('tooltip.menu.quick') }}</span>
+        <span>{{ $t('tooltip.menu.quick') }} <kbd>Ctrl</kbd> + <kbd>↓</kbd></span>
       </v-tooltip>
       <quick-add ref="quickAdd" v-model="showQuickAdd" v-on:quick-infos="updateQuickList"></quick-add>
       <v-spacer></v-spacer>
@@ -156,13 +168,29 @@ export default {
       hasQuickNext: false,
     }
   },
+  computed: {
+    keymapprev () {
+      return {
+        'ctrl+left': this.quickPrev
+      }
+    },
+    keymapquicklist () {
+      return {
+        'ctrl+down': this.showQuickList
+      }
+    },
+    keymapnext () {
+      return {
+        'ctrl+right': this.quickNext
+      }
+    },
+  },
   created() {
     this.games = Games.GAMES;
     this.game = Games.ULT;
   },
   mounted() {
       this.$refs.quickAdd.updateCharacters();
-    
   },
   methods: {
     exportPNG() {
@@ -185,6 +213,10 @@ export default {
         this.$i18n.locale = locale;
     },
     // ** QUICK LIST ** //
+    showQuickList() {
+      console.log('HEY', this.showQuickAdd);
+      this.showQuickAdd = !this.showQuickAdd;
+    },
     updateQuickList(infos) {
       console.log('.. update quick list');
       // infos = array -> id, p1 {tag, char}, p2 {...}, phase
@@ -206,38 +238,42 @@ export default {
       this.hasQuickNext = infos[this.crtIdx + 1];
     },
     quickPrev() {
-      console.log('..prev');
-      var quickList = JSON.parse(localStorage.quickList);
-      var crtidx = localStorage.quickCrtIdx;
-      crtidx--;
-      
-      this.quickCrt = quickList[crtidx];
-      localStorage.quickCrtIdx = crtidx;
-      this.crtIdx = crtidx;
-
-      this.$refs.main.importInfos(this.quickCrt);
-      // update char select
-      this.$refs.main.$refs.confPlayer.selectQuickChar(this.quickCrt.j1.characters.game, this.quickCrt.j1, this.quickCrt.j2);
-
-      this.hasQuickPrev = quickList[this.crtIdx - 1];
-      this.hasQuickNext = quickList[this.crtIdx + 1];
+      if (this.hasQuickPrev) {
+        console.log('..prev');
+        var quickList = JSON.parse(localStorage.quickList);
+        var crtidx = localStorage.quickCrtIdx;
+        crtidx--;
+        
+        this.quickCrt = quickList[crtidx];
+        localStorage.quickCrtIdx = crtidx;
+        this.crtIdx = crtidx;
+  
+        this.$refs.main.importInfos(this.quickCrt);
+        // update char select
+        this.$refs.main.$refs.confPlayer.selectQuickChar(this.quickCrt.j1.characters.game, this.quickCrt.j1, this.quickCrt.j2);
+  
+        this.hasQuickPrev = quickList[this.crtIdx - 1];
+        this.hasQuickNext = quickList[this.crtIdx + 1];
+      }
     },
     quickNext() {
-      console.log('..next');
-      var quickList = JSON.parse(localStorage.quickList);
-      var crtidx = localStorage.quickCrtIdx;
-      crtidx++;
-      
-      this.quickCrt = quickList[crtidx];
-      localStorage.quickCrtIdx = crtidx;
-      this.crtIdx = crtidx;
-
-      this.$refs.main.importInfos(this.quickCrt);
-      // update char select
-      this.$refs.main.$refs.confPlayer.selectQuickChar(this.quickCrt.j1.characters.game, this.quickCrt.j1, this.quickCrt.j2);
-
-      this.hasQuickPrev = quickList[this.crtIdx - 1];
-      this.hasQuickNext = quickList[this.crtIdx + 1];
+      if (this.hasQuickNext) {
+        console.log('..next');
+        var quickList = JSON.parse(localStorage.quickList);
+        var crtidx = localStorage.quickCrtIdx;
+        crtidx++;
+        
+        this.quickCrt = quickList[crtidx];
+        localStorage.quickCrtIdx = crtidx;
+        this.crtIdx = crtidx;
+  
+        this.$refs.main.importInfos(this.quickCrt);
+        // update char select
+        this.$refs.main.$refs.confPlayer.selectQuickChar(this.quickCrt.j1.characters.game, this.quickCrt.j1, this.quickCrt.j2);
+  
+        this.hasQuickPrev = quickList[this.crtIdx - 1];
+        this.hasQuickNext = quickList[this.crtIdx + 1];
+      }
     }
   }
 }

@@ -4,10 +4,13 @@ import VueCompositionAPI from '@vue/composition-api'
 import vuetify from './plugins/vuetify'
 import VueI18n from 'vue-i18n'
 import Message from './messages'
+import VueHotkey from 'v-hotkey'
+
 
 Vue.config.productionTip = false
 Vue.use(VueCompositionAPI);
 Vue.use(VueI18n);
+Vue.use(VueHotkey)
 
 require("./assets/scss/main.scss")
 
