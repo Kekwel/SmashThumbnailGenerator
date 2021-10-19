@@ -1,7 +1,12 @@
 <template>
   <v-dialog v-model="show" max-width="1000">
     <v-card min-height="50vh">
-      <v-card-title ref="quick-title" class="headline">Ajout rapide</v-card-title>
+      <v-card-title ref="quick-title" class="headline justify-space-between">
+        Ajout rapide
+        <v-btn color="red" small icon style="align-self: center;" @click.stop="show = false">
+          <v-icon>mdi-close-circle</v-icon>
+        </v-btn>
+      </v-card-title>
       <v-divider class="ma-2"></v-divider>
 
       <v-card-text class="pa-1">
@@ -121,8 +126,8 @@
               <v-list-item-title>
                 <v-container class="pa-0">
                   <v-row no-gutters>
-                    <v-btn class="mr-2" small icon color="error" style="align-self: center;" @click="deleteInfo(info)">
-                      <v-icon>mdi-close-thick</v-icon>
+                    <v-btn class="mr-2" small icon color="pink" style="align-self: center;" @click="deleteInfo(info)">
+                      <v-icon>mdi-minus-box</v-icon>
                     </v-btn>
                     <v-col>
                         <div class="text-h6">{{ info.id }} | </div> 
@@ -146,13 +151,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-card>
-
-        <!-- <br/> TODO
-        <br/>REMOVE -->
       </v-card-text>
-      <v-card-actions>
-        <v-btn color="primary" @click.stop="show = false">Close</v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
