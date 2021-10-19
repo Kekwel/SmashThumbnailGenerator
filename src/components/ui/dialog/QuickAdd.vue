@@ -121,6 +121,9 @@
               <v-list-item-title>
                 <v-container class="pa-0">
                   <v-row no-gutters>
+                    <v-btn class="mr-2" small icon color="error" style="align-self: center;" @click="deleteInfo(info)">
+                      <v-icon>mdi-close-thick</v-icon>
+                    </v-btn>
                     <v-col>
                         <div class="text-h6">{{ info.id }} | </div> 
                     </v-col>
@@ -226,8 +229,23 @@ export default {
         //this.infos.push(infoToPush);
         this.newInfo = this.createNewInfo();
         //this.$refs['quick-tag-j1'].focus();
-        //this.$refs['quick-phase'].$refs.search.focus()
-        this.$refs['quick-title'].focus()
+        this.$refs['quick-phase'].$refs.search.focus()
+        //this.$refs['quick-title'].focus()
+
+        this.$emit('quick-infos', this.infos);
+      }
+    },
+    deleteInfo(info) {
+      console.log('..delete ', info);
+      // on garde tous sauf l'element a supprimer
+      const crtIdx = this.infos.indexOf(info);
+      if (crtIdx > -1) {
+        this.infos.splice(crtIdx, 1);
+        // refresh id (TODO ou autrement ?)
+        for (let i = 0; i < this.infos.length; i++) {
+          const crtInfo = this.infos[i];
+          crtInfo.id = i + 1;
+        }
 
         this.$emit('quick-infos', this.infos);
       }

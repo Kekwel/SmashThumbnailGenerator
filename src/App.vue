@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <!-- TODO img bg en fonction du jeu ? src="..." -->
     <v-app-bar app dense dark :src="game.bgSrc">
       <v-toolbar-title>
         <v-select style="width: 12em;" class="mr-2" 
@@ -28,7 +27,6 @@
 
       <v-divider class="ml-2" inset vertical></v-divider>
 
-      <!-- TODO caption button ! btn prev/next -->
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <div>
