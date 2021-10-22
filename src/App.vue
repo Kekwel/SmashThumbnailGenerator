@@ -73,7 +73,7 @@
             PNG
           </v-btn>
         </template>
-        <span>Export PNG <kbd>Ctrl</kbd> + <kbd>Enter</kbd></span>
+        <span>Export PNG <kbd>Ctrl</kbd> + <kbd>Alt</kbd> +<kbd>Enter</kbd></span>
       </v-tooltip>
 
       <v-spacer></v-spacer>
@@ -189,7 +189,7 @@ export default {
     },
     keymappng () {
       return {
-        'ctrl+enter': this.exportPNG
+        'ctrl+alt+enter': this.exportPNG
       }
     }
   },
