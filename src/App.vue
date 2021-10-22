@@ -66,10 +66,15 @@
       <quick-add ref="quickAdd" v-model="showQuickAdd" v-on:quick-infos="updateQuickList"></quick-add>
       <v-spacer></v-spacer>
 
-      <v-btn dark color="light-blue" @click="exportPNG">
-        <v-icon dark left>mdi-image-move</v-icon>
-        PNG
-      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn dark color="light-blue" @click="exportPNG" v-bind="attrs" v-on="on" v-hotkey="keymappng">
+            <v-icon dark left>mdi-image-move</v-icon>
+            PNG
+          </v-btn>
+        </template>
+        <span>Export PNG <kbd>Ctrl</kbd> + <kbd>Enter</kbd></span>
+      </v-tooltip>
 
       <v-spacer></v-spacer>
 
@@ -182,6 +187,11 @@ export default {
         'ctrl+right': this.quickNext
       }
     },
+    keymappng () {
+      return {
+        'ctrl+enter': this.exportPNG
+      }
+    }
   },
   created() {
     this.games = Games.GAMES;
@@ -219,8 +229,11 @@ export default {
         this.$i18n.locale = locale;
     },
     // ** QUICK LIST ** //
-    showQuickList() {
-      this.showQuickAdd = !this.showQuickAdd;
+    showQuickList(val) {
+      if (typeof val == Boolean)
+        this.showQuickAdd = val;
+      else
+        this.showQuickAdd = !this.showQuickAdd;
     },
     updateQuickList(infos) {
       console.log('.. update quick list');

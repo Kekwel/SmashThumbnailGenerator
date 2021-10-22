@@ -2,7 +2,7 @@
   <v-dialog v-model="show" max-width="1000">
     <v-card min-height="50vh">
       <v-card-title ref="quick-title" class="headline justify-space-between">
-        Ajout rapide
+        {{ $t('title.quickAdd') }}
         <v-btn color="red" small icon style="align-self: center;" @click.stop="show = false">
           <v-icon>mdi-close-circle</v-icon>
         </v-btn>
@@ -110,17 +110,22 @@
               <!-- </div> -->
             </v-col>
 
-            <v-btn class="ml-2" dark x-small fab color="success" style="align-self: center;" @click="addInfo" v-hotkey="keymap">
-              <v-icon>mdi-plus-thick</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn class="ml-2" dark x-small fab color="success" style="align-self: center;" @click="addInfo" v-hotkey="keymap" v-bind="attrs" v-on="on">
+                  <v-icon>mdi-plus-thick</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ $t('tooltip.btn.add') }} : <kbd>Ctrl</kbd> + <kbd>Enter</kbd></span>
+            </v-tooltip>
 
           </v-row>
         </v-container>
         
         <v-divider class="my-2"/>
         
-        <!-- RECAP -->
-        <v-card class="ml-2" tile>
+        <!-- RECAP ou README ? -->
+        <v-card class="ml-2" tile v-if="infos.length !== 0">
           <v-list-item v-for="info in infos" :key="info.id" dense>
             <v-list-item-content class="py-1" style="border-top: 1px solid black">
               <v-list-item-title>
@@ -150,6 +155,19 @@
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+        </v-card>
+        <v-card class="ml-2" tile v-else height="16em">
+          <v-card-title ref="quick-title" class="headline font-italic" style="color: #9E9E9E">
+            {{ $t('title.shortcut') }}
+          </v-card-title>
+          <v-card-text>
+              <div>
+                <kbd><v-icon small color="white">mdi-keyboard-tab</v-icon> Tab</kbd> : {{ $t('label.shortcut.tab') }}
+              </div>
+              <div>
+                <kbd>Ctrl</kbd> + <kbd>Enter</kbd> : {{ $t('label.shortcut.ctrlEnter') }}
+              </div>
+          </v-card-text>
         </v-card>
       </v-card-text>
     </v-card>
@@ -252,7 +270,7 @@ export default {
     createNewInfo() {
       return {
         p1: {
-          tag: 'aaa'
+          tag: ''
         },
         color: {
           j1: {
@@ -267,7 +285,7 @@ export default {
           }
         },
         p2: {
-          tag: 'aaa'
+          tag: ''
         },
         phase: {name: 'Winners Round 1', value: 'WR1'}
       }
@@ -327,6 +345,7 @@ export default {
   margin: 0;
   padding: 0;
   min-width: 6em;
+  max-height: 20em;
 }
 .v-select.quick .vs__search {
   padding: 0;

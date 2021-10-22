@@ -39,7 +39,11 @@ const messages = {
         custom: 'Custom Font'
       },
       angle: 'Angle',
-      blur: 'Flou'
+      blur: 'Flou',
+      shortcut: {
+        tab: 'Valide le choix du champ courant et passe au suivant',
+        ctrlEnter: 'Créer une nouvelle entrée'
+      }
     },
     title: {
       tagAndPhases: 'Tag & Phases',
@@ -58,7 +62,9 @@ const messages = {
         banner: 'Ombre bandeau'
       },
       versus: 'Versus',
-      default: 'Par défaut'
+      default: 'Par défaut',
+      quickAdd: 'Ajout rapide',
+      shortcut: 'Raccourcis'
     },
     placeholder: {
       image: 'Choisissez une image'
@@ -67,7 +73,8 @@ const messages = {
       random: 'Personnages aléatoires !',
       clippath: 'Empêche un élément d\'être affiché sur une zone',
       btn: {
-        reset: 'Réinitialisation'
+        reset: 'Réinitialisation',
+        add: 'Ajout'
       },
       menu: {
         quick: 'Ajout rapide',
@@ -109,7 +116,11 @@ const messages = {
         custom: 'Custom Font'
       },
       angle: 'Angle',
-      blur: 'Blur'
+      blur: 'Blur',
+      shortcut: {
+        tab: 'Validate the choice of the current field and go to the next one',
+        ctrlEnter: 'Create a new entry'
+      }
     },
     title: {
       tagAndPhases: 'Tag & Phases',
@@ -128,7 +139,9 @@ const messages = {
         banner: 'Banner shadow'
       },
       versus: 'Versus',
-      default: 'Default'
+      default: 'Default',
+      quickAdd: 'Quick add',
+      shortcut: 'Shortcuts'
     },
     placeholder: {
       image: 'Choose a picture'
@@ -137,7 +150,8 @@ const messages = {
       random: 'Random characters !',
       clippath: 'Prevents an element from being displayed on an area',
       btn: {
-        reset: 'Reset'
+        reset: 'Reset',
+        add: 'Add'
       },
       menu: {
         quick: 'Quick add',
