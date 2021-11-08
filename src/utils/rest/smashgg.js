@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { config } from '../../../public/config';
 import characters from '../characters';
 import stocks from '../stocks';
 
@@ -43,8 +44,7 @@ const sgg = {
         }
       `;
       const headers = {
-        // TODO token dans variable conf ?
-        'Authorization': `Bearer xxx`,
+        'Authorization': `Bearer ${config.smashgg.token}`,
         'Content-Type': 'application/json',
       }
       let page = 1;
@@ -53,9 +53,11 @@ const sgg = {
       
       let infos = [];
       while (page < totalPages) {
-        const res = await axios.post('https://api.smash.gg/gql/alpha', {
+        const res = await axios.post(config.smashgg.url, {
             query: query,
             variables: {
+              // TODO textfield pour renter le slug
+              // TODO helper sur comment récup le slug
                 "eventSlug":"tournament/cornismash-90-ultimate-weekly-lyon/event/main-event-ultimate-singles",
                 "page": page,
                 "perPage": perPage
