@@ -3,6 +3,9 @@
     <v-card min-height="50vh">
       <v-card-title ref="quick-title" class="headline justify-space-between">
         {{ $t('title.quickAdd') }}
+        <v-btn color="red" small icon style="align-self: center;" @click="importSmashGG">
+          <v-icon>mdi-import</v-icon>
+        </v-btn>
         <v-btn color="red" small icon style="align-self: center;" @click.stop="show = false">
           <v-icon>mdi-close-circle</v-icon>
         </v-btn>
@@ -132,18 +135,14 @@
                 <v-container class="pa-0">
                   <v-row no-gutters>
                     <v-btn class="mr-2" small icon color="pink" style="align-self: center;" @click="deleteInfo(info)">
-                      <v-icon>mdi-minus-box</v-icon>
+                    <v-icon>mdi-minus-box</v-icon>
                     </v-btn>
-                    <v-col>
                         <div class="text-h6">{{ info.id }} | </div> 
-                    </v-col>
                     <v-col cols="5" class="d-flex align-center">
                         <span class="text-body-1 mx-2">{{ info.j1.tag }}</span>
                         <div :style="stockStyles(info.j1.characters, info.j1.characters.row, info.j1.characters.col)"></div>
                     </v-col>
-                    <v-col>
-                      <div class="text-button ml-2">VS</div> 
-                    </v-col>
+                    <div class="text-button mr-4">VS</div> 
                     <v-col cols="5" class="d-flex align-center">
                         <span class="text-body-1 mx-2">{{ info.j2.tag }}</span>
                         <div :style="stockStyles(info.j2.characters, info.j2.characters.row, info.j2.characters.col)"></div>
@@ -178,6 +177,7 @@
 import vSelect from "vue-select";
 import StockIcon from '../StockIcon.vue';
 import { cloneDeep } from 'lodash';
+import smashgg from '../../../utils/rest/smashgg.js';
 export default {
   components: { vSelect, StockIcon },
   props: {
@@ -235,22 +235,25 @@ export default {
           phase1: this.newInfo.phase.name.substr(0, this.newInfo.phase.name.indexOf(' ')),
           phase2: this.newInfo.phase.name.substr(this.newInfo.phase.name.indexOf(' ') + 1),
         }
+
         infoToPush.j1.characters.row = this.newInfo.color.j1.row;
         infoToPush.j1.characters.col = this.pad(this.newInfo.color.j1.col, 2);
 
         infoToPush.j2.characters.row = this.newInfo.color.j2.row;
         infoToPush.j2.characters.col = this.pad(this.newInfo.color.j2.col, 2);
-
-        // clone deep
-        this.infos.push(cloneDeep(infoToPush));
-        //this.infos.push(infoToPush);
-        this.newInfo = this.createNewInfo();
-        //this.$refs['quick-tag-j1'].focus();
-        this.$refs['quick-phase'].$refs.search.focus()
-        //this.$refs['quick-title'].focus()
-
-        this.$emit('quick-infos', this.infos);
+        this.pushInfos(infoToPush);
       }
+    },
+    pushInfos(infoToPush, toEmit = true) {
+      // clone deep
+      this.infos.push(cloneDeep(infoToPush));
+      this.newInfo = this.createNewInfo();
+      //this.$refs['quick-tag-j1'].focus();
+      this.$refs['quick-phase'].$refs.search.focus()
+      //this.$refs['quick-title'].focus()
+
+      if (toEmit)
+        this.$emit('quick-infos', this.infos);
     },
     deleteInfo(info) {
       console.log('..delete ', info);
@@ -328,6 +331,38 @@ export default {
     },
     filterPhase(item, queryText) {
       return item.name.toLowerCase().includes(queryText.toLowerCase()) || item.value.toLowerCase().includes(queryText.toLowerCase());
+    },
+    async importSmashGG() {
+      console.log('.. send post smashgg');
+      const infosSmashgg = await smashgg.getStreamedSetsInfos();
+
+      //console.log('toAdd', infosSmashgg);
+
+      // TODO infoToPush.j1.characters => object Character => recup de array this.crtCharacters ?
+      // TODO tester le jeu ?
+
+      let cpt = 0;
+      for (const info of infosSmashgg) {
+        let infoToPush = {
+          id: this.infos.length + 1,
+          j1: info.p1,
+          j2: info.p2,
+          // TODO phase1 & phase2
+          phase: info.phase.value,
+          phase1: info.phase.phase1,
+          phase2: info.phase.phase2
+        }
+  
+        infoToPush.j1.characters.row = 0;
+        infoToPush.j1.characters.col = '00';
+  
+        infoToPush.j2.characters.row = 0;
+        infoToPush.j2.characters.col = '00';
+  
+        cpt++;
+        // emit qu'au dernier item
+        this.pushInfos(infoToPush, cpt === infosSmashgg.length);
+      }
     },
     /* TODO UTILS */
     pad(num, size) {

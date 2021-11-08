@@ -1,5 +1,15 @@
 import Utils from "../../utils"
 
+// https://api.smash.gg/videogames
+// id 1 : Melee
+// id 2 : Brawl
+// id 3 : Smash 4
+// id 4 : Smash 64
+// id 1386 : Smash Ultimate
+/* const smashggIDs = {
+    1386: 'ult'
+} */
+
 const empty = {id: 0, code: '', name: 'Empty', src: Utils.getRoot() + 'img/icons/ult.png', bgSrc: Utils.getRoot() + "img/background/ult.jpg"};
 const ult = {id: 1, code: 'ult', name: 'Ultimate', src: Utils.getRoot() + 'img/icons/ult.png', bgSrc: Utils.getRoot() + "img/background/ult.jpg"};
 const melee = {id: 2, code: 'melee', name: 'Melee', src: Utils.getRoot() + 'img/icons/melee.png', bgSrc: Utils.getRoot() + "img/background/melee.jpg"}

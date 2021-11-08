@@ -5,8 +5,9 @@ import vuetify from './plugins/vuetify'
 import VueI18n from 'vue-i18n'
 import Message from './messages'
 import VueHotkey from 'v-hotkey'
+import axios from 'axios';
 
-
+Vue.prototype.$http = axios;
 Vue.config.productionTip = false
 Vue.use(VueCompositionAPI);
 Vue.use(VueI18n);

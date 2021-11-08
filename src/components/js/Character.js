@@ -24,7 +24,7 @@ class Character {
         this._col = '00';
         this._maxCol = maxCol;
 
-        this._firstStockUrl = this.getfirstStockUrl();
+        this._firstStockUrl = this.getFirstStockUrl();
         this._allStockUrl = this.getAllStocksUrl();
     }
 
@@ -34,7 +34,7 @@ class Character {
         item.game = this.game;
         item.name = this.name;
         item.formatName = this.formatName;
-        item.firstStockUrl = this.getfirstStockUrl();
+        item.firstStockUrl = this.getFirstStockUrl();
         item.allStocksUrl = this.getAllStocksUrl();
         item.url = this.getCharUrl();
 
@@ -52,11 +52,14 @@ class Character {
                         : '/'
     }
 
-    getfirstStockUrl() {
+    getFirstStockUrl() {
         //var stockUrl = this.getRoot() + "img/stock/" + this._game + "/"  + this._formatName + ".png";
         //var stockUrl = "https://smash-render.s3.eu-west-3.amazonaws.com/" + this._game + "/stock/" + this._formatName + ".png";
         var stockUrl = "https://raw.githubusercontent.com/Kekwel/ThumbnailGeneratorAssets/main/games/" + this._game + "/stock/" + this._formatName + ".png";
         return stockUrl;
+    }
+    get firstStockUrl() {
+        return this.getFirstStockUrl();
     }
     // img/stock/$GAME/$CHARNAME_all.png
     getAllStocksUrl() {

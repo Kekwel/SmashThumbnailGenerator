@@ -14,7 +14,8 @@ const SIX_COL = 6;
 const SEVEN_COL = 7;
 const EIGHT_COL = 8;
 
-const ultimate = [new Character('ult', '1', 'Mario', 'mario', ONE_ROW, EIGHT_COL),
+const ultimate = [
+        new Character('ult', '1', 'Mario', 'mario', ONE_ROW, EIGHT_COL),
         new Character('ult', '2', 'Donkey Kong', 'donkey', ONE_ROW, EIGHT_COL),
         new Character('ult', '3', 'Link', 'link', ONE_ROW, EIGHT_COL),
         new Character('ult', '4', 'Samus', 'samus', ONE_ROW, EIGHT_COL),
@@ -104,7 +105,8 @@ const ultimate = [new Character('ult', '1', 'Mario', 'mario', ONE_ROW, EIGHT_COL
     ]
     .sort(compareId);
 
-const melee = [new Character('melee', '1', 'Dr. Mario', 'mariod', TWO_ROW, FIVE_COL),
+const melee = [
+                new Character('melee', '1', 'Dr. Mario', 'mariod', TWO_ROW, FIVE_COL),
                 new Character('melee', '2', 'Mario', 'mario', TWO_ROW, FIVE_COL),
                 new Character('melee', '3', 'Luigi', 'luigi', TWO_ROW, FOUR_COL),
                 new Character('melee', '4', 'Bowser', 'bowser', TWO_ROW, FOUR_COL),
@@ -133,7 +135,8 @@ const melee = [new Character('melee', '1', 'Dr. Mario', 'mariod', TWO_ROW, FIVE_
                 /* new Character('melee', '?', 'Random', 'random') */
         ].sort(compareId);
 
-const pplus = [new Character('pplus', '1', 'Mario', 'mario', THREE_ROW, SIX_COL),
+const pplus = [
+                new Character('pplus', '1', 'Mario', 'mario', THREE_ROW, SIX_COL),
                 new Character('pplus', '2', 'Luigi', 'luigi', THREE_ROW, SIX_COL),
                 new Character('pplus', '3', 'Peach', 'peach', THREE_ROW, SIX_COL),
                 new Character('pplus', '4', 'Wario', 'wario', THREE_ROW, SIX_COL),
@@ -178,7 +181,8 @@ const pplus = [new Character('pplus', '1', 'Mario', 'mario', THREE_ROW, SIX_COL)
         ].sort(compareId);
 
 // --- RoA
-const roa = [new Character('roa', '1', 'Clairen', 'clairen', ONE_ROW, SIX_COL),
+const roa = [
+            new Character('roa', '1', 'Clairen', 'clairen', ONE_ROW, SIX_COL),
             new Character('roa', '2', 'Forsburn', 'forsburn', ONE_ROW, SIX_COL),
             new Character('roa', '3', 'Zetterburn', 'zetterburn', ONE_ROW, SIX_COL),
             new Character('roa', '4', 'Wrastor', 'wrastor', ONE_ROW, SIX_COL),
@@ -195,7 +199,8 @@ const roa = [new Character('roa', '1', 'Clairen', 'clairen', ONE_ROW, SIX_COL),
         ].sort(compareId);
 
 // --- NASB
-const nasb = [new Character('nasb', '1', 'Spongebob Squarepants', 'apple', ONE_ROW, ZERO_COL),
+const nasb = [
+                new Character('nasb', '1', 'Spongebob Squarepants', 'apple', ONE_ROW, ZERO_COL),
                 new Character('nasb', '2', 'Patrick Star', 'star', ONE_ROW, ZERO_COL),
                 new Character('nasb', '3', 'Sandy Cheeks', 'diver', ONE_ROW, ZERO_COL),
                 new Character('nasb', '4', 'Michelangelo', 'pizza', ONE_ROW, ZERO_COL),
@@ -237,7 +242,13 @@ function compareId(a, b) {
     return a.id - b.id;
 }
 
+// --
+const games = {
+    1386: ultimate
+}
+
 export default {
+    GAMES: games,
     ULT: ultimate,
     MELEE: melee,
     PPLUS: pplus,
