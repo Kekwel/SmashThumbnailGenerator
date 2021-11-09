@@ -6,17 +6,19 @@ import VueI18n from 'vue-i18n'
 import Message from './messages'
 import VueHotkey from 'v-hotkey'
 import axios from 'axios';
+import Toasted from 'vue-toasted';
 
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false
 Vue.use(VueCompositionAPI);
 Vue.use(VueI18n);
-Vue.use(VueHotkey)
+Vue.use(VueHotkey);
+Vue.use(Toasted, { iconPack : 'custom-class' });
 
 require("./assets/scss/main.scss")
 
 const messages = Message.message;
-const i18n = new VueI18n({
+export const i18n = new VueI18n({
   locale: getBrowserLocale({ countryCodeOnly: true }), // set locale
   fallbackLocale: 'fr',
   messages, // set locale messages

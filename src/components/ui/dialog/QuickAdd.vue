@@ -7,7 +7,7 @@
           <v-text-field v-model="eventSlug" color="teal" background-color="teal lighten-5"
                         ref="eventSlugSmashgg" label="Import from SmashGG" 
                         :rules="[() => !!eventSlug || $t('tooltip.help.import.smashgg'),
-                                 () => /^https:\/\/smash.gg\/tournament\//.test(eventSlug) || $t('tooltip.help.import.smashgg')]"
+                                 () => /tournament\/(.+?)\/event\/(.+?)(\/|$)/.test(eventSlug) || $t('tooltip.help.import.smashgg')]"
                         :hint="$t('tooltip.help.import.smashgg')" hide-details="auto"
                         dense >
               <template v-slot:prepend>
@@ -201,6 +201,7 @@ import vSelect from "vue-select";
 import StockIcon from '../StockIcon.vue';
 import { cloneDeep } from 'lodash';
 import smashgg from '../../../utils/rest/smashgg.js';
+
 export default {
   components: { vSelect, StockIcon },
   props: {
@@ -360,18 +361,27 @@ export default {
     async importSmashGG() {
       this.$refs['eventSlugSmashgg'].validate(true);
 
-      if (this.eventSlug) {
+      if (this.eventSlug && /tournament\/(.+?)\/event\/(.+?)(\/|$)/.test(this.eventSlug)) {
         console.log('.. send post smashgg', this.eventSlug);
+
+        // recupere group
+        const match = this.eventSlug.match(/tournament\/(.+?)\/event\/(.+?)(\/|$)/);
+        const tournament = match[1];
+        const event = match[2];
+
         this.loadingSmashgg = true;
         //smashgg.getStreamedSetsInfos("https://smash.gg/tournament/cornismash-90-ultimate-weekly-lyon/event/main-event-ultimate-singles")
-        smashgg.getStreamedSetsInfos(this.eventSlug)
+        smashgg.getStreamedSetsInfos(tournament, event)
         .then(infosSmashgg => {
-          //console.log('toAdd', infosSmashgg);
+          console.log('toAdd', infosSmashgg);
+          if (infosSmashgg.errors.length > 0) {
+            throw new Error(infosSmashgg.errors[0].message);
+          }
     
           // TODO tester le jeu ?
     
           let cpt = 0;
-          for (const info of infosSmashgg) {
+          for (const info of infosSmashgg.infos) {
             let infoToPush = {
               id: this.infos.length + 1,
               j1: info.p1,
@@ -393,11 +403,29 @@ export default {
             this.pushInfos(infoToPush, cpt === infosSmashgg.length);
           }
           this.loadingSmashgg = false;
-          // TODO notif ok !
+          // -- notif ok !
+          this.$toasted.show(this.$t('notification.smashgg.importOk', {nb: cpt}), { 
+            icon : {
+              name: 'mdi mdi-checkbox-marked v-icon'
+            },
+            theme: "toasted-primary", 
+            position: "top-center", 
+            duration : 5000,
+            type: 'success'
+          });
         })
         .catch(err => {
-          console.log(err);
-          // TODO notif pourquoi error
+          console.error(err.message);
+          // -- notif pourquoi error
+          this.$toasted.show(err.message, { 
+            icon : {
+              name: 'mdi mdi-alert-box v-icon'
+            },
+            theme: "toasted-primary", 
+            position: "top-center", 
+            duration : 5000,
+            type: 'error'
+          });
           this.loadingSmashgg = false;
         });
       }

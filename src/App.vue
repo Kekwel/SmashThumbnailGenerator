@@ -335,4 +335,8 @@ export default {
   // light-blue lighten-4
   background-color: #B3E5FC;
 }
+
+.toasted {
+  font-family: "Roboto", sans-serif;
+}
 </style>

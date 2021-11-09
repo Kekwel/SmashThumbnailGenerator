@@ -69,6 +69,17 @@ const messages = {
     placeholder: {
       image: 'Choisissez une image'
     },
+    error: {
+      smashgg: {
+        nodata: 'Aucune donnée trouvée ! Vérifiez le lien',
+        noSetStreamed: 'Aucun set streamé trouvé ! ',
+      }
+    },
+    notification: {
+      smashgg: {
+        importOk: '{nb} sets importés !'
+      }
+    },
     tooltip: {
       random: 'Personnages aléatoires !',
       clippath: 'Empêche un élément d\'être affiché sur une zone',
@@ -78,7 +89,7 @@ const messages = {
       },
       help: {
         import: {
-          smashgg: 'Lien de l\'évenement (https://smash.gg/tournament/TOURNAMENT_ID/events/EVENT_ID)'
+          smashgg: 'Lien de l\'évenement (https://smash.gg/tournament/TOURNAMENT_ID/event/EVENT_ID)'
         },
       },
       menu: {
@@ -90,6 +101,7 @@ const messages = {
       }
     }
   },
+
   en: {
     credits: {
       icon: 'Smash Bros Icons',
@@ -151,6 +163,17 @@ const messages = {
     placeholder: {
       image: 'Choose a picture'
     },
+    error: {
+      smashgg: {
+        nodata: 'No data found ! Please check the smashgg link',
+        noSetStreamed: 'No streamed sets found !',
+      }
+    },
+    notification: {
+      smashgg: {
+        importOk: '{nb} imported sets !'
+      }
+    },
     tooltip: {
       random: 'Random characters !',
       clippath: 'Prevents an element from being displayed on an area',
@@ -160,7 +183,7 @@ const messages = {
       },
       help: {
         import: {
-          smashgg: 'Event link (https://smash.gg/tournament/TOURNAMENT_ID/events/EVENT_ID)'
+          smashgg: 'Event link (https://smash.gg/tournament/TOURNAMENT_ID/event/EVENT_ID)'
         },
       },
       menu: {

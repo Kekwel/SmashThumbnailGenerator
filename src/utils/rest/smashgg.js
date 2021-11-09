@@ -1,13 +1,13 @@
 
 import axios from 'axios';
 import { config } from '../../../public/config';
+import { i18n } from '../../main';
 import characters from '../characters';
 import stocks from '../stocks';
 
 const sgg = {
-    async getStreamedSetsInfos(eventSlug) {
-      eventSlug = eventSlug.replace('https://smash.gg/', '');
-      console.log('pouet', eventSlug);
+    async getStreamedSetsInfos(tournament, event) {
+      const eventSlug = `tournament/${tournament}/event/${event}`;
 
       // TODO query autre part
       const query = `query EventSets($eventSlug: String!, $page: Int!, $perPage: Int!) {
@@ -54,57 +54,69 @@ const sgg = {
       let totalPages = page + 1;
       let perPage = 20;
       
-      let infos = [];
+      let infoRes = {
+        infos: [],
+        errors: []
+      };
       while (page < totalPages) {
         const res = await axios.post(config.smashgg.url, {
             query: query,
             variables: {
-              // TODO textfield pour renter le slug
-              // TODO helper sur comment récup le slug
                 "eventSlug": eventSlug,
                 "page": page,
                 "perPage": perPage
             }
         }, { headers });
         
-        // TODO gestion error
         const data = res.data.data;
-        //console.log(res);
-
-        totalPages = data.event.sets.pageInfo.totalPages;
-        const videogameId = data.event.videogame.id;
+        const hasErrors = res.data.errors;
+        
+        if (hasErrors) {
+          totalPages = 0;
+          infoRes.errors = hasErrors;
+        } else if (!data.event) {
+          totalPages = 0;
+          infoRes.errors = [{message: i18n.t('error.smashgg.nodata')}];
+        } else {
+          totalPages = data.event.sets.pageInfo.totalPages;
+          const videogameId = data.event.videogame.id;
+    
+          // -- ne recup que les sets dont stream != null
+          for (const set of data.event.sets.nodes) {
+            if (set.stream) {
+              let phase = this.getPhase(set.fullRoundText);
+    
+              const info = {
+                p1: {},
+                p2: {},
+                phase: phase
+              }
+    
+              // TODO récupérer les persos les + utilisés dans le set (parcours de array games)
+              // TODO max 2 persos
   
-        // -- ne recup que les sets dont stream != null
-        for (const set of data.event.sets.nodes) {
-          if (set.stream) {
-            let phase = this.getPhase(set.fullRoundText);
-  
-            const info = {
-              p1: {},
-              p2: {},
-              phase: phase
+              // J1
+              info.p1.tag = set.games[0].selections[0].entrant.name;
+              info.p1.characters = this.findCharacter(videogameId, set.games[0].selections[0].selectionValue)
+    
+              // J2
+              info.p2.tag = set.games[0].selections[1].entrant.name;
+              info.p2.characters = this.findCharacter(videogameId, set.games[0].selections[1].selectionValue)
+    
+              infoRes.infos.push(info);
             }
-  
-            // TODO récupérer les persos les + utilisés dans le set (parcours de array games)
-            // TODO max 2 persos
-
-            // J1
-            info.p1.tag = set.games[0].selections[0].entrant.name;
-            info.p1.characters = this.findCharacter(videogameId, set.games[0].selections[0].selectionValue)
-  
-            // J2
-            info.p2.tag = set.games[0].selections[1].entrant.name;
-            info.p2.characters = this.findCharacter(videogameId, set.games[0].selections[1].selectionValue)
-  
-            infos.push(info);
           }
+  
+          page++;
         }
-
-        page++;
       }
 
-      // TODO si infos vide -> notif 'pas trouvé de set streamé'
-      return infos;
+      // si requete ok MAIS aucune donnée => aucun set "streamé"
+      if (totalPages !== 0 && infoRes.infos.length === 0) {
+        infoRes.errors = [{message: i18n.t('error.smashgg.noSetStreamed')}];
+      }
+
+      return infoRes;
     },
 
     // décompose la phase provenant de smashgg
