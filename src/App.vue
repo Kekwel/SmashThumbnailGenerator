@@ -240,9 +240,6 @@ export default {
       // infos = array -> id, p1 {tag, char}, p2 {...}, phase
       //this.quickList = infos;
       this.quickCrt = infos[0];
-
-      console.log('aaaa', this.quickCrt.j1.characters);
-      console.log('aaaa', this.quickCrt.j1.characters.firstStockUrl);
       
       // met dans storage local..
       //localStorage.quickList = JSON.stringify(this.quickList);

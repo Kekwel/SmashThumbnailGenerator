@@ -137,15 +137,15 @@
                     <v-btn class="mr-2" small icon color="pink" style="align-self: center;" @click="deleteInfo(info)">
                     <v-icon>mdi-minus-box</v-icon>
                     </v-btn>
-                        <div class="text-h6">{{ info.id }} | </div> 
+                    <!-- <div class="text-h6">{{ info.id }} | </div>  -->
                     <v-col cols="5" class="d-flex align-center">
-                        <span class="text-body-1 mx-2">{{ info.j1.tag }}</span>
                         <div :style="stockStyles(info.j1.characters, info.j1.characters.row, info.j1.characters.col)"></div>
+                        <span class="text-body-1 mx-2">{{ info.j1.tag }}</span>
                     </v-col>
                     <div class="text-button mr-4">VS</div> 
                     <v-col cols="5" class="d-flex align-center">
-                        <span class="text-body-1 mx-2">{{ info.j2.tag }}</span>
                         <div :style="stockStyles(info.j2.characters, info.j2.characters.row, info.j2.characters.col)"></div>
+                        <span class="text-body-1 mx-2">{{ info.j2.tag }}</span>
                     </v-col>
 
                     <div class="text-button ml-2">- {{ info.phase }}</div>
@@ -355,7 +355,7 @@ export default {
   
         infoToPush.j1.characters.row = 0;
         infoToPush.j1.characters.col = '00';
-  
+
         infoToPush.j2.characters.row = 0;
         infoToPush.j2.characters.col = '00';
   

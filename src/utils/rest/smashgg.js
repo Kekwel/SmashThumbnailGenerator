@@ -18,7 +18,7 @@ const sgg = {
             sets(
               page: $page
               perPage: $perPage
-              sortType: STANDARD
+              sortType: MAGIC
             ) {
               pageInfo {
                 totalPages
