@@ -76,6 +76,11 @@ const messages = {
         reset: 'Réinitialisation',
         add: 'Ajout'
       },
+      help: {
+        import: {
+          smashgg: 'Lien de l\'évenement (https://smash.gg/tournament/TOURNAMENT_ID/events/EVENT_ID)'
+        },
+      },
       menu: {
         quick: 'Ajout rapide',
         credits: 'Credits',
@@ -152,6 +157,11 @@ const messages = {
       btn: {
         reset: 'Reset',
         add: 'Add'
+      },
+      help: {
+        import: {
+          smashgg: 'Event link (https://smash.gg/tournament/TOURNAMENT_ID/events/EVENT_ID)'
+        },
       },
       menu: {
         quick: 'Quick add',

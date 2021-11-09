@@ -5,7 +5,10 @@ import characters from '../characters';
 import stocks from '../stocks';
 
 const sgg = {
-    async getStreamedSetsInfos() {
+    async getStreamedSetsInfos(eventSlug) {
+      eventSlug = eventSlug.replace('https://smash.gg/', '');
+      console.log('pouet', eventSlug);
+
       // TODO query autre part
       const query = `query EventSets($eventSlug: String!, $page: Int!, $perPage: Int!) {
           event(slug: $eventSlug) {
@@ -58,13 +61,13 @@ const sgg = {
             variables: {
               // TODO textfield pour renter le slug
               // TODO helper sur comment récup le slug
-                "eventSlug":"tournament/cornismash-90-ultimate-weekly-lyon/event/main-event-ultimate-singles",
+                "eventSlug": eventSlug,
                 "page": page,
                 "perPage": perPage
             }
         }, { headers });
         
-        // TODO passe ici si erreur dans query..
+        // TODO gestion error
         const data = res.data.data;
         //console.log(res);
 
@@ -83,6 +86,8 @@ const sgg = {
             }
   
             // TODO récupérer les persos les + utilisés dans le set (parcours de array games)
+            // TODO max 2 persos
+
             // J1
             info.p1.tag = set.games[0].selections[0].entrant.name;
             info.p1.characters = this.findCharacter(videogameId, set.games[0].selections[0].selectionValue)
@@ -94,11 +99,11 @@ const sgg = {
             infos.push(info);
           }
         }
-        // console.log(data.event);
 
         page++;
       }
 
+      // TODO si infos vide -> notif 'pas trouvé de set streamé'
       return infos;
     },
 

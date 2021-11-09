@@ -3,9 +3,30 @@
     <v-card min-height="50vh">
       <v-card-title ref="quick-title" class="headline justify-space-between">
         {{ $t('title.quickAdd') }}
-        <v-btn color="red" small icon style="align-self: center;" @click="importSmashGG">
-          <v-icon>mdi-import</v-icon>
-        </v-btn>
+        <div style="width: 25em">
+          <v-text-field v-model="eventSlug" color="teal" background-color="teal lighten-5"
+                        label="Import from SmashGG" 
+                        :hint="$t('tooltip.help.import.smashgg')" hide-details="auto"
+                        dense >
+              <template v-slot:prepend>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="teal" small icon 
+                      :style="{ display: loadingSmashgg ? 'none' : ''}"
+                      @click="importSmashGG">
+                      <v-icon v-on="on">
+                        mdi-import
+                      </v-icon>
+                    </v-btn>
+                    <v-progress-circular indeterminate color="teal" :width="3" :size="loadingSmashgg ? 20 : 0"
+                      :style="{ display: loadingSmashgg ? '' : 'none'}">
+                    </v-progress-circular>
+                  </template>
+                  {{ $t('tooltip.help.import.smashgg') }}
+                </v-tooltip>
+              </template>
+          </v-text-field>
+        </div>
         <v-btn color="red" small icon style="align-self: center;" @click.stop="show = false">
           <v-icon>mdi-close-circle</v-icon>
         </v-btn>
@@ -198,7 +219,9 @@ export default {
         {name: 'Grand Finals', value: 'GF'},
         ],
       crtCharacters: [],
-      crtColorChar: []
+      crtColorChar: [],
+      eventSlug: '',
+      loadingSmashgg: false,
     }
   },
   computed: {
@@ -333,36 +356,44 @@ export default {
       return item.name.toLowerCase().includes(queryText.toLowerCase()) || item.value.toLowerCase().includes(queryText.toLowerCase());
     },
     async importSmashGG() {
-      console.log('.. send post smashgg');
-      const infosSmashgg = await smashgg.getStreamedSetsInfos();
-
-      //console.log('toAdd', infosSmashgg);
-
-      // TODO icon qui tourne pour attendre résultat
-      // TODO tester le jeu ?
-
-      let cpt = 0;
-      for (const info of infosSmashgg) {
-        let infoToPush = {
-          id: this.infos.length + 1,
-          j1: info.p1,
-          j2: info.p2,
-          // TODO phase1 & phase2
-          phase: info.phase.value,
-          phase1: info.phase.phase1,
-          phase2: info.phase.phase2
+      console.log('.. send post smashgg', this.eventSlug);
+      this.loadingSmashgg = true;
+      smashgg.getStreamedSetsInfos("https://smash.gg/tournament/cornismash-90-ultimate-weekly-lyon/event/main-event-ultimate-singles")
+      .then(infosSmashgg => {
+        //console.log('toAdd', infosSmashgg);
+  
+        // TODO tester le jeu ?
+  
+        let cpt = 0;
+        for (const info of infosSmashgg) {
+          let infoToPush = {
+            id: this.infos.length + 1,
+            j1: info.p1,
+            j2: info.p2,
+            // TODO phase1 & phase2
+            phase: info.phase.value,
+            phase1: info.phase.phase1,
+            phase2: info.phase.phase2
+          }
+    
+          infoToPush.j1.characters.row = 0;
+          infoToPush.j1.characters.col = '00';
+  
+          infoToPush.j2.characters.row = 0;
+          infoToPush.j2.characters.col = '00';
+    
+          cpt++;
+          // emit qu'au dernier item
+          this.pushInfos(infoToPush, cpt === infosSmashgg.length);
         }
-  
-        infoToPush.j1.characters.row = 0;
-        infoToPush.j1.characters.col = '00';
-
-        infoToPush.j2.characters.row = 0;
-        infoToPush.j2.characters.col = '00';
-  
-        cpt++;
-        // emit qu'au dernier item
-        this.pushInfos(infoToPush, cpt === infosSmashgg.length);
-      }
+        this.loadingSmashgg = false;
+        // TODO notif ok !
+      })
+      .catch(err => {
+        console.log(err);
+        // TODO notif pourquoi error
+        this.loadingSmashgg = false;
+      });
     },
     /* TODO UTILS */
     pad(num, size) {
