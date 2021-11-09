@@ -189,10 +189,10 @@ export default {
       infos: [],
       // TODO faire autrement pour les Round
       phases: [
-        {name: 'Winners Round 1', value: 'WR1'}, {name: 'Winners Round 2', value: 'WR2'}, {name: 'Winners Round 3', value: 'WR3'}, {name: 'Winners Round 4', value: 'WR4'},
+        {name: 'Winners Round 1', value: 'WR1'}, {name: 'Winners Round 2', value: 'WR2'}, {name: 'Winners Round 3', value: 'WR3'}, {name: 'Winners Round 4', value: 'WR4'}, {name: 'Winners Round 5', value: 'WR5'},
         {name: 'Winners Quarters', value: 'WQ'}, {name: 'Winners Semis', value: 'WS'},
         {name: 'Winners Finals', value: 'WF'},
-        {name: 'Losers Round 1', value: 'LR1'}, {name: 'Losers Round 2', value: 'LR2'}, {name: 'Losers Round 3', value: 'LR3'}, {name: 'Losers Round 4', value: 'LR4'},
+        {name: 'Losers Round 1', value: 'LR1'}, {name: 'Losers Round 2', value: 'LR2'}, {name: 'Losers Round 3', value: 'LR3'}, {name: 'Losers Round 4', value: 'LR4'}, {name: 'Losers Round 5', value: 'LR5'},
         {name: 'Losers Quarters', value: 'LQ'}, {name: 'Losers Semis', value: 'WS'},
         {name: 'Losers Finals', value: 'LF'},  
         {name: 'Grand Finals', value: 'GF'},
@@ -338,7 +338,7 @@ export default {
 
       //console.log('toAdd', infosSmashgg);
 
-      // TODO infoToPush.j1.characters => object Character => recup de array this.crtCharacters ?
+      // TODO icon qui tourne pour attendre résultat
       // TODO tester le jeu ?
 
       let cpt = 0;

@@ -65,7 +65,6 @@ const sgg = {
         }, { headers });
         
         // TODO passe ici si erreur dans query..
-        // TODO recup characters
         const data = res.data.data;
         //console.log(res);
 
@@ -119,8 +118,9 @@ const sgg = {
       
       if (fullPhase.match(/round/i)) {
         // TODO recup X
-        phase2 = "Round X"
-        value += "Rx"
+        const matchRound = fullPhase.match(/round ([0-9]*)/i);
+        phase2 = `Round ${matchRound[1]}`
+        value += `R${matchRound[1]}`
       } else if (fullPhase.match(/quarter/i)) {
         phase2 = "Quarters"
         value += "Q"
