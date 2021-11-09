@@ -5,7 +5,9 @@
         {{ $t('title.quickAdd') }}
         <div style="width: 25em">
           <v-text-field v-model="eventSlug" color="teal" background-color="teal lighten-5"
-                        label="Import from SmashGG" 
+                        ref="eventSlugSmashgg" label="Import from SmashGG" 
+                        :rules="[() => !!eventSlug || $t('tooltip.help.import.smashgg'),
+                                 () => /^https:\/\/smash.gg\/tournament\//.test(eventSlug) || $t('tooltip.help.import.smashgg')]"
                         :hint="$t('tooltip.help.import.smashgg')" hide-details="auto"
                         dense >
               <template v-slot:prepend>
@@ -356,44 +358,49 @@ export default {
       return item.name.toLowerCase().includes(queryText.toLowerCase()) || item.value.toLowerCase().includes(queryText.toLowerCase());
     },
     async importSmashGG() {
-      console.log('.. send post smashgg', this.eventSlug);
-      this.loadingSmashgg = true;
-      smashgg.getStreamedSetsInfos("https://smash.gg/tournament/cornismash-90-ultimate-weekly-lyon/event/main-event-ultimate-singles")
-      .then(infosSmashgg => {
-        //console.log('toAdd', infosSmashgg);
-  
-        // TODO tester le jeu ?
-  
-        let cpt = 0;
-        for (const info of infosSmashgg) {
-          let infoToPush = {
-            id: this.infos.length + 1,
-            j1: info.p1,
-            j2: info.p2,
-            // TODO phase1 & phase2
-            phase: info.phase.value,
-            phase1: info.phase.phase1,
-            phase2: info.phase.phase2
+      this.$refs['eventSlugSmashgg'].validate(true);
+
+      if (this.eventSlug) {
+        console.log('.. send post smashgg', this.eventSlug);
+        this.loadingSmashgg = true;
+        //smashgg.getStreamedSetsInfos("https://smash.gg/tournament/cornismash-90-ultimate-weekly-lyon/event/main-event-ultimate-singles")
+        smashgg.getStreamedSetsInfos(this.eventSlug)
+        .then(infosSmashgg => {
+          //console.log('toAdd', infosSmashgg);
+    
+          // TODO tester le jeu ?
+    
+          let cpt = 0;
+          for (const info of infosSmashgg) {
+            let infoToPush = {
+              id: this.infos.length + 1,
+              j1: info.p1,
+              j2: info.p2,
+              // TODO phase1 & phase2
+              phase: info.phase.value,
+              phase1: info.phase.phase1,
+              phase2: info.phase.phase2
+            }
+      
+            infoToPush.j1.characters.row = 0;
+            infoToPush.j1.characters.col = '00';
+    
+            infoToPush.j2.characters.row = 0;
+            infoToPush.j2.characters.col = '00';
+      
+            cpt++;
+            // emit qu'au dernier item
+            this.pushInfos(infoToPush, cpt === infosSmashgg.length);
           }
-    
-          infoToPush.j1.characters.row = 0;
-          infoToPush.j1.characters.col = '00';
-  
-          infoToPush.j2.characters.row = 0;
-          infoToPush.j2.characters.col = '00';
-    
-          cpt++;
-          // emit qu'au dernier item
-          this.pushInfos(infoToPush, cpt === infosSmashgg.length);
-        }
-        this.loadingSmashgg = false;
-        // TODO notif ok !
-      })
-      .catch(err => {
-        console.log(err);
-        // TODO notif pourquoi error
-        this.loadingSmashgg = false;
-      });
+          this.loadingSmashgg = false;
+          // TODO notif ok !
+        })
+        .catch(err => {
+          console.log(err);
+          // TODO notif pourquoi error
+          this.loadingSmashgg = false;
+        });
+      }
     },
     /* TODO UTILS */
     pad(num, size) {
