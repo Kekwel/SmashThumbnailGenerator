@@ -373,20 +373,19 @@ export default {
         //smashgg.getStreamedSetsInfos("https://smash.gg/tournament/cornismash-90-ultimate-weekly-lyon/event/main-event-ultimate-singles")
         smashgg.getStreamedSetsInfos(tournament, event)
         .then(infosSmashgg => {
-          console.log('toAdd', infosSmashgg);
           if (infosSmashgg.errors.length > 0) {
             throw new Error(infosSmashgg.errors[0].message);
           }
-    
-          // TODO tester le jeu ?
-    
+
+
           let cpt = 0;
           for (const info of infosSmashgg.infos) {
+            console.log('hye', info);
             let infoToPush = {
               id: this.infos.length + 1,
               j1: info.p1,
               j2: info.p2,
-              // TODO phase1 & phase2
+              // -- phase1 & phase2
               phase: info.phase.value,
               phase1: info.phase.phase1,
               phase2: info.phase.phase2
@@ -400,7 +399,7 @@ export default {
       
             cpt++;
             // emit qu'au dernier item
-            this.pushInfos(infoToPush, cpt === infosSmashgg.length);
+            this.pushInfos(infoToPush, cpt === infosSmashgg.infos.length);
           }
           this.loadingSmashgg = false;
           // -- notif ok !

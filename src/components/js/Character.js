@@ -80,6 +80,9 @@ class Character {
             //charUrl = this.getRoot() + "img/char/" + this._game + "/" + this._formatName + "_" + this._row + "_" + this._col + ".png";
 		return charUrl;
     }
+    get charUrl() {
+        return this.getCharUrl();
+    }
 
     // GETTER SETTER
     get game() {

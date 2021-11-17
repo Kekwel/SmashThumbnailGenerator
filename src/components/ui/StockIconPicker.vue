@@ -6,14 +6,15 @@
           <v-col cols="10">
             <!-- TODO v-autocomplete ? -->
             <v-select class="my-2" style="width: 15.5em" :options="characters" label="_name" @input="updateChar($event, image)" v-model="crtCharacter">
-              <template #selected-option="{ _name, _firstStockUrl }">
+              <template #selected-option="{ _name, name, _firstStockUrl }">
                 <div class="stock-icon-selected">
-                  <stock-icon :width="28" :src="_firstStockUrl" /> {{ _name }}
+                  <stock-icon :width="28" :src="_firstStockUrl" /> {{ _name }}{{ name }}
                 </div>
               </template>
-              <template #option="{ _name, _firstStockUrl }">
+              <!-- TODO dégueu de mettre _name et name.. revoir structure lors de l'import (quick add) -->
+              <template #option="{ _name, name, _firstStockUrl }">
                 <div class="stock-icon-selected">
-                  <stock-icon :width="28" :src="_firstStockUrl" />{{ _name }}
+                  <stock-icon :width="28" :src="_firstStockUrl" />{{ _name }}{{ name }}
                 </div>
               </template>
             </v-select>
@@ -51,6 +52,8 @@ export default {
     player: Object,
     image: Object,
     characters: Array,
+    // TODO a revoir...
+    isSecond: Boolean,
   },
   data() {
     return {
@@ -116,22 +119,35 @@ export default {
       this.resetActive();
       console.log("update", character ? character.formatName : 'null', "for player", this.image.number, "..");
 
-      //var qui = localStorage.quickCrt ? JSON.parse(localStorage.quickCrt) : '';
       var quickList = localStorage.quickList ? JSON.parse(localStorage.quickList) : [];
       var quickIdx = localStorage.quickCrtIdx ? JSON.parse(localStorage.quickCrtIdx) : '';
       var qui = quickList[quickIdx];
-      // TODO a modifier
+      // TODO a modifier, a revoir, a détruire je sais pas mais j'ai fait n'imp sur ce coup, mais ca fonctionne
 
       if (qui?.j1 && qui?.j2) {
         // si j1
         if (this.image.number === 'j1') {
-          qui.j1.characters.row = character.row;
-          qui.j1.characters.col = character.col;
-          qui.j1.characters.url = character.getCharUrl();
+          // si second perso
+          if (!this.isSecond) {
+            qui.j1.characters.row = character.row;
+            qui.j1.characters.col = character.col;
+            // flemme de tout changer... désolé
+            qui.j1.characters.url = character.url ?? character.getCharUrl();
+          } else {
+            qui.j1.duo[1].row = character.row;
+            qui.j1.duo[1].col = character.col;
+            qui.j1.duo[1].url = character.url ?? character.getCharUrl();
+          }
         } else {
-          qui.j2.characters.row = character.row;
-          qui.j2.characters.col = character.col;
-          qui.j2.characters.url = character.getCharUrl();
+          if (!this.isSecond) {
+            qui.j2.characters.row = character.row;
+            qui.j2.characters.col = character.col;
+            qui.j2.characters.url = character.url ?? character.getCharUrl();
+          } else {
+            qui.j2.duo[1].row = character.row;
+            qui.j2.duo[1].col = character.col;
+            qui.j2.duo[1].url = character.url ?? character.getCharUrl();
+          }
         }
         // on maj le storage
         quickList[quickIdx] = qui;
@@ -152,6 +168,7 @@ export default {
     setCurrentChar(image, row, col) {
       this.crtCharacter.row = row;
       this.crtCharacter.col = this.pad(col, 2);
+      console.log('set crt', this.crtCharacter);
       this.updateChar(this.crtCharacter, image);
     },
     initStockIconDivsArray() {
@@ -195,7 +212,6 @@ export default {
       this.updateChar(char);
     },
     selectQuickChar(j) {
-      // TODO update quickchar lors changement skin
       let quickChar = new Character(j.characters.game, '1', j.characters.name, j.characters.formatName, j.characters.maxRow, j.characters.maxCol)
       quickChar.row = j.characters.row;
       quickChar.col = j.characters.col;

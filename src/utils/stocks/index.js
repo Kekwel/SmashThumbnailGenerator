@@ -243,12 +243,12 @@ function compareId(a, b) {
 }
 
 // --
-const games = {
+const gamesId = {
     1386: ultimate
 }
 
 export default {
-    GAMES: games,
+    GAMES: gamesId,
     ULT: ultimate,
     MELEE: melee,
     PPLUS: pplus,

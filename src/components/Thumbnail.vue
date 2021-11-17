@@ -442,7 +442,7 @@ export default {
       if (jsonObj.images)
         this.addCustomImages(jsonObj.images);
     },
-    setPlayerInfo(player, infoPlayer) {
+    async setPlayerInfo(player, infoPlayer) {
         // tag
       if (infoPlayer.tag)
         this.setTextInfos(player.myTag, infoPlayer.tag);
@@ -452,7 +452,11 @@ export default {
         this.setBgInfos(player.bg, infoPlayer.bg);
       
         // characters
-      if (infoPlayer.characters) {
+      if (infoPlayer.duo?.length > 1) {
+        //const game = infoPlayer.duo[0].game;
+        this.setCharInfos(player.firstCharacter, infoPlayer.characters);
+        //await player.addImg(game, infoPlayer.duo[1])
+      } else if (infoPlayer.characters) {
         // if (infoPlayer.characters.url)
         //   player.filename = infoPlayer.characters.url;
         this.setCharInfos(player.firstCharacter, infoPlayer.characters);
@@ -599,7 +603,7 @@ export default {
         this.j2.removeImg();
       
       this.game = game;
-      switch (game.code) {
+      switch (game.code ? game.code : game) {
         case 'ult':
           this.characters = Stocks.ULT;
           break;

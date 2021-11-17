@@ -258,40 +258,33 @@ export default {
     quickPrev() {
       if (this.hasQuickPrev) {
         console.log('..prev');
-        var quickList = JSON.parse(localStorage.quickList);
-        var crtidx = localStorage.quickCrtIdx;
-        crtidx--;
-        
-        this.quickCrt = quickList[crtidx];
-        localStorage.quickCrtIdx = crtidx;
-        this.crtIdx = crtidx;
-  
-        this.$refs.main.importInfos(this.quickCrt);
-        // update char select
-        this.$refs.main.$refs.confPlayer.selectQuickChar(this.quickCrt.j1.characters.game, this.quickCrt.j1, this.quickCrt.j2);
-  
-        this.hasQuickPrev = quickList[this.crtIdx - 1];
-        this.hasQuickNext = quickList[this.crtIdx + 1];
+        this.quickPrevOrNext(true);
       }
     },
     quickNext() {
       if (this.hasQuickNext) {
         console.log('..next');
-        var quickList = JSON.parse(localStorage.quickList);
-        var crtidx = localStorage.quickCrtIdx;
-        crtidx++;
-        
-        this.quickCrt = quickList[crtidx];
-        localStorage.quickCrtIdx = crtidx;
-        this.crtIdx = crtidx;
-  
-        this.$refs.main.importInfos(this.quickCrt);
-        // update char select
-        this.$refs.main.$refs.confPlayer.selectQuickChar(this.quickCrt.j1.characters.game, this.quickCrt.j1, this.quickCrt.j2);
-  
-        this.hasQuickPrev = quickList[this.crtIdx - 1];
-        this.hasQuickNext = quickList[this.crtIdx + 1];
+        this.quickPrevOrNext(false);
       }
+    },
+    quickPrevOrNext(prev) {
+      console.log(prev ? '..prev' : '..next');
+      var quickList = JSON.parse(localStorage.quickList);
+      var crtidx = localStorage.quickCrtIdx;
+      if (prev) crtidx-- 
+      else crtidx++;
+      
+      this.quickCrt = quickList[crtidx];
+      localStorage.quickCrtIdx = crtidx;
+      this.crtIdx = crtidx;
+
+      // TODO transformer quickCrt en vrai objet (Character etc)
+      this.$refs.main.importInfos(this.quickCrt);
+      // update char select
+      this.$refs.main.$refs.confPlayer.selectQuickChar(this.quickCrt.j1.characters.game, this.quickCrt.j1, this.quickCrt.j2);
+
+      this.hasQuickPrev = quickList[this.crtIdx - 1];
+      this.hasQuickNext = quickList[this.crtIdx + 1];
     }
   }
 }

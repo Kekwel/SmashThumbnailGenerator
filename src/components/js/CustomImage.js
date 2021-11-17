@@ -151,7 +151,7 @@ class CustomImage {
 	}
 
 	get filename() {
-		return this._character.getCharUrl();
+		return this._character.url ?? this._character.getCharUrl();
 	}
 	set filename(filename) {
 		var self = this;

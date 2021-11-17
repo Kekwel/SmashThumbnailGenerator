@@ -11,7 +11,7 @@ const utils = {
     },
     getRandomChar(game) {
         let characters = Stocks.ULT;
-        switch (game.code) {
+        switch (game.code ? game.code : game) {
             case 'ult':
                 characters = Stocks.ULT;
                 break;
