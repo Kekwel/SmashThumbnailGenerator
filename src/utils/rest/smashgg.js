@@ -36,6 +36,7 @@ const sgg = {
                 games {
                   selections {
                     entrant {
+                      id
                       name
                     }
                     selectionValue
@@ -87,57 +88,69 @@ const sgg = {
               let phase = this.getPhase(set.fullRoundText);
     
               const info = {
-                p1: {
-                  duo: []
-                },
-                p2: {
-                  duo: []
-                },
                 phase: phase
               }
     
               // -- récupére les persos les + utilisés dans le set (parcours de array games)
               // -- max 2 persos
-              let stat = {
-                p1: [],
-                p2: []
-              };
+              let stat = { };
               for (const game of set.games) {
-                // j1
-                const idCharJ1 = game.selections[0].selectionValue;
+                for (const selection of game.selections) {
+                  const entrantId = selection.entrant.id
+                  const entrantName = selection.entrant.name
+                  const charId = selection.selectionValue;
 
-                let index = stat.p1.findIndex(el => el.id === idCharJ1);
-                if (index < 0) {
-                  stat.p1.push({
-                    'id': idCharJ1,
-                    'nb': 1
-                  });
-                } else {
-                  stat.p1[index].nb++
-                }
-                
-                // j2
-                const idCharJ2 = game.selections[1].selectionValue;
-                index = stat.p2.findIndex(el => el.id === idCharJ2);
-                if (index < 0) {
-                  stat.p2.push({
-                    'id': idCharJ2,
-                    'nb': 1
-                  });
-                } else {
-                  stat.p2[index].nb++
+                  // init array stat joueur
+                  if (!stat[entrantId])
+                    stat[entrantId] = {name: entrantName, characters : []}
+                  
+                  // recherche index du perso joué 
+                  let index = stat[entrantId].characters.findIndex(el => el.id === charId);
+                  
+                  if (index < 0) {
+                    stat[entrantId].characters.push({
+                      'id': charId,
+                      'nb': 1
+                    });
+                  } else {
+                    stat[entrantId].characters[index].nb++
+                  }
                 }
               }
-              // tri par nb d'occurence des characters
-              stat.p1.sort((a, b) => b.nb - a.nb);
-              stat.p2.sort((a, b) => b.nb - a.nb);
               
-              // TODO récupérer les 2 + utilisés (si taille > 2)
-              //this.getMaxCharUsed(stat.p2);
-  
-              // J1
-              info.p1.tag = set.games[0].selections[0].entrant.name;
+              // tri par nb d'occurence des characters
+              for (const id of Object.keys(stat))
+                stat[id].characters.sort((a, b) => b.nb - a.nb);
+              
+              // init info player
+              Object.keys(stat).forEach(id => {
+                const statPlayer = stat[id];
+                // on init joueur
+                let player = {
+                  duo: []
+                }
+                // pseudo
+                player.tag = statPlayer.name;
+                // 2 persos le + utilisé
+                for (let i = 0; i < 2; i++) {
+                  const element = statPlayer.characters[i];
+                  if (element)
+                    player.duo.push(this.findCharacter(videogameId, element.id));
+                }
+                // personnage solo, a ne plus utiliser
+                player.characters = this.findCharacter(videogameId, statPlayer.characters[0].id)
 
+                console.log('joueru ? ', player);
+                if (!info.p1)
+                  info.p1 = player
+                else
+                  info.p2 = player
+              });
+              infoRes.infos.push(info);
+              /* // J1
+              info.p1.tag = set.games[0].selections[0].entrant.name;
+              
+              // récupérer les 2 + utilisés (si taille > 2)
               for (let i = 0; i < 2; i++) {
                 const element = stat.p1[i];
                 if (element)
@@ -148,14 +161,15 @@ const sgg = {
               // J2
               info.p2.tag = set.games[0].selections[1].entrant.name;
 
+              // récupérer les 2 + utilisés (si taille > 2)
               for (let i = 0; i < 2; i++) {
                 const element = stat.p2[i];
                 if (element)
                   info.p2.duo.push(this.findCharacter(videogameId, element.id));
               }
-              info.p2.characters = this.findCharacter(videogameId, set.games[0].selections[1].selectionValue)
+              info.p2.characters = this.findCharacter(videogameId, set.games[0].selections[1].selectionValue) 
     
-              infoRes.infos.push(info);
+              infoRes.infos.push(info);*/
             }
           }
   

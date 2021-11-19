@@ -257,13 +257,11 @@ export default {
     },
     quickPrev() {
       if (this.hasQuickPrev) {
-        console.log('..prev');
         this.quickPrevOrNext(true);
       }
     },
     quickNext() {
       if (this.hasQuickNext) {
-        console.log('..next');
         this.quickPrevOrNext(false);
       }
     },
