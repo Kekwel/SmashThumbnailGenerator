@@ -52,7 +52,7 @@ const ultimate = [
         new Character('ult', '30', 'Wario', 'wario', ONE_ROW, EIGHT_COL),
         new Character('ult', '31', 'Snake', 'snake', ONE_ROW, EIGHT_COL),
         new Character('ult', '32', 'Ike', 'ike', ONE_ROW, EIGHT_COL),
-        new Character('ult', '33-34-35', 'Pokémon Trainer', 'ptrainer', ONE_ROW, EIGHT_COL),
+        new Character('ult', '33-34-35', 'Pokemon Trainer', 'ptrainer', ONE_ROW, EIGHT_COL),
         new Character('ult', '36', 'Diddy Kong', 'diddy', ONE_ROW, EIGHT_COL),
         new Character('ult', '37', 'Lucas', 'lucas', ONE_ROW, EIGHT_COL),
         new Character('ult', '38', 'Sonic', 'sonic', ONE_ROW, EIGHT_COL),
@@ -105,6 +105,8 @@ const ultimate = [
     ]
     .sort(compareId);
 
+// TODO "Sheik / Zelda"
+// TODO ou alors récupérer de api smashgg...
 const melee = [
                 new Character('melee', '1', 'Dr. Mario', 'mariod', TWO_ROW, FIVE_COL),
                 new Character('melee', '2', 'Mario', 'mario', TWO_ROW, FIVE_COL),
@@ -129,12 +131,14 @@ const melee = [
                 new Character('melee', '21', 'Pikachu', 'pikachu', TWO_ROW, FOUR_COL),
                 new Character('melee', '22', 'Jigglypuff', 'jigglypuff', TWO_ROW, FIVE_COL),
                 new Character('melee', '23', 'Mewtwo', 'mewtwo', TWO_ROW, FOUR_COL),
-                new Character('melee', '24', 'Game & Watch', 'gamewatch', TWO_ROW, FOUR_COL),
+                new Character('melee', '24', 'Mr. Game & Watch', 'gamewatch', TWO_ROW, FOUR_COL),
                 new Character('melee', '25', 'Marth', 'marth', TWO_ROW, FIVE_COL),
                 new Character('melee', '26', 'Roy', 'roy', TWO_ROW, FIVE_COL),
+                new Character('melee', '?', 'Random Character', 'random'),
                 /* new Character('melee', '?', 'Random', 'random') */
         ].sort(compareId);
 
+// TODO "Sheik/Zelda"
 const pplus = [
                 new Character('pplus', '1', 'Mario', 'mario', THREE_ROW, SIX_COL),
                 new Character('pplus', '2', 'Luigi', 'luigi', THREE_ROW, SIX_COL),
@@ -165,19 +169,20 @@ const pplus = [
                 new Character('pplus', '27', 'Ness', 'ness', THREE_ROW, SIX_COL),
                 new Character('pplus', '28', 'Lucas', 'lucas', THREE_ROW, SIX_COL),
                 new Character('pplus', '29', 'Kirby', 'kirby', THREE_ROW, SIX_COL),
-                new Character('pplus', '30', 'Metaknight', 'metaknight', THREE_ROW, SIX_COL),
+                new Character('pplus', '30', 'Meta Knight', 'metaknight', THREE_ROW, SIX_COL),
                 new Character('pplus', '31', 'King Dedede', 'dedede', THREE_ROW, SIX_COL),
                 new Character('pplus', '32', 'Marth', 'marth', THREE_ROW, SIX_COL),
                 new Character('pplus', '33', 'Roy', 'roy', THREE_ROW, SIX_COL),
                 new Character('pplus', '34', 'Ike', 'ike', THREE_ROW, SIX_COL),
-                new Character('pplus', '35', 'Game & Watch', 'gamewatch', THREE_ROW, SIX_COL),
-                new Character('pplus', '36', 'R.O.B.', 'rob', THREE_ROW, SIX_COL),
+                new Character('pplus', '35', 'Mr. Game & Watch', 'gamewatch', THREE_ROW, SIX_COL),
+                new Character('pplus', '36', 'ROB', 'rob', THREE_ROW, SIX_COL),
                 new Character('pplus', '37', 'Ice Climbers', 'ice', THREE_ROW, SIX_COL),
                 new Character('pplus', '38', 'Pit', 'pit', THREE_ROW, SIX_COL),
                 new Character('pplus', '39', 'Olimar', 'pikmin', THREE_ROW, SIX_COL),
                 new Character('pplus', '40', 'Snake', 'snake', THREE_ROW, SIX_COL),
                 new Character('pplus', '41', 'Sonic', 'sonic', THREE_ROW, SIX_COL),
                 new Character('pplus', '42', 'Knuckles', 'knuckles', THREE_ROW, SIX_COL),
+                new Character('pplus', '?', 'Random Character', 'random'),
         ].sort(compareId);
 
 // --- RoA
@@ -191,35 +196,37 @@ const roa = [
             new Character('roa', '7', 'Sylvanos', 'sylvanos', ONE_ROW, SIX_COL),
             new Character('roa', '8', 'Maypul', 'maypul', ONE_ROW, SIX_COL),
             new Character('roa', '9', 'Kragg', 'kragg', ONE_ROW, SIX_COL),
-            new Character('roa', '10', 'Ori and Sein', 'ori', ONE_ROW, SIX_COL),
+            new Character('roa', '10', 'Ori', 'ori', ONE_ROW, SIX_COL),
             new Character('roa', '11', 'Shovel Knight', 'shovelknight', ONE_ROW, SIX_COL),
             new Character('roa', '12', 'Orcane', 'orcane', ONE_ROW, SIX_COL),
             new Character('roa', '13', 'Etalus', 'etalus', ONE_ROW, SIX_COL),
             new Character('roa', '14', 'Ranno', 'ranno', ONE_ROW, SIX_COL),
+            new Character('roa', '?', 'Random Character', 'random'),
         ].sort(compareId);
 
 // --- NASB
 const nasb = [
-                new Character('nasb', '1', 'Spongebob Squarepants', 'apple', ONE_ROW, ZERO_COL),
-                new Character('nasb', '2', 'Patrick Star', 'star', ONE_ROW, ZERO_COL),
-                new Character('nasb', '3', 'Sandy Cheeks', 'diver', ONE_ROW, ZERO_COL),
+                new Character('nasb', '1', 'SpongeBob', 'apple', ONE_ROW, ZERO_COL),
+                new Character('nasb', '2', 'Patrick', 'star', ONE_ROW, ZERO_COL),
+                new Character('nasb', '3', 'Sandy', 'diver', ONE_ROW, ZERO_COL),
                 new Character('nasb', '4', 'Michelangelo', 'pizza', ONE_ROW, ZERO_COL),
                 new Character('nasb', '5', 'Leonardo', 'moon', ONE_ROW, ZERO_COL),
-                new Character('nasb', '6', 'April O\'Neil', 'reporter', ONE_ROW, ZERO_COL),
+                new Character('nasb', '6', 'April', 'reporter', ONE_ROW, ZERO_COL),
                 new Character('nasb', '7', 'Zim', 'alien', ONE_ROW, ZERO_COL),
                 new Character('nasb', '8', 'Aang', 'kite', ONE_ROW, ZERO_COL),
                 new Character('nasb', '9', 'Korra', 'athlete', ONE_ROW, ZERO_COL),
                 new Character('nasb', '10', 'Reptar', 'mascot', ONE_ROW, ZERO_COL),
-                new Character('nasb', '11', 'Nigel Thornberry', 'narrator', ONE_ROW, ZERO_COL),
+                new Character('nasb', '11', 'Nigel', 'narrator', ONE_ROW, ZERO_COL),
                 new Character('nasb', '12', 'CatDog', 'chimera', ONE_ROW, ZERO_COL),
                 new Character('nasb', '13', 'Ren & Stimpy', 'duo', ONE_ROW, ZERO_COL),
-                new Character('nasb', '14', 'Powdered Toastman', 'hero', ONE_ROW, ZERO_COL),
-                new Character('nasb', '15', 'Lincoln Loud', 'rascal', ONE_ROW, ZERO_COL),
-                new Character('nasb', '16', 'Lucy Loud', 'goth', ONE_ROW, ZERO_COL),
+                new Character('nasb', '14', 'Powdered Toast Man', 'hero', ONE_ROW, ZERO_COL),
+                new Character('nasb', '15', 'Lincoln', 'rascal', ONE_ROW, ZERO_COL),
+                new Character('nasb', '16', 'Lucy', 'goth', ONE_ROW, ZERO_COL),
                 new Character('nasb', '17', 'Danny Phantom', 'plasma', ONE_ROW, ZERO_COL),
                 new Character('nasb', '18', 'Oblina', 'snake', ONE_ROW, ZERO_COL),
                 new Character('nasb', '19', 'Helga', 'rival', ONE_ROW, ZERO_COL),
                 new Character('nasb', '20', 'Toph', 'clay', ONE_ROW, ZERO_COL),
+                new Character('nasb', '?', 'Random Character', 'random'),
             ].sort(compareId);
 
 
@@ -244,7 +251,11 @@ function compareId(a, b) {
 
 // --
 const gamesId = {
-    1386: ultimate
+    1386: ultimate,
+    1: melee,
+    33602: pplus,
+    24: roa,
+    39281: nasb,
 }
 
 export default {

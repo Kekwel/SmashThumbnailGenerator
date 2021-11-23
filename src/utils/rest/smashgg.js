@@ -84,92 +84,75 @@ const sgg = {
     
           // -- ne recup que les sets dont stream != null
           for (const set of data.event.sets.nodes) {
-            if (set.stream) {
-              let phase = this.getPhase(set.fullRoundText);
-    
-              const info = {
-                phase: phase
-              }
-    
-              // -- récupére les persos les + utilisés dans le set (parcours de array games)
-              // -- max 2 persos
-              let stat = { };
-              for (const game of set.games) {
-                for (const selection of game.selections) {
-                  const entrantId = selection.entrant.id
-                  const entrantName = selection.entrant.name
-                  const charId = selection.selectionValue;
-
-                  // init array stat joueur
-                  if (!stat[entrantId])
-                    stat[entrantId] = {name: entrantName, characters : []}
-                  
-                  // recherche index du perso joué 
-                  let index = stat[entrantId].characters.findIndex(el => el.id === charId);
-                  
-                  if (index < 0) {
-                    stat[entrantId].characters.push({
-                      'id': charId,
-                      'nb': 1
-                    });
-                  } else {
-                    stat[entrantId].characters[index].nb++
+            // si au moins élément
+            if (set?.games) {
+              // si streamé
+              if (set.stream) {
+                // test si games renseignés (si toutes ne sont pas undefined)
+                const onlyUndefinedInfos = set.games.filter(item => item.selections === null).length === set.games.length;
+                if (!onlyUndefinedInfos) {
+                  let phase = this.getPhase(set.fullRoundText);
+        
+                  const info = {
+                    phase: phase
                   }
+        
+                  // -- récupére les persos les + utilisés dans le set (parcours de array games)
+                  // -- max 2 persos
+                  let stat = { };
+                  for (const game of set.games) {
+                    for (const selection of game.selections) {
+                      const entrantId = selection.entrant.id
+                      const entrantName = selection.entrant.name
+                      const charId = selection.selectionValue;
+                      // init array stat joueur
+                      if (!stat[entrantId])
+                        stat[entrantId] = {name: entrantName, characters : []}
+                      
+                      // recherche index du perso joué 
+                      let index = stat[entrantId].characters.findIndex(el => el.id === charId);
+                      
+                      if (index < 0) {
+                        stat[entrantId].characters.push({
+                          'id': charId,
+                          'nb': 1
+                        });
+                      } else {
+                        stat[entrantId].characters[index].nb++
+                      }
+                    }
+                  }
+                  
+                  // tri par nb d'occurence des characters
+                  for (const id of Object.keys(stat))
+                  stat[id].characters.sort((a, b) => b.nb - a.nb);
+                  
+                  // init info player
+                  Object.keys(stat).forEach(id => {
+                    const statPlayer = stat[id];
+                    // on init joueur
+                    let player = {
+                      duo: []
+                    }
+                    // pseudo
+                    player.tag = statPlayer.name;
+                    // 2 persos le + utilisé
+                    for (let i = 0; i < 2; i++) {
+                      const element = statPlayer.characters[i];
+                      if (element)
+                      player.duo.push(this.findCharacter(videogameId, element.id));
+                    }
+                    // personnage solo, a ne plus utiliser
+                    player.characters = this.findCharacter(videogameId, statPlayer.characters[0].id)
+                    
+                    if (!info.p1)
+                    info.p1 = player
+                    else
+                    info.p2 = player
+                  });
+                  infoRes.infos.push(info);
                 }
               }
-              
-              // tri par nb d'occurence des characters
-              for (const id of Object.keys(stat))
-                stat[id].characters.sort((a, b) => b.nb - a.nb);
-              
-              // init info player
-              Object.keys(stat).forEach(id => {
-                const statPlayer = stat[id];
-                // on init joueur
-                let player = {
-                  duo: []
-                }
-                // pseudo
-                player.tag = statPlayer.name;
-                // 2 persos le + utilisé
-                for (let i = 0; i < 2; i++) {
-                  const element = statPlayer.characters[i];
-                  if (element)
-                    player.duo.push(this.findCharacter(videogameId, element.id));
-                }
-                // personnage solo, a ne plus utiliser
-                player.characters = this.findCharacter(videogameId, statPlayer.characters[0].id)
-
-                console.log('joueru ? ', player);
-                if (!info.p1)
-                  info.p1 = player
-                else
-                  info.p2 = player
-              });
-              infoRes.infos.push(info);
-              /* // J1
-              info.p1.tag = set.games[0].selections[0].entrant.name;
-              
-              // récupérer les 2 + utilisés (si taille > 2)
-              for (let i = 0; i < 2; i++) {
-                const element = stat.p1[i];
-                if (element)
-                  info.p1.duo.push(this.findCharacter(videogameId, element.id));
-              }
-              info.p1.characters = this.findCharacter(videogameId, set.games[0].selections[0].selectionValue)
-    
-              // J2
-              info.p2.tag = set.games[0].selections[1].entrant.name;
-
-              // récupérer les 2 + utilisés (si taille > 2)
-              for (let i = 0; i < 2; i++) {
-                const element = stat.p2[i];
-                if (element)
-                  info.p2.duo.push(this.findCharacter(videogameId, element.id));
-              }
-              info.p2.characters = this.findCharacter(videogameId, set.games[0].selections[1].selectionValue) 
-    
-              infoRes.infos.push(info);*/
             }
           }
   
@@ -187,7 +170,7 @@ const sgg = {
 
     // décompose la phase provenant de smashgg
     getPhase(fullPhase) {
-      let phase1 = '', phase2 = '', value = '';
+      let phase1 = 'Winners', phase2 = '', value = '';
       if (fullPhase.match(/winner/i)) {
         phase1 = "Winners"
         value = "W"
@@ -214,7 +197,7 @@ const sgg = {
         phase2 = "Finals"
         value += "F"
       }
-
+      
       const res = {
         phase1: phase1,
         phase2: phase2,
@@ -224,11 +207,15 @@ const sgg = {
     },
 
     findCharacter(videogameId, value) {
-      // TODO tester si CHARACTERS[videogameId] existe
-      const charnameSmashGG = characters.CHARACTERS[videogameId].character.filter(char => char.id === value)[0].name;
+      // on prend random au cas où on ne trouve pas le jeu/perso
+      let character = stocks.GAMES[videogameId].filter(char => char.formatName === 'random')[0];
+      // teste si CHARACTERS[videogameId] et GAMES[videogameId] existe
+      if (characters[videogameId] && stocks.GAMES[videogameId]) {
+        let charnameSmashGG = characters[videogameId].character.filter(char => char.id === value)[0].name;
+        // TODO si pas trouvé => error 
+        character = stocks.GAMES[videogameId].filter(char => char.name === charnameSmashGG)[0];
+      }
 
-      // TODO si pas trouvé => random 
-      let character = stocks.GAMES[videogameId].filter(char => char.name === charnameSmashGG)[0];
       return character;
     }
 }

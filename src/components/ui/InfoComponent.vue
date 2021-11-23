@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     updateX(x) {
-      console.log(typeof x);
       this.img.set('left', parseInt(x))
       this.updateCanvas();
     },

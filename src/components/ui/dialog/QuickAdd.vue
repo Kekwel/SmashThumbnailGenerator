@@ -380,7 +380,6 @@ export default {
 
           let cpt = 0;
           for (const info of infosSmashgg.infos) {
-            console.log('hye', info);
             let infoToPush = {
               id: this.infos.length + 1,
               j1: info.p1,
@@ -390,7 +389,7 @@ export default {
               phase1: info.phase.phase1,
               phase2: info.phase.phase2
             }
-      
+
             infoToPush.j1.characters.row = 0;
             infoToPush.j1.characters.col = '00';
     
