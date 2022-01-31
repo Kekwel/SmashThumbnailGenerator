@@ -40,7 +40,7 @@
           <v-row no-gutters>
             <!-- Phase -->
             <v-col cols="2" class="mr-2 d-flex align-center">
-              <v-select ref="quick-phase" class="quick-phase" :clearable=false selectOnTab :options="phases" label="name" v-model="newInfo.phase" >
+              <v-select ref="quick-phase" class="quick-phase" :clearable=false selectOnTab :options="phases" label="name" v-model="phase" >
                 <template #selected-option="{ value }">
                   {{ value }}
                 </template>
@@ -63,14 +63,13 @@
 
             <v-col cols="3" class="mx-2 d-flex align-center">
               <!-- J1 TAG -->
-              <v-text-field ref="quick-tag-j1" :rules="[() => !!newInfo.p1.tag || '']"
-                :label="$t('title.player', {nb: '1'})" v-model="newInfo.p1.tag"
+              <v-text-field ref="quick-tag-j1" :rules="[() => !!j1.tag || '']"
+                :label="$t('title.player', {nb: '1'})" v-model="j1.tag"
                 color="red" background-color="red lighten-5" dense outlined filled hide-details required onClick="this.select();" @keyup.enter="addInfo" />
             </v-col>
             <v-col cols="1" class="mr-2">
               <!-- J1 CHAR -->
-              <v-select ref="quick-char-j1" :clearable=false selectOnTab class="player1 quick" 
-                        :options="crtCharacters" label="name" v-model="newInfo.p1.characters">
+              <v-select ref="quick-char-j1" :clearable=false selectOnTab class="player1 quick" :options="crtCharacters" label="name" v-model="j1.personnages[0]" @input="allo">
                 <template #selected-option="{ firstStockUrl }">
                   <div class="stock-icon-selected">
                     <stock-icon :width="28" :src="firstStockUrl" />
@@ -85,15 +84,15 @@
 
               <!-- <div v-if="newInfo.p1.characters"> -->
                 <v-select ref="quick-color-j1" :clearable=false selectOnTab class="mt-2 player1 quick" 
-                          :options="playerColorChar(this.newInfo.p1)" label="name" v-model="newInfo.color.j1">
+                          :options="playerColorChar(this.j1)" label="name" v-model="j1.skins[0]">
                   <template #selected-option="{ row, col }">
                     <div class="stock-icon-selected">
-                      <div :style="stockStyles(newInfo.p1.characters, row, col)"></div>
+                      <div :style="stockStyles(j1.personnages[0], row, col)"></div>
                     </div>
                   </template>
                   <template #option="{ row, col }">
                     <div class="stock-icon-selected">
-                      <div :style="stockStyles(newInfo.p1.characters, row, col)"></div>
+                      <div :style="stockStyles(j1.personnages[0], row, col)"></div>
                     </div>
                   </template>
                 </v-select>
@@ -104,13 +103,13 @@
             
             <v-col cols="3" class="mx-2 d-flex align-center">
               <!-- J2 TAG -->
-              <v-text-field ref="quick-tag-j2" :rules="[() => !!newInfo.p2.tag || '']"
-                :label="$t('title.player', {nb: '2'})" v-model="newInfo.p2.tag" 
+              <v-text-field ref="quick-tag-j2" :rules="[() => !!j2.tag || '']"
+                :label="$t('title.player', {nb: '2'})" v-model="j2.tag" 
                 color="blue" background-color="blue lighten-5" dense outlined filled hide-details required onClick="this.select();" @keyup.enter="addInfo" />
             </v-col>
             <v-col cols="1" class="mr-2">
               <!-- J2 CHAR -->
-              <v-select ref="quick-char-j2" :clearable=false selectOnTab class="player2 quick" :options="crtCharacters" label="name" v-model="newInfo.p2.characters">
+              <v-select ref="quick-char-j2" :clearable=false selectOnTab class="player2 quick" :options="crtCharacters" label="name" v-model="j2.personnages[0]">
                 <template #selected-option="{ firstStockUrl }">
                   <stock-icon :width="28" :src="firstStockUrl" />
                 </template>
@@ -121,15 +120,15 @@
 
               <!-- <div v-if="newInfo.p2.characters"> -->
                 <v-select ref="quick-color-j2" :clearable=false selectOnTab class="mt-2 player2 quick" 
-                          :options="this.playerColorChar(this.newInfo.p2)" label="name" v-model="newInfo.color.j2">
+                          :options="this.playerColorChar(this.j2)" label="name" v-model="j2.skins[0]">
                   <template #selected-option="{ row, col }">
                     <div class="stock-icon-selected">
-                      <div :style="stockStyles(newInfo.p2.characters, row, col)"></div>
+                      <div :style="stockStyles(j2.personnages[0], row, col)"></div>
                     </div>
                   </template>
                   <template #option="{ row, col }">
                     <div class="stock-icon-selected">
-                      <div :style="stockStyles(newInfo.p2.characters, row, col)"></div>
+                      <div :style="stockStyles(j2.personnages[0], row, col)"></div>
                     </div>
                   </template>
                 </v-select>
@@ -151,9 +150,12 @@
         <v-divider class="my-2"/>
         
         <!-- RECAP ou README ? -->
+        <!-- TODO si clique sur ligne, pouvoir editer -->
+        <!-- TODO gestion duos -->
+        <!-- TODO en fonction du truc à modifier ? icon > choix skin, texte > normal, phase > select ?-->
         <v-card class="ml-2" tile v-if="infos.length !== 0">
           <v-list-item v-for="info in infos" :key="info.id" dense>
-            <v-list-item-content class="py-1" style="border-top: 1px solid black">
+            <v-list-item-content class="py-1 match" style="border-top: 1px solid black" @click="editInfo(info)">
               <v-list-item-title>
                 <v-container class="pa-0">
                   <v-row no-gutters>
@@ -209,7 +211,25 @@ export default {
   },
   data() {
     return {
-      newInfo: this.createNewInfo(),
+      crtID: undefined,
+      j1: {
+        tag: '',
+        personnages: [],
+        skins: [{
+          name: '', row: 0, col: '00'
+        }]
+      },
+      j2: {
+        tag: '',
+        personnages: [],
+        skins: [{
+          name: '', row: 0, col: '00'
+        }]
+      },
+      phase: {
+        value: '',
+        name: ''
+      },
       infos: [],
       // TODO faire autrement pour les Round
       phases: [
@@ -217,7 +237,7 @@ export default {
         {name: 'Winners Quarters', value: 'WQ'}, {name: 'Winners Semis', value: 'WS'},
         {name: 'Winners Finals', value: 'WF'},
         {name: 'Losers Round 1', value: 'LR1'}, {name: 'Losers Round 2', value: 'LR2'}, {name: 'Losers Round 3', value: 'LR3'}, {name: 'Losers Round 4', value: 'LR4'}, {name: 'Losers Round 5', value: 'LR5'},
-        {name: 'Losers Quarters', value: 'LQ'}, {name: 'Losers Semis', value: 'WS'},
+        {name: 'Losers Quarters', value: 'LQ'}, {name: 'Losers Semis', value: 'LS'},
         {name: 'Losers Finals', value: 'LF'},  
         {name: 'Grand Finals', value: 'GF'},
         ],
@@ -247,33 +267,41 @@ export default {
       this.$refs['quick-tag-j1'].validate(true);
       this.$refs['quick-tag-j2'].validate(true);
 
-      if (!this.newInfo.p1.characters || !this.newInfo.p2.characters) {
+// TODO _.isEmpty(..)
+      if (this.j1.personnages.length === 0 || this.j2.personnages.length === 0) {
         // TODO notif ou qqchose pour dire il manque info
-      } else if (this.newInfo.p1.tag && this.newInfo.p2.tag) {
-        console.log('.. add info ', this.newInfo);
+        console.log('y a pas de persos');
+      } else if (this.j1.tag && this.j2.tag) {
+        console.log('.. add info ', this.j1, this.j2);
 
         let infoToPush = {
           id: this.infos.length + 1,
-          j1: this.newInfo.p1,
-          j2: this.newInfo.p2,
+          j1: {
+            characters: this.j1.personnages[0],
+            tag: this.j1.tag
+          },
+          j2: {
+            characters: this.j2.personnages[0],
+            tag: this.j2.tag
+          },
           // TODO phase1 & phase2
-          phase: this.newInfo.phase.value,
-          phase1: this.newInfo.phase.name.substr(0, this.newInfo.phase.name.indexOf(' ')),
-          phase2: this.newInfo.phase.name.substr(this.newInfo.phase.name.indexOf(' ') + 1),
+          phase: this.phase.value,
+          phase1: this.phase.name.substr(0, this.phase.name.indexOf(' ')),
+          phase2: this.phase.name.substr(this.phase.name.indexOf(' ') + 1),
         }
 
-        infoToPush.j1.characters.row = this.newInfo.color.j1.row;
-        infoToPush.j1.characters.col = this.pad(this.newInfo.color.j1.col, 2);
+        infoToPush.j1.characters.row = this.j1.skins[0].row;
+        infoToPush.j1.characters.col = this.pad(this.j1.skins[0].col, 2);
 
-        infoToPush.j2.characters.row = this.newInfo.color.j2.row;
-        infoToPush.j2.characters.col = this.pad(this.newInfo.color.j2.col, 2);
+        infoToPush.j2.characters.row = this.j2.skins[0].row;
+        infoToPush.j2.characters.col = this.pad(this.j2.skins[0].col, 2);
         this.pushInfos(infoToPush);
       }
     },
     pushInfos(infoToPush, toEmit = true) {
       // clone deep
       this.infos.push(cloneDeep(infoToPush));
-      this.newInfo = this.createNewInfo();
+      this.resetInfos();
       //this.$refs['quick-tag-j1'].focus();
       this.$refs['quick-phase'].$refs.search.focus()
       //this.$refs['quick-title'].focus()
@@ -296,32 +324,15 @@ export default {
         this.$emit('quick-infos', this.infos);
       }
     },
-    createNewInfo() {
-      return {
-        p1: {
-          tag: ''
-        },
-        color: {
-          j1: {
-            name: '',
-            row: 0,
-            col: "00"
-          },
-          j2: {
-            name: '',
-            row: 0,
-            col: "00"
-          }
-        },
-        p2: {
-          tag: ''
-        },
-        phase: {name: 'Winners Round 1', value: 'WR1'}
-      }
+    resetInfos() {
+      this.crtID = undefined;
+      this.j1 = { tag: '', personnages: [], skins: [{ name: '', row: 0, col: '00' }] }
+      this.j2 = { tag: '', personnages: [], skins: [{ name: '', row: 0, col: '00' }] }
+      this.phase = { value: 'WR1', name: 'Winners Round 1' }
     },
     updateCharacters() {
       this.infos = [];
-      this.newInfo = this.createNewInfo();
+      this.resetInfos();
 
       this.crtCharacters = [];
       var localChar = JSON.parse(localStorage.characters);
@@ -340,9 +351,9 @@ export default {
     },
     playerColorChar(player) {
       let colors = [];
-      if (player?.characters) {
-        for (let i = 0; i < player.characters.maxRow; i++) {
-          for (let j = 0; j < player.characters.maxCol; j++) {
+      if (player?.personnages.length > 0) {
+        for (let i = 0; i < player.personnages[0].maxRow; i++) {
+          for (let j = 0; j < player.personnages[0].maxCol; j++) {
             colors.push({
               name: i + " " + j,
               row: i,
@@ -376,7 +387,6 @@ export default {
           if (infosSmashgg.errors.length > 0) {
             throw new Error(infosSmashgg.errors[0].message);
           }
-
 
           let cpt = 0;
           for (const info of infosSmashgg.infos) {
@@ -428,6 +438,48 @@ export default {
         });
       }
     },
+
+    editInfo(a) {
+      // on stringify puis parse pour que les attributs n'ai plus les '_' avant, ouais sinon ca bug lol
+      a = JSON.parse(JSON.stringify({...a}));
+      console.log('edit', a);
+      
+      this.resetInfos();
+      // ID
+      this.crtID = a.id;
+      // TAG
+      this.j1.tag = a.j1.tag;
+      this.j2.tag = a.j2.tag;
+      // PHASE
+      this.phase.name = a.phase1 + ' ' + a.phase2;
+      this.phase.value = a.phase;
+
+      // TODO duos
+      // PERSO + COULEUR
+      /* this.newInfo.p1.characters = a.j1.duo[0];
+      this.newInfo.color.j1.name = a.j1.duo[0].formatName;
+      this.newInfo.color.j1.row = a.j1.duo[0].row; */
+      // J1
+      this.j1.personnages[0] = a.j1.characters;
+      this.j1.skins[0].name = a.j1.characters.formatName;
+      this.j1.skins[0].row = a.j1.characters.row;
+      this.j1.skins[0].col = a.j1.characters.col;
+
+      // J2
+      this.j2.personnages[0] = a.j2.characters;
+      this.j2.skins[0].name = a.j2.characters.formatName;
+      this.j2.skins[0].row = a.j2.characters.row;
+      this.j2.skins[0].col = a.j2.characters.col;
+    },
+
+    allo(a) {
+      console.log('allo', a)
+      //console.log('olla', this.newInfo.p1.characters);
+      /* this.j1.personnage = a;
+      this.newInfo.color.j1.name = a.formatName;
+      this.newInfo.color.j1.row = a.row;
+      this.newInfo.color.j1.col = a.col; */
+    },
     /* TODO UTILS */
     pad(num, size) {
         var s = "000000000" + num;
@@ -468,5 +520,11 @@ export default {
 .player2 .vs__dropdown-toggle,
 .player2 .vs__dropdown-menu {
   background: #E3F2FD;
+}
+
+.match:hover {
+  filter: brightness(85%);
+  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
+  cursor: pointer;
 }
 </style>

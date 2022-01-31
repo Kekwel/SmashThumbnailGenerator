@@ -14,6 +14,7 @@ const SIX_COL = 6;
 const SEVEN_COL = 7;
 const EIGHT_COL = 8;
 
+// TODO a deplacer dans un fichier facilement éditable + pour ajouter + facilement un nouveau jeu
 const ultimate = [
         new Character('ult', '1', 'Mario', 'mario', ONE_ROW, EIGHT_COL),
         new Character('ult', '2', 'Donkey Kong', 'donkey', ONE_ROW, EIGHT_COL),

@@ -168,7 +168,7 @@ export default {
     setCurrentChar(image, row, col) {
       this.crtCharacter.row = row;
       this.crtCharacter.col = this.pad(col, 2);
-      console.log('set crt', this.crtCharacter);
+      
       this.updateChar(this.crtCharacter, image);
     },
     initStockIconDivsArray() {
