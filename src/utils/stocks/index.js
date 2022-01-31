@@ -227,6 +227,7 @@ const nasb = [
                 new Character('nasb', '18', 'Oblina', 'snake', ONE_ROW, ZERO_COL),
                 new Character('nasb', '19', 'Helga', 'rival', ONE_ROW, ZERO_COL),
                 new Character('nasb', '20', 'Toph', 'clay', ONE_ROW, ZERO_COL),
+                new Character('nasb', '21', 'Garfield', 'pasta', ONE_ROW, ZERO_COL),
                 new Character('nasb', '?', 'Random Character', 'random'),
             ].sort(compareId);
 
