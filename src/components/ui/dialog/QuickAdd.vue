@@ -61,84 +61,168 @@
 
             <div class="text-button d-flex align-center">|</div>
 
-            <v-col cols="3" class="mx-2 d-flex align-center">
-              <!-- J1 TAG -->
-              <v-text-field ref="quick-tag-j1" :rules="[() => !!j1.tag || '']"
-                :label="$t('title.player', {nb: '1'})" v-model="j1.tag"
-                color="red" background-color="red lighten-5" dense outlined filled hide-details required onClick="this.select();" @keyup.enter="addInfo" />
-            </v-col>
-            <v-col cols="1" class="mr-2">
-              <!-- J1 CHAR -->
-              <v-select ref="quick-char-j1" :clearable=false selectOnTab class="player1 quick" :options="crtCharacters" label="name" v-model="j1.personnages[0]" @input="allo">
-                <template #selected-option="{ firstStockUrl }">
-                  <div class="stock-icon-selected">
-                    <stock-icon :width="28" :src="firstStockUrl" />
-                  </div>
-                </template>
-                <template #option="option">
-                  <div class="stock-icon-selected">
-                    <stock-icon :width="28" :src="option.firstStockUrl" />
-                  </div>
-                </template>
-              </v-select>
-
-              <!-- <div v-if="newInfo.p1.characters"> -->
-                <v-select ref="quick-color-j1" :clearable=false selectOnTab class="mt-2 player1 quick" 
-                          :options="playerColorChar(this.j1)" label="name" v-model="j1.skins[0]">
-                  <template #selected-option="{ row, col }">
-                    <div class="stock-icon-selected">
-                      <div :style="stockStyles(j1.personnages[0], row, col)"></div>
-                    </div>
-                  </template>
-                  <template #option="{ row, col }">
-                    <div class="stock-icon-selected">
-                      <div :style="stockStyles(j1.personnages[0], row, col)"></div>
-                    </div>
-                  </template>
-                </v-select>
-              <!-- </div> -->
+            <v-col cols="4" class="mx-2 d-flex align-center">
+              <v-row no-gutters>
+                <v-col cols="12">
+                  <!-- J1 TAG -->
+                  <v-text-field ref="quick-tag-j1" :rules="[() => !!j1.tag || '']"
+                    :label="$t('title.player', {nb: '1'})" v-model="j1.tag"
+                    color="red" background-color="red lighten-5" dense outlined filled hide-details required @keyup.enter="addInfo" />
+                </v-col>
+                <v-col cols="3" class="d-flex align-center justify-center">
+                  <span>{{ $t('short.character', {nb: 1}) }}</span>
+                </v-col>
+                <v-col cols="4">
+                  <!-- J1 CHAR -->
+                  <v-select ref="quick-char-j1" :clearable=false selectOnTab class="mt-2 mx-2 player1 quick" :options="crtCharacters" label="name" v-model="j1.personnages[0]" >
+                    <template #selected-option="{ firstStockUrl }">
+                      <div class="stock-icon-selected">
+                        <stock-icon :width="32" :src="firstStockUrl" />
+                      </div>
+                    </template>
+                    <template #option="option">
+                      <div class="stock-icon-selected">
+                        <stock-icon :width="32" :src="option.firstStockUrl" />
+                      </div>
+                    </template>
+                  </v-select>
+                </v-col>
+                <v-col cols="4">
+                  <v-select ref="quick-color-j1" :clearable=false selectOnTab class="mt-2 mx-2 player1 quick" 
+                            :options="playerColorChar(this.j1)" label="name" v-model="j1.skins[0]">
+                    <template #selected-option="{ row, col }">
+                      <div class="stock-icon-selected">
+                        <div :style="stockStyles(j1.personnages[0], row, col)" style="transform: scale(1.2);"></div>
+                      </div>
+                    </template>
+                    <template #option="{ row, col }">
+                      <div class="stock-icon-selected">
+                        <div :style="stockStyles(j1.personnages[0], row, col)" style="transform: scale(1.2);"></div>
+                      </div>
+                    </template>
+                  </v-select>
+                </v-col>
+                <v-row no-gutters>
+                  <v-col cols="3" class="d-flex align-center justify-center">
+                    <span>{{ $t('short.character', {nb: 2}) }}</span>
+                  </v-col>
+                  <v-col cols="4">
+                    <!-- J1 CHAR N° 2 -->
+                    <v-select ref="quick-char-j1" :clearable=false selectOnTab class="mt-2 mx-2 player1 quick" :options="crtCharacters" label="name" v-model="j1.personnages[1]" >
+                      <template #selected-option="{ firstStockUrl }">
+                        <div class="stock-icon-selected">
+                          <stock-icon :width="32" :src="firstStockUrl" />
+                        </div>
+                      </template>
+                      <template #option="option">
+                        <div class="stock-icon-selected">
+                          <stock-icon :width="32" :src="option.firstStockUrl" />
+                        </div>
+                      </template>
+                    </v-select>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-select ref="quick-color-j1" :clearable=false selectOnTab class="mt-2 mx-2 player1 quick" 
+                              :options="playerColorChar(this.j1)" label="name" v-model="j1.skins[1]">
+                      <template #selected-option="{ row, col }">
+                        <div class="stock-icon-selected">
+                          <div :style="stockStyles(j1.personnages[1], row, col)" style="transform: scale(1.2);"></div>
+                        </div>
+                      </template>
+                      <template #option="{ row, col }">
+                        <div class="stock-icon-selected">
+                          <div :style="stockStyles(j1.personnages[1], row, col)" style="transform: scale(1.2);"></div>
+                        </div>
+                      </template>
+                    </v-select>
+                  </v-col>
+                </v-row>
+              </v-row>
             </v-col>
 
             <div class="text-button d-flex align-center">VS</div>
             
-            <v-col cols="3" class="mx-2 d-flex align-center">
-              <!-- J2 TAG -->
-              <v-text-field ref="quick-tag-j2" :rules="[() => !!j2.tag || '']"
-                :label="$t('title.player', {nb: '2'})" v-model="j2.tag" 
-                color="blue" background-color="blue lighten-5" dense outlined filled hide-details required onClick="this.select();" @keyup.enter="addInfo" />
+            <v-col cols="4" class="mx-2 d-flex align-center">
+              <v-row no-gutters>
+                <v-col cols="12">
+                  <!-- J2 TAG -->
+                  <v-text-field ref="quick-tag-j2" :rules="[() => !!j2.tag || '']"
+                    :label="$t('title.player', {nb: '2'})" v-model="j2.tag" 
+                    color="blue" background-color="blue lighten-5" dense outlined filled hide-details required @keyup.enter="addInfo" />
+                </v-col>
+                <v-col cols="3" class="d-flex align-center justify-center">
+                  <span>{{ $t('short.character', {nb: 1}) }}</span>
+                </v-col>
+                <v-col cols="4">
+                  <!-- J2 CHAR -->
+                  <v-select ref="quick-char-j2" :clearable=false selectOnTab class="mt-2 mx-2 player2 quick" :options="crtCharacters" label="name" v-model="j2.personnages[0]">
+                    <template #selected-option="{ firstStockUrl }">
+                      <stock-icon :width="32" :src="firstStockUrl" />
+                    </template>
+                    <template #option="option">
+                      <stock-icon :width="32" :src="option.firstStockUrl" />
+                    </template>
+                  </v-select>
+                </v-col>
+                <v-col cols="4">
+                  <v-select ref="quick-color-j2" :clearable=false selectOnTab class="mt-2 mx-2 player2 quick" 
+                            :options="this.playerColorChar(this.j2)" label="name" v-model="j2.skins[0]">
+                    <template #selected-option="{ row, col }">
+                      <div class="stock-icon-selected">
+                        <div :style="stockStyles(j2.personnages[0], row, col)" style="transform: scale(1.2);"></div>
+                      </div>
+                    </template>
+                    <template #option="{ row, col }">
+                      <div class="stock-icon-selected">
+                        <div :style="stockStyles(j2.personnages[0], row, col)" style="transform: scale(1.2);"></div>
+                      </div>
+                    </template>
+                  </v-select>
+                </v-col>
+                <v-row no-gutters>
+                  <v-col cols="3" class="d-flex align-center justify-center">
+                    <span>{{ $t('short.character', {nb: 2}) }}</span>
+                  </v-col>
+                  <v-col cols="4">
+                    <!-- J2 CHAR N° 2 -->
+                    <v-select ref="quick-char-j2" :clearable=false selectOnTab class="mt-2 mx-2 player2 quick" :options="crtCharacters" label="name" v-model="j2.personnages[1]" >
+                      <template #selected-option="{ firstStockUrl }">
+                        <div class="stock-icon-selected">
+                          <stock-icon :width="32" :src="firstStockUrl" />
+                        </div>
+                      </template>
+                      <template #option="option">
+                        <div class="stock-icon-selected">
+                          <stock-icon :width="32" :src="option.firstStockUrl" />
+                        </div>
+                      </template>
+                    </v-select>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-select ref="quick-color-j2" :clearable=false selectOnTab class="mt-2 mx-2 player2 quick" 
+                              :options="playerColorChar(this.j2)" label="name" v-model="j2.skins[1]">
+                      <template #selected-option="{ row, col }">
+                        <div class="stock-icon-selected">
+                          <div :style="stockStyles(j2.personnages[1], row, col)" style="transform: scale(1.2);"></div>
+                        </div>
+                      </template>
+                      <template #option="{ row, col }">
+                        <div class="stock-icon-selected">
+                          <div :style="stockStyles(j2.personnages[1], row, col)" style="transform: scale(1.2);"></div>
+                        </div>
+                      </template>
+                    </v-select>
+                  </v-col>
+                </v-row>
+              </v-row>
             </v-col>
-            <v-col cols="1" class="mr-2">
-              <!-- J2 CHAR -->
-              <v-select ref="quick-char-j2" :clearable=false selectOnTab class="player2 quick" :options="crtCharacters" label="name" v-model="j2.personnages[0]">
-                <template #selected-option="{ firstStockUrl }">
-                  <stock-icon :width="28" :src="firstStockUrl" />
-                </template>
-                <template #option="option">
-                  <stock-icon :width="28" :src="option.firstStockUrl" />
-                </template>
-              </v-select>
 
-              <!-- <div v-if="newInfo.p2.characters"> -->
-                <v-select ref="quick-color-j2" :clearable=false selectOnTab class="mt-2 player2 quick" 
-                          :options="this.playerColorChar(this.j2)" label="name" v-model="j2.skins[0]">
-                  <template #selected-option="{ row, col }">
-                    <div class="stock-icon-selected">
-                      <div :style="stockStyles(j2.personnages[0], row, col)"></div>
-                    </div>
-                  </template>
-                  <template #option="{ row, col }">
-                    <div class="stock-icon-selected">
-                      <div :style="stockStyles(j2.personnages[0], row, col)"></div>
-                    </div>
-                  </template>
-                </v-select>
-              <!-- </div> -->
-            </v-col>
 
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn class="ml-2" dark x-small fab color="success" style="align-self: center;" @click="addInfo" v-hotkey="keymap" v-bind="attrs" v-on="on">
-                  <v-icon>mdi-plus-thick</v-icon>
+                <v-btn class="ml-2" dark x-small fab :color="crtID ? 'cyan' : 'success'" style="align-self: center;" @click="addInfo" v-hotkey="keymap" v-bind="attrs" v-on="on">
+                  <v-icon v-if="!crtID">mdi-plus-thick</v-icon>
+                  <v-icon v-else>mdi-refresh</v-icon>
                 </v-btn>
               </template>
               <span>{{ $t('tooltip.btn.add') }} : <kbd>Ctrl</kbd> + <kbd>Enter</kbd></span>
@@ -165,14 +249,14 @@
                     <!-- <div class="text-h6">{{ info.id }} | </div>  -->
                     <v-col cols="5" class="d-flex align-center">
                         <div :style="stockStyles(info.j1.characters, info.j1.characters.row, info.j1.characters.col)"></div>
-                        <div v-if="info.j1.duo.length > 1" :style="stockStyles(info.j1.duo[1], info.j1.duo[1].row, info.j1.duo[1].col)"></div>
+                        <div v-if="info.j1.duo && info.j1.duo.length > 1" :style="stockStyles(info.j1.duo[1], info.j1.duo[1].row, info.j1.duo[1].col)"></div>
                         
                         <span class="text-body-1 mx-2">{{ info.j1.tag }}</span>
                     </v-col>
                     <div class="text-button mr-4">VS</div> 
                     <v-col cols="5" class="d-flex align-center">
                         <div :style="stockStyles(info.j2.characters, info.j2.characters.row, info.j2.characters.col)"></div>
-                        <div v-if="info.j2.duo.length > 1" :style="stockStyles(info.j2.duo[1], info.j2.duo[1].row, info.j2.duo[1].col)"></div>
+                        <div v-if="info.j2.duo && info.j2.duo.length > 1" :style="stockStyles(info.j2.duo[1], info.j2.duo[1].row, info.j2.duo[1].col)"></div>
 
                         <span class="text-body-1 mx-2">{{ info.j2.tag }}</span>
                     </v-col>
@@ -205,7 +289,7 @@
 <script>
 import vSelect from "vue-select";
 import StockIcon from '../StockIcon.vue';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, findIndex } from 'lodash';
 import smashgg from '../../../utils/rest/smashgg.js';
 
 export default {
@@ -219,16 +303,12 @@ export default {
       j1: {
         tag: '',
         personnages: [],
-        skins: [{
-          name: '', row: 0, col: '00'
-        }]
+        skins: [{ name: '', row: 0, col: '00' }, { name: '', row: 0, col: '00' }]
       },
       j2: {
         tag: '',
         personnages: [],
-        skins: [{
-          name: '', row: 0, col: '00'
-        }]
+        skins: [{ name: '', row: 0, col: '00' }, { name: '', row: 0, col: '00' }]
       },
       phase: {
         value: '',
@@ -276,16 +356,18 @@ export default {
         // TODO notif ou qqchose pour dire il manque info
         console.log('y a pas de persos');
       } else if (this.j1.tag && this.j2.tag) {
-        console.log('.. add info ', this.j1, this.j2);
-
+        console.log(`.. ${this.crtID ? "edit" : "add"} info`, this.j1, this.j2);
+        
         let infoToPush = {
-          id: this.infos.length + 1,
+          id: this.crtID ? this.crtID : (this.infos.length + 1),
           j1: {
             characters: this.j1.personnages[0],
+            duo: this.j1.personnages,
             tag: this.j1.tag
           },
           j2: {
             characters: this.j2.personnages[0],
+            duo: this.j2.personnages,
             tag: this.j2.tag
           },
           // TODO phase1 & phase2
@@ -299,15 +381,35 @@ export default {
 
         infoToPush.j2.characters.row = this.j2.skins[0].row;
         infoToPush.j2.characters.col = this.pad(this.j2.skins[0].col, 2);
+
+        // maj skin "duo"
+        for (let i = 0; i < this.j1.skins.length; i++) {
+          const element = this.j1.skins[i];
+          infoToPush.j1.duo[i].row = element.row;
+          infoToPush.j1.duo[i].col = this.pad(element.col, 2);
+        }
+        for (let i = 0; i < this.j2.skins.length; i++) {
+          const element = this.j2.skins[i];
+          infoToPush.j2.duo[i].row = element.row;
+          infoToPush.j2.duo[i].col = this.pad(element.col, 2);
+        }
+
         this.pushInfos(infoToPush);
       }
     },
     pushInfos(infoToPush, toEmit = true) {
-      // clone deep
-      this.infos.push(cloneDeep(infoToPush));
+      // recherche si déjà présent 
+      const index = findIndex(this.infos, { 'id': infoToPush.id})
+      if (index >= 0) {
+        // maj
+        this.infos.splice(index, 1, cloneDeep(infoToPush));
+      } else {
+        // clone deep & push
+        this.infos.push(cloneDeep(infoToPush));
+      }
       this.resetInfos();
-      //this.$refs['quick-tag-j1'].focus();
-      this.$refs['quick-phase'].$refs.search.focus()
+      this.$refs['quick-tag-j1'].focus();
+      //this.$refs['quick-phase'].$refs.search.focus()
       //this.$refs['quick-title'].focus()
 
       if (toEmit)
@@ -330,8 +432,8 @@ export default {
     },
     resetInfos() {
       this.crtID = undefined;
-      this.j1 = { tag: '', personnages: [], skins: [{ name: '', row: 0, col: '00' }] }
-      this.j2 = { tag: '', personnages: [], skins: [{ name: '', row: 0, col: '00' }] }
+      this.j1 = { tag: '', personnages: [], skins: [{ name: '', row: 0, col: '00' }, { name: '', row: 0, col: '00' }] }
+      this.j2 = { tag: '', personnages: [], skins: [{ name: '', row: 0, col: '00' }, { name: '', row: 0, col: '00' }] }
       this.phase = { value: 'WR1', name: 'Winners Round 1' }
     },
     updateCharacters() {
@@ -460,29 +562,31 @@ export default {
 
       // TODO duos
       // PERSO + COULEUR
-      /* this.newInfo.p1.characters = a.j1.duo[0];
-      this.newInfo.color.j1.name = a.j1.duo[0].formatName;
-      this.newInfo.color.j1.row = a.j1.duo[0].row; */
       // J1
       this.j1.personnages[0] = a.j1.characters;
       this.j1.skins[0].name = a.j1.characters.formatName;
       this.j1.skins[0].row = a.j1.characters.row;
       this.j1.skins[0].col = a.j1.characters.col;
+      if (a.j1.duo && a.j1.duo.length > 1) {
+        this.j1.personnages[1] = a.j1.duo[1];
+        this.j1.skins[1] = {};
+        this.j1.skins[1].name = a.j1.duo[1].formatName;
+        this.j1.skins[1].row = a.j1.duo[1].row;
+        this.j1.skins[1].col = a.j1.duo[1].col;
+      }
 
       // J2
       this.j2.personnages[0] = a.j2.characters;
       this.j2.skins[0].name = a.j2.characters.formatName;
       this.j2.skins[0].row = a.j2.characters.row;
       this.j2.skins[0].col = a.j2.characters.col;
-    },
-
-    allo(a) {
-      console.log('allo', a)
-      //console.log('olla', this.newInfo.p1.characters);
-      /* this.j1.personnage = a;
-      this.newInfo.color.j1.name = a.formatName;
-      this.newInfo.color.j1.row = a.row;
-      this.newInfo.color.j1.col = a.col; */
+      if (a.j2.duo && a.j2.duo.length > 1) {
+        this.j2.personnages[1] = a.j2.duo[1];
+        this.j2.skins[1] = {}
+        this.j2.skins[1].name = a.j2.duo[1].formatName;
+        this.j2.skins[1].row = a.j2.duo[1].row;
+        this.j2.skins[1].col = a.j2.duo[1].col;
+      }
     },
     /* TODO UTILS */
     pad(num, size) {

@@ -99,6 +99,9 @@ const messages = {
         discord: 'ID Discord',
         github: 'Github Repo'
       }
+    },
+    short: {
+      character: 'Perso. {nb}'
     }
   },
 
@@ -193,6 +196,9 @@ const messages = {
         discord: 'Discord ID',
         github: 'Github Repo'
       }
+    },
+    short: {
+      character: 'Char. {nb}'
     }
   }
 }
