@@ -165,11 +165,15 @@
                     <!-- <div class="text-h6">{{ info.id }} | </div>  -->
                     <v-col cols="5" class="d-flex align-center">
                         <div :style="stockStyles(info.j1.characters, info.j1.characters.row, info.j1.characters.col)"></div>
+                        <div v-if="info.j1.duo.length > 1" :style="stockStyles(info.j1.duo[1], info.j1.duo[1].row, info.j1.duo[1].col)"></div>
+                        
                         <span class="text-body-1 mx-2">{{ info.j1.tag }}</span>
                     </v-col>
                     <div class="text-button mr-4">VS</div> 
                     <v-col cols="5" class="d-flex align-center">
                         <div :style="stockStyles(info.j2.characters, info.j2.characters.row, info.j2.characters.col)"></div>
+                        <div v-if="info.j2.duo.length > 1" :style="stockStyles(info.j2.duo[1], info.j2.duo[1].row, info.j2.duo[1].col)"></div>
+
                         <span class="text-body-1 mx-2">{{ info.j2.tag }}</span>
                     </v-col>
 
