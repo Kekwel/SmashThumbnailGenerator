@@ -139,6 +139,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Thumbnail from './components/Thumbnail.vue';
 import Games from "./utils/games"
 import CountryFlag from 'vue-country-flag'
@@ -210,6 +211,12 @@ export default {
       this.spin = !this.spin;
     },
     updateGame(id) {
+      // https://raw.githubusercontent.com/joaorb64/StreamHelperAssets/main/games/ssbu/base_files/config.json
+      axios.get('https://raw.githubusercontent.com/joaorb64/StreamHelperAssets/main/games/ssbu/base_files/config.json')
+      .then(response => {
+        console.log('--', response.data);
+      })
+
       this.game = this.games[id];
 
       console.log('.. change game', this.game.name);
