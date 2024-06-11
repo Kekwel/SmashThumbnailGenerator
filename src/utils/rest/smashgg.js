@@ -1,14 +1,14 @@
 
 import axios from 'axios';
-import { config } from '../../../public/config';
 import { i18n } from '../../main';
 import characters from '../characters';
 import stocks from '../stocks';
 
 const sgg = {
-    async getStreamedSetsInfos(tournament, event) {
+    async getStreamedSetsInfos(apikey, tournament, event) {
       const eventSlug = `tournament/${tournament}/event/${event}`;
 
+      const apiUrl = 'https://api.smash.gg/gql/alpha'
       // TODO query autre part
       const query = `query EventSets($eventSlug: String!, $page: Int!, $perPage: Int!) {
           event(slug: $eventSlug) {
@@ -48,7 +48,7 @@ const sgg = {
         }
       `;
       const headers = {
-        'Authorization': `Bearer ${config.smashgg.token}`,
+        'Authorization': `Bearer ${apikey}`,
         'Content-Type': 'application/json',
       }
       let page = 1;
@@ -60,7 +60,7 @@ const sgg = {
         errors: []
       };
       while (page < totalPages) {
-        const res = await axios.post(config.smashgg.url, {
+        const res = await axios.post(apiUrl, {
             query: query,
             variables: {
                 "eventSlug": eventSlug,

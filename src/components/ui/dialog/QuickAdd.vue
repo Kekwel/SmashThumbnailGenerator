@@ -40,14 +40,14 @@
           <v-row no-gutters>
             <!-- Phase -->
             <v-col cols="2" class="mr-2 d-flex align-center">
-              <v-select ref="quick-phase" class="quick-phase" :clearable=false selectOnTab :options="phases" label="name" v-model="phase" >
+              <multi-select ref="quick-phase" class="quick-phase" :clearable=false selectOnTab :options="phases" label="name" v-model="phase" >
                 <template #selected-option="{ value }">
                   {{ value }}
                 </template>
                 <template #option="{ name }">
                   {{ name }}
                 </template>
-              </v-select>
+              </multi-select>
               <!-- <v-combobox label="Phase" :items="phases" @keyup.enter="addInfo" v-model="newInfo.phase" :filter="filterPhase"
                           dense filled outlined hide-details>
                 <template v-slot:selection="{ item }">
@@ -74,7 +74,7 @@
                 </v-col>
                 <v-col cols="4">
                   <!-- J1 CHAR -->
-                  <v-select ref="quick-char-j1" :clearable=false selectOnTab class="mt-2 mx-2 player1 quick" :options="crtCharacters" label="name" v-model="j1.personnages[0]" >
+                  <multi-select ref="quick-char-j1" :clearable=false selectOnTab class="mt-2 mx-2 player1 quick" :options="crtCharacters" label="name" v-model="j1.personnages[0]" >
                     <template #selected-option="{ firstStockUrl }">
                       <div class="stock-icon-selected">
                         <stock-icon :width="32" :src="firstStockUrl" />
@@ -85,10 +85,10 @@
                         <stock-icon :width="32" :src="option.firstStockUrl" />
                       </div>
                     </template>
-                  </v-select>
+                  </multi-select>
                 </v-col>
                 <v-col cols="4">
-                  <v-select ref="quick-color-j1" :clearable=false selectOnTab class="mt-2 mx-2 player1 quick" 
+                  <multi-select ref="quick-color-j1" :clearable=false selectOnTab class="mt-2 mx-2 player1 quick"
                             :options="playerColorChar(this.j1)" label="name" v-model="j1.skins[0]">
                     <template #selected-option="{ row, col }">
                       <div class="stock-icon-selected">
@@ -100,7 +100,7 @@
                         <div :style="stockStyles(j1.personnages[0], row, col)" style="transform: scale(1.2);"></div>
                       </div>
                     </template>
-                  </v-select>
+                  </multi-select>
                 </v-col>
                 <v-row no-gutters>
                   <v-col cols="3" class="d-flex align-center justify-center">
@@ -108,7 +108,7 @@
                   </v-col>
                   <v-col cols="4">
                     <!-- J1 CHAR N° 2 -->
-                    <v-select ref="quick-char-j1" :clearable=false selectOnTab class="mt-2 mx-2 player1 quick" :options="crtCharacters" label="name" v-model="j1.personnages[1]" >
+                    <multi-select ref="quick-char-j1" :clearable=false selectOnTab class="mt-2 mx-2 player1 quick" :options="crtCharacters" label="name" v-model="j1.personnages[1]" >
                       <template #selected-option="{ firstStockUrl }">
                         <div class="stock-icon-selected">
                           <stock-icon :width="32" :src="firstStockUrl" />
@@ -119,10 +119,10 @@
                           <stock-icon :width="32" :src="option.firstStockUrl" />
                         </div>
                       </template>
-                    </v-select>
+                    </multi-select>
                   </v-col>
                   <v-col cols="4">
-                    <v-select ref="quick-color-j1" :clearable=false selectOnTab class="mt-2 mx-2 player1 quick" 
+                    <multi-select ref="quick-color-j1" :clearable=false selectOnTab class="mt-2 mx-2 player1 quick"
                               :options="playerColorChar(this.j1)" label="name" v-model="j1.skins[1]">
                       <template #selected-option="{ row, col }">
                         <div class="stock-icon-selected">
@@ -134,7 +134,7 @@
                           <div :style="stockStyles(j1.personnages[1], row, col)" style="transform: scale(1.2);"></div>
                         </div>
                       </template>
-                    </v-select>
+                    </multi-select>
                   </v-col>
                 </v-row>
               </v-row>
@@ -155,17 +155,17 @@
                 </v-col>
                 <v-col cols="4">
                   <!-- J2 CHAR -->
-                  <v-select ref="quick-char-j2" :clearable=false selectOnTab class="mt-2 mx-2 player2 quick" :options="crtCharacters" label="name" v-model="j2.personnages[0]">
+                  <multi-select ref="quick-char-j2" :clearable=false selectOnTab class="mt-2 mx-2 player2 quick" :options="crtCharacters" label="name" v-model="j2.personnages[0]">
                     <template #selected-option="{ firstStockUrl }">
                       <stock-icon :width="32" :src="firstStockUrl" />
                     </template>
                     <template #option="option">
                       <stock-icon :width="32" :src="option.firstStockUrl" />
                     </template>
-                  </v-select>
+                  </multi-select>
                 </v-col>
                 <v-col cols="4">
-                  <v-select ref="quick-color-j2" :clearable=false selectOnTab class="mt-2 mx-2 player2 quick" 
+                  <multi-select ref="quick-color-j2" :clearable=false selectOnTab class="mt-2 mx-2 player2 quick"
                             :options="this.playerColorChar(this.j2)" label="name" v-model="j2.skins[0]">
                     <template #selected-option="{ row, col }">
                       <div class="stock-icon-selected">
@@ -177,7 +177,7 @@
                         <div :style="stockStyles(j2.personnages[0], row, col)" style="transform: scale(1.2);"></div>
                       </div>
                     </template>
-                  </v-select>
+                  </multi-select>
                 </v-col>
                 <v-row no-gutters>
                   <v-col cols="3" class="d-flex align-center justify-center">
@@ -185,7 +185,7 @@
                   </v-col>
                   <v-col cols="4">
                     <!-- J2 CHAR N° 2 -->
-                    <v-select ref="quick-char-j2" :clearable=false selectOnTab class="mt-2 mx-2 player2 quick" :options="crtCharacters" label="name" v-model="j2.personnages[1]" >
+                    <multi-select ref="quick-char-j2" :clearable=false selectOnTab class="mt-2 mx-2 player2 quick" :options="crtCharacters" label="name" v-model="j2.personnages[1]" >
                       <template #selected-option="{ firstStockUrl }">
                         <div class="stock-icon-selected">
                           <stock-icon :width="32" :src="firstStockUrl" />
@@ -196,10 +196,10 @@
                           <stock-icon :width="32" :src="option.firstStockUrl" />
                         </div>
                       </template>
-                    </v-select>
+                    </multi-select>
                   </v-col>
                   <v-col cols="4">
-                    <v-select ref="quick-color-j2" :clearable=false selectOnTab class="mt-2 mx-2 player2 quick" 
+                    <multi-select ref="quick-color-j2" :clearable=false selectOnTab class="mt-2 mx-2 player2 quick"
                               :options="playerColorChar(this.j2)" label="name" v-model="j2.skins[1]">
                       <template #selected-option="{ row, col }">
                         <div class="stock-icon-selected">
@@ -211,7 +211,7 @@
                           <div :style="stockStyles(j2.personnages[1], row, col)" style="transform: scale(1.2);"></div>
                         </div>
                       </template>
-                    </v-select>
+                    </multi-select>
                   </v-col>
                 </v-row>
               </v-row>
@@ -287,13 +287,12 @@
 </template>
 
 <script>
-import vSelect from "vue-select";
 import StockIcon from '../StockIcon.vue';
 import { cloneDeep, findIndex } from 'lodash';
 import smashgg from '../../../utils/rest/smashgg.js';
 
 export default {
-  components: { vSelect, StockIcon },
+  components: { StockIcon },
   props: {
     value: Boolean,
   },
@@ -488,7 +487,7 @@ export default {
 
         this.loadingSmashgg = true;
         //smashgg.getStreamedSetsInfos("https://smash.gg/tournament/cornismash-90-ultimate-weekly-lyon/event/main-event-ultimate-singles")
-        smashgg.getStreamedSetsInfos(tournament, event)
+        smashgg.getStreamedSetsInfos(this.$getApikey(), tournament, event)
         .then(infosSmashgg => {
           if (infosSmashgg.errors.length > 0) {
             throw new Error(infosSmashgg.errors[0].message);

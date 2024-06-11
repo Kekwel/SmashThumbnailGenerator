@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app dense dark :src="game.bgSrc">
       <v-toolbar-title>
-        <v-select style="width: 12em;" class="mr-2" 
+        <v-select style="width: 12em;" class="mr-2"
             @change="updateGame"
             v-model="game" :items="games" item-text="name" item-value="id"
             filled dense dark hide-details color="light-blue" item-color="blue">

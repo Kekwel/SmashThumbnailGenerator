@@ -5,7 +5,7 @@
         <v-row no-gutters>
           <v-col cols="10">
             <!-- TODO v-autocomplete ? -->
-            <v-select class="my-2" style="width: 15.5em" :options="characters" label="_name" @input="updateChar($event, image)" v-model="crtCharacter">
+            <multi-select class="my-2" style="width: 15.5em" :options="characters" label="_name" @input="updateChar($event, image)" v-model="crtCharacter">
               <template #selected-option="{ _name, name, _firstStockUrl }">
                 <div class="stock-icon-selected">
                   <stock-icon :width="28" :src="_firstStockUrl" /> {{ _name }}{{ name }}
@@ -17,7 +17,7 @@
                   <stock-icon :width="28" :src="_firstStockUrl" />{{ _name }}{{ name }}
                 </div>
               </template>
-            </v-select>
+            </multi-select>
           </v-col>
           <v-col cols="2" align-self="center" class="d-flex justify-end">
             <v-btn @click="image.flip(); updateActive(); activeFlip = !activeFlip" :color="activeFlip ? 'primary' : ''" :dark="activeFlip" elevation="2" small>
@@ -43,11 +43,10 @@
 </template>
 
 <script>
-import vSelect from "vue-select";
 import { Character } from '../js/Character';
 import StockIcon from '../ui/StockIcon.vue';
 export default {
-  components: { vSelect, StockIcon },
+  components: { StockIcon },
   props: {
     player: Object,
     image: Object,
@@ -118,6 +117,7 @@ export default {
     updateChar(character) {
       this.resetActive();
       console.log("update", character ? character.formatName : 'null', "for player", this.image.number, "..");
+      console.log(this.characters)
 
       var quickList = localStorage.quickList ? JSON.parse(localStorage.quickList) : [];
       var quickIdx = localStorage.quickCrtIdx ? JSON.parse(localStorage.quickCrtIdx) : '';

@@ -2,6 +2,13 @@
   <v-container class="pa-2">
     <v-row no-gutters>
       <v-col>
+        <!-- Startgg API key -->
+        <option-title title="Start.gg"/>
+        <v-text-field dense hide-details v-model="apikey" :placeholder="$t('title.apiKey')"/>
+        <v-checkbox :label="$t('label.remember')" hide-details dense v-model="rememberApikey"></v-checkbox>
+
+        <!-- TODO Challonge ? -->
+        <v-divider class="mt-4"/>
         <!-- Export / Import -->
         <option-title :title="$t('title.export')"/>
 
@@ -20,10 +27,10 @@
         <v-divider class="mt-4"/>
 
         <!-- Grid -->
-        <!-- <option-title class="mt-2" :title="$t('title.grid')"/>
-        <v-switch class="mt-2" v-model="isDisplayGrid" :label="$t('label.grid')" @change="updateGrid" :loading="loadingGrid" /> -->
-        
-        <v-divider class="mt-4"/>
+<!--        <option-title class="mt-2" :title="$t('title.grid')"/>-->
+<!--        <v-switch class="mt-2" v-model="isDisplayGrid" :label="$t('label.grid')" @change="updateGrid" :loading="loadingGrid" />-->
+<!--        -->
+<!--        <v-divider class="mt-4"/>-->
         <option-title class="mt-2" :title="$t('title.timestamp')"/>
         <v-switch class="mt-2" v-model="isDisplayTS" :label="$t('label.timestamp')" @change="updateTimestamp" />
       </v-col>
@@ -35,6 +42,7 @@
 import OptionTitle from '../ui/OptionTitle.vue';
 import Layouts from "../../utils/layouts"
 import { CustomText } from "../js/CustomText";
+import Vue from "vue";
 export default {
   components: { OptionTitle },
   props: {
@@ -48,7 +56,9 @@ export default {
       isDisplayGrid: false,
       loadingGrid: false,
       isDisplayTS: false,
-      rectTS: null
+      rectTS: null,
+      apikey: '',
+      rememberApikey: false
     };
   },
   created() {
@@ -65,6 +75,39 @@ export default {
     this.rectTS.group.set('lockScalingX', true);
     this.rectTS.group.set('lockScalingY', true);
     this.rectTS.group.set('lockRotation', true);
+
+    if (localStorage.apikey) {
+      this.apikey = localStorage.apikey;
+    }
+    if (localStorage.rememberApikey) {
+      this.rememberApikey = localStorage.rememberApikey;
+    }
+  },
+  watch: {
+    apikey(newApikey) {
+      if (localStorage.rememberApikey) {
+        // si remember
+        Vue.prototype.$apikey = '';
+        localStorage.apikey = newApikey;
+      } else {
+        // si pas remember
+        Vue.prototype.$apikey = newApikey
+        localStorage.apikey = '';
+      }
+    },
+    rememberApikey(newRememberApikey) {
+      localStorage.rememberApikey = newRememberApikey;
+
+      if (newRememberApikey) {
+        // si remember
+        Vue.prototype.$apikey = '';
+        localStorage.apikey = this.apikey;
+      } else {
+        // si pas remember
+        Vue.prototype.$apikey = this.apikey;
+        localStorage.apikey = '';
+      }
+    }
   },
   methods: {
     onButtonClick() {

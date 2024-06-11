@@ -43,7 +43,8 @@ const messages = {
       shortcut: {
         tab: 'Valide le choix du champ courant et passe au suivant',
         ctrlEnter: 'Créer une nouvelle entrée'
-      }
+      },
+      remember: 'Se souvenir'
     },
     title: {
       tagAndPhases: 'Tag & Phases',
@@ -64,7 +65,8 @@ const messages = {
       versus: 'Versus',
       default: 'Par défaut',
       quickAdd: 'Ajout rapide',
-      shortcut: 'Raccourcis'
+      shortcut: 'Raccourcis',
+      apiKey: 'Startgg API key'
     },
     placeholder: {
       image: 'Choisissez une image'
@@ -89,7 +91,7 @@ const messages = {
       },
       help: {
         import: {
-          smashgg: 'Lien de l\'évenement (https://smash.gg/tournament/TOURNAMENT_ID/event/EVENT_ID)'
+          smashgg: 'Lien de l\'évenement (https://start.gg/tournament/TOURNAMENT_ID/event/EVENT_ID)'
         },
       },
       menu: {
@@ -140,7 +142,8 @@ const messages = {
       shortcut: {
         tab: 'Validate the choice of the current field and go to the next one',
         ctrlEnter: 'Create a new entry'
-      }
+      },
+      remember: 'Remember'
     },
     title: {
       tagAndPhases: 'Tag & Phases',
@@ -161,14 +164,15 @@ const messages = {
       versus: 'Versus',
       default: 'Default',
       quickAdd: 'Quick add',
-      shortcut: 'Shortcuts'
+      shortcut: 'Shortcuts',
+      apiKey: 'Startgg API key'
     },
     placeholder: {
       image: 'Choose a picture'
     },
     error: {
       smashgg: {
-        nodata: 'No data found ! Please check the smashgg link',
+        nodata: 'No data found ! Please check the startgg link',
         noSetStreamed: 'No streamed sets found !',
       }
     },
@@ -186,7 +190,7 @@ const messages = {
       },
       help: {
         import: {
-          smashgg: 'Event link (https://smash.gg/tournament/TOURNAMENT_ID/event/EVENT_ID)'
+          smashgg: 'Event link (https://start.gg/tournament/TOURNAMENT_ID/event/EVENT_ID)'
         },
       },
       menu: {
