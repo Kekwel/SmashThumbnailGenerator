@@ -14,7 +14,7 @@
           </template>
         </v-select>
       </v-toolbar-title>
-      <v-toolbar-title>Thumbnail Generator v1.2.0</v-toolbar-title>
+      <v-toolbar-title>Thumbnail Generator v1.2.1</v-toolbar-title>
 
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
