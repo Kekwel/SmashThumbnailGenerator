@@ -382,12 +382,12 @@ export default {
         infoToPush.j2.characters.col = this.pad(this.j2.skins[0].col, 2);
 
         // maj skin "duo"
-        for (let i = 0; i < this.j1.skins.length; i++) {
+        for (let i = 0; i < this.j1.personnages.length; i++) {
           const element = this.j1.skins[i];
           infoToPush.j1.duo[i].row = element.row;
           infoToPush.j1.duo[i].col = this.pad(element.col, 2);
         }
-        for (let i = 0; i < this.j2.skins.length; i++) {
+        for (let i = 0; i < this.j2.personnages.length; i++) {
           const element = this.j2.skins[i];
           infoToPush.j2.duo[i].row = element.row;
           infoToPush.j2.duo[i].col = this.pad(element.col, 2);
