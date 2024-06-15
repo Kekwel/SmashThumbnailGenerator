@@ -44,7 +44,9 @@ const messages = {
         tab: 'Valide le choix du champ courant et passe au suivant',
         ctrlEnter: 'Créer une nouvelle entrée'
       },
-      remember: 'Se souvenir'
+      startgg: {
+        remember: 'Se souvenir'
+      }
     },
     title: {
       tagAndPhases: 'Tag & Phases',
@@ -143,7 +145,9 @@ const messages = {
         tab: 'Validate the choice of the current field and go to the next one',
         ctrlEnter: 'Create a new entry'
       },
-      remember: 'Remember'
+      startgg: {
+        remember: 'Remember'
+      }
     },
     title: {
       tagAndPhases: 'Tag & Phases',

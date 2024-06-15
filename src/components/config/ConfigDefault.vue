@@ -5,7 +5,7 @@
         <!-- Startgg API key -->
         <option-title title="Start.gg"/>
         <v-text-field dense hide-details v-model="apikey" :placeholder="$t('title.apiKey')"/>
-        <v-checkbox :label="$t('label.remember')" hide-details dense v-model="rememberApikey"></v-checkbox>
+        <v-checkbox :label="$t('label.startgg.remember')" hide-details dense v-model="rememberApikey"></v-checkbox>
 
         <!-- TODO Challonge ? -->
         <v-divider class="mt-4"/>
@@ -58,7 +58,7 @@ export default {
       isDisplayTS: false,
       rectTS: null,
       apikey: '',
-      rememberApikey: false
+      rememberApikey: ""
     };
   },
   created() {
@@ -82,6 +82,10 @@ export default {
     if (localStorage.rememberApikey) {
       this.rememberApikey = localStorage.rememberApikey;
     }
+    if (localStorage.fetchStreamed) {
+      console.log('allo ? ? ', this.fetchStreamed, localStorage.fetchStreamed)
+      this.fetchStreamed = localStorage.fetchStreamed;
+    }
   },
   watch: {
     apikey(newApikey) {
@@ -96,7 +100,7 @@ export default {
       }
     },
     rememberApikey(newRememberApikey) {
-      localStorage.rememberApikey = newRememberApikey;
+      localStorage.rememberApikey = newRememberApikey ? "yes" : "";
 
       if (newRememberApikey) {
         // si remember
@@ -107,6 +111,10 @@ export default {
         Vue.prototype.$apikey = this.apikey;
         localStorage.apikey = '';
       }
+    },
+    fetchStreamed(newFetchStreamed) {
+      console.log('bah ? ', newFetchStreamed)
+      localStorage.fetchStreamed = newFetchStreamed;
     }
   },
   methods: {
