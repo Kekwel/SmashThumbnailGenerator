@@ -75,6 +75,7 @@ const messages = {
     },
     error: {
       smashgg: {
+        noApiKey: 'Vérifiez votre clé d\'API startgg dans l\'onglet de configuration',
         nodata: 'Aucune donnée trouvée ! Vérifiez le lien',
         noSetStreamed: 'Aucun set streamé trouvé ! ',
       }
@@ -176,6 +177,7 @@ const messages = {
     },
     error: {
       smashgg: {
+        noApiKey: 'Check your startgg API key in configuration tab',
         nodata: 'No data found ! Please check the startgg link',
         noSetStreamed: 'No streamed sets found !',
       }

@@ -529,6 +529,11 @@ export default {
         })
         .catch(err => {
           console.error(err.message);
+          // check startgg apikey !!
+          if (err.message.includes("400")) {
+            err.message += '<br>' + this.$t('error.smashgg.noApiKey');
+          }
+
           // -- notif pourquoi error
           this.$toasted.show(err.message, { 
             icon : {
