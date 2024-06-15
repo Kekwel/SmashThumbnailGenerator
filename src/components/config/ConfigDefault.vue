@@ -4,7 +4,23 @@
       <v-col>
         <!-- Startgg API key -->
         <option-title title="Start.gg"/>
-        <v-text-field dense hide-details v-model="apikey" :placeholder="$t('title.apiKey')"/>
+        <v-row no-gutters>
+          <v-col cols="11">
+            <v-text-field dense hide-details v-model="apikey" :placeholder="$t('title.apiKey')"/>
+          </v-col>
+
+          <!-- how 2 generate api key https://developer.start.gg/docs/authentication/ -->
+          <v-col cols="1">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon href="https://developer.start.gg/docs/authentication/" target="_blank" v-bind="attrs" v-on="on">
+                  <v-icon color="warning">mdi-help-box</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ $t('tooltip.menu.apikey') }}</span>
+            </v-tooltip>
+          </v-col>
+        </v-row>
         <v-checkbox :label="$t('label.startgg.remember')" hide-details dense v-model="rememberApikey"></v-checkbox>
 
         <!-- TODO Challonge ? -->

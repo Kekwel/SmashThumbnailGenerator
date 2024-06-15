@@ -68,7 +68,7 @@ const messages = {
       default: 'Par défaut',
       quickAdd: 'Ajout rapide',
       shortcut: 'Raccourcis',
-      apiKey: 'Startgg API key'
+      apiKey: 'Startgg API token'
     },
     placeholder: {
       image: 'Choisissez une image'
@@ -102,7 +102,8 @@ const messages = {
         credits: 'Credits',
         twitter: 'Twitter',
         discord: 'ID Discord',
-        github: 'Github Repo'
+        github: 'Github Repo',
+        apikey: 'Comment générer ce token ?'
       }
     },
     short: {
@@ -170,7 +171,7 @@ const messages = {
       default: 'Default',
       quickAdd: 'Quick add',
       shortcut: 'Shortcuts',
-      apiKey: 'Startgg API key'
+      apiKey: 'Startgg API token'
     },
     placeholder: {
       image: 'Choose a picture'
@@ -204,7 +205,8 @@ const messages = {
         credits: 'Credits',
         twitter: 'Twitter',
         discord: 'Discord ID',
-        github: 'Github Repo'
+        github: 'Github Repo',
+        apikey: 'How to generate this token ?'
       }
     },
     short: {
