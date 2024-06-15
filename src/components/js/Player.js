@@ -63,7 +63,7 @@ class Player {
         this.canvas.renderAll();
     }
 
-    addImg(game) {
+    async addImg(game, char1 = Utils.getRandomChar(game)) {
         this.canvas.add(this.tmpCharSeparator);
         
         let img0 = this.charArray[0];
@@ -71,7 +71,7 @@ class Player {
         let idxTag = this.canvas.getObjects().indexOf(this.myTag.group);
 
         // random char
-        var char1 = Utils.getRandomChar(game);
+        // var char1 = Utils.getRandomChar(game);
         let newX1 = -100, newY1 = 205;
         var imgOpt;
         var clipPath, clipPath0;
@@ -157,7 +157,7 @@ class Player {
         return {
             player: this._number,
             tag: this.myTag,
-						bg: this.bg,
+            bg: this.bg,
             characters: this.firstCharacter
         }
     }

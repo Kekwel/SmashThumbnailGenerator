@@ -2,6 +2,29 @@
   <v-container class="pa-2">
     <v-row no-gutters>
       <v-col>
+        <!-- Startgg API key -->
+        <option-title title="Start.gg"/>
+        <v-row no-gutters>
+          <v-col cols="11">
+            <v-text-field dense hide-details v-model="apikey" :placeholder="$t('title.apiKey')"/>
+          </v-col>
+
+          <!-- how 2 generate api key https://developer.start.gg/docs/authentication/ -->
+          <v-col cols="1">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon href="https://developer.start.gg/docs/authentication/" target="_blank" v-bind="attrs" v-on="on">
+                  <v-icon color="warning">mdi-help-box</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ $t('tooltip.menu.apikey') }}</span>
+            </v-tooltip>
+          </v-col>
+        </v-row>
+        <v-checkbox :label="$t('label.startgg.remember')" hide-details dense v-model="rememberApikey"></v-checkbox>
+
+        <!-- TODO Challonge ? -->
+        <v-divider class="mt-4"/>
         <!-- Export / Import -->
         <option-title :title="$t('title.export')"/>
 
@@ -20,10 +43,10 @@
         <v-divider class="mt-4"/>
 
         <!-- Grid -->
-        <!-- <option-title class="mt-2" :title="$t('title.grid')"/>
-        <v-switch class="mt-2" v-model="isDisplayGrid" :label="$t('label.grid')" @change="updateGrid" :loading="loadingGrid" /> -->
-        
-        <v-divider class="mt-4"/>
+<!--        <option-title class="mt-2" :title="$t('title.grid')"/>-->
+<!--        <v-switch class="mt-2" v-model="isDisplayGrid" :label="$t('label.grid')" @change="updateGrid" :loading="loadingGrid" />-->
+<!--        -->
+<!--        <v-divider class="mt-4"/>-->
         <option-title class="mt-2" :title="$t('title.timestamp')"/>
         <v-switch class="mt-2" v-model="isDisplayTS" :label="$t('label.timestamp')" @change="updateTimestamp" />
       </v-col>
@@ -35,6 +58,7 @@
 import OptionTitle from '../ui/OptionTitle.vue';
 import Layouts from "../../utils/layouts"
 import { CustomText } from "../js/CustomText";
+import Vue from "vue";
 export default {
   components: { OptionTitle },
   props: {
@@ -48,7 +72,9 @@ export default {
       isDisplayGrid: false,
       loadingGrid: false,
       isDisplayTS: false,
-      rectTS: null
+      rectTS: null,
+      apikey: '',
+      rememberApikey: ""
     };
   },
   created() {
@@ -65,6 +91,47 @@ export default {
     this.rectTS.group.set('lockScalingX', true);
     this.rectTS.group.set('lockScalingY', true);
     this.rectTS.group.set('lockRotation', true);
+
+    if (localStorage.apikey) {
+      this.apikey = localStorage.apikey;
+    }
+    if (localStorage.rememberApikey) {
+      this.rememberApikey = localStorage.rememberApikey;
+    }
+    if (localStorage.fetchStreamed) {
+      console.log('allo ? ? ', this.fetchStreamed, localStorage.fetchStreamed)
+      this.fetchStreamed = localStorage.fetchStreamed;
+    }
+  },
+  watch: {
+    apikey(newApikey) {
+      if (localStorage.rememberApikey) {
+        // si remember
+        Vue.prototype.$apikey = '';
+        localStorage.apikey = newApikey;
+      } else {
+        // si pas remember
+        Vue.prototype.$apikey = newApikey
+        localStorage.apikey = '';
+      }
+    },
+    rememberApikey(newRememberApikey) {
+      localStorage.rememberApikey = newRememberApikey ? "yes" : "";
+
+      if (newRememberApikey) {
+        // si remember
+        Vue.prototype.$apikey = '';
+        localStorage.apikey = this.apikey;
+      } else {
+        // si pas remember
+        Vue.prototype.$apikey = this.apikey;
+        localStorage.apikey = '';
+      }
+    },
+    fetchStreamed(newFetchStreamed) {
+      console.log('bah ? ', newFetchStreamed)
+      localStorage.fetchStreamed = newFetchStreamed;
+    }
   },
   methods: {
     onButtonClick() {

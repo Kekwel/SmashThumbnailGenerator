@@ -1,4 +1,3 @@
-
 import Stocks from "./stocks"
 import { fabric } from "fabric";
 
@@ -12,7 +11,7 @@ const utils = {
     },
     getRandomChar(game) {
         let characters = Stocks.ULT;
-        switch (game.code) {
+        switch (game.code ? game.code : game) {
             case 'ult':
                 characters = Stocks.ULT;
                 break;
@@ -24,6 +23,9 @@ const utils = {
                 break;
             case 'roa':
                 characters = Stocks.ROA;
+                break;
+            case 'nasb':
+                characters = Stocks.NASB;
                 break;
             default:
                 characters = [];

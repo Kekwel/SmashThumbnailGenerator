@@ -6,7 +6,7 @@
         <option-title :title="$t('title.match')" />
         <v-text-field v-model="j1.tag" color="red" background-color="red lighten-5" dense shaped filled hide-details onClick="this.select();" />
         <stock-icon-picker ref="charJ1" :characters="characters" :player="j1" :image="j1.firstCharacter" />
-        <stock-icon-picker v-if="j1.charArray.length > 1" ref="charJ1bis" :characters="characters" :player="j1" :image="j1.secondCharacter" />
+        <stock-icon-picker v-if="j1.charArray.length > 1" ref="charJ1bis" :characters="characters" :player="j1" :image="j1.secondCharacter" isSecond />
         <v-btn v-if="j1.charArray.length == 1" @click="j1.addImg(game)" color="light-blue" dark elevation="2" small>
           <v-icon dark>mdi-plus</v-icon>
         </v-btn>
@@ -38,7 +38,7 @@
 
         <v-text-field v-model="j2.tag" color="blue" background-color="blue lighten-5" dense shaped filled hide-details onClick="this.select();" />
         <stock-icon-picker ref="charJ2" :characters="characters" :player="j2" :image="j2.firstCharacter" />
-        <stock-icon-picker v-if="j2.charArray.length > 1" ref="charJ2bis" :characters="characters" :player="j2" :image="j2.secondCharacter" />
+        <stock-icon-picker v-if="j2.charArray.length > 1" ref="charJ2bis" :characters="characters" :player="j2" :image="j2.secondCharacter" isSecond />
         <v-btn v-if="j2.charArray.length == 1" @click="j2.addImg(game);" color="light-blue" dark elevation="2" small>
           <v-icon dark>mdi-plus</v-icon>
         </v-btn>
@@ -98,6 +98,7 @@ import "vue-select/dist/vue-select.css";
 import StockIconPicker from "../ui/StockIconPicker.vue";
 
 import Utils from "../../utils"
+import { Character } from '../js/Character';
 export default {
   components: { OptionTitle, StockIconPicker },
   props: {
@@ -140,6 +141,30 @@ export default {
       this.$refs.charJ2.selectChar(charJ2);
       this.j1.filename = charJ1.getCharUrl();
       this.j2.filename = charJ2.getCharUrl();
+    },
+    selectQuickChar(game, j1, j2){
+      this.game = game;
+
+      this.$refs.charJ1.selectQuickChar(j1);
+      this.$refs.charJ2.selectQuickChar(j2);
+      this.j1.filename = j1.url;
+      this.j2.filename = j2.url;
+
+      // si plusieurs chars, o najoute
+      if (j1.duo?.length > 1) {
+        let j = j1;
+        let quickChar = new Character(j.characters.game, '1', j.duo[1].name, j.duo[1].formatName, j.duo[1].maxRow, j.duo[1].maxCol)
+        quickChar.row = j.duo[1].row;
+        quickChar.col = j.duo[1].col;
+        this.j1.addImg(j1.characters.game, quickChar);
+      }
+      if (j2.duo?.length > 1) {
+        let j = j2;
+        let quickChar = new Character(j.characters.game, '2', j.duo[1].name, j.duo[1].formatName, j.duo[1].maxRow, j.duo[1].maxCol)
+        quickChar.row = j.duo[1].row;
+        quickChar.col = j.duo[1].col;
+        this.j2.addImg(j2.characters.game, quickChar);
+      }
     },
     reversePlayer() {
       // TAG

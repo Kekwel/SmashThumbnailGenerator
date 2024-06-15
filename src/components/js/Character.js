@@ -24,13 +24,24 @@ class Character {
         this._col = '00';
         this._maxCol = maxCol;
 
-        this._firstStockUrl = this.getfirstStockUrl();
+        this._firstStockUrl = this.getFirstStockUrl();
         this._allStockUrl = this.getAllStocksUrl();
     }
 
     toJSON() {
         var item = {};
-        // TODO ?
+        item.id = this.id;
+        item.game = this.game;
+        item.name = this.name;
+        item.formatName = this.formatName;
+        item.firstStockUrl = this.getFirstStockUrl();
+        item.allStocksUrl = this.getAllStocksUrl();
+        item.url = this.getCharUrl();
+
+        item.row = this.row;
+        item.col = this.col;
+        item.maxRow = this.maxRow;
+        item.maxCol = this.maxCol;
         return item;
     }
 
@@ -41,21 +52,36 @@ class Character {
                         : '/'
     }
 
-    getfirstStockUrl() {
-        var stockUrl = this.getRoot() + "img/stock/" + this._game + "/"  + this._formatName + ".png";
+    getFirstStockUrl() {
+        //var stockUrl = this.getRoot() + "img/stock/" + this._game + "/"  + this._formatName + ".png";
+        //var stockUrl = "https://smash-render.s3.eu-west-3.amazonaws.com/" + this._game + "/stock/" + this._formatName + ".png";
+        var stockUrl = "https://raw.githubusercontent.com/Kekwel/ThumbnailGeneratorAssets/main/games/" + this._game + "/stock/" + this._formatName + ".png";
         return stockUrl;
+    }
+    get firstStockUrl() {
+        return this.getFirstStockUrl();
     }
     // img/stock/$GAME/$CHARNAME_all.png
     getAllStocksUrl() {
-        var stocksUrl = this.getRoot() + "img/stock/" + this._game + "/"  + this._formatName + "_all.png";
+        // var stocksUrl = this.getRoot() + "img/stock/" + this._game + "/"  + this._formatName + "_all.png";
+        //var stocksUrl = "https://smash-render.s3.eu-west-3.amazonaws.com/" + this._game + "/stock/" + this._formatName + "_all.png";
+        var stocksUrl = "https://raw.githubusercontent.com/Kekwel/ThumbnailGeneratorAssets/main/games/" + this._game + "/stock/" + this._formatName + "_all.png";
 		return stocksUrl;
     }
     // img/char/$GAME/$CHARNAME_$ROW_$COL.png
     getCharUrl() {
-        var charUrl = this.getRoot() + "img/char/" + this._game + "/mario_" + this._row + "_" + this._col + ".png";
+        //var charUrl = this.getRoot() + "img/char/" + this._game + "/mario_" + this._row + "_" + this._col + ".png";
+        //var charUrl = "https://raw.githubusercontent.com/Kekwel/StreamHelperAssets/main/games/ssbu/full/chara_1_bayonetta_01.png";
+        //var charUrl = "https://smash-render.s3.eu-west-3.amazonaws.com/" + this._game + "/char/mario_" + this._row + "_" + this._col + ".png";
+        var charUrl = "https://raw.githubusercontent.com/Kekwel/ThumbnailGeneratorAssets/main/games/" + this._game + "/char/mario_" + this._row + "_" + this._col + ".png";
         if (this._formatName)
-            charUrl = this.getRoot() + "img/char/" + this._game + "/" + this._formatName + "_" + this._row + "_" + this._col + ".png";
+            charUrl = "https://raw.githubusercontent.com/Kekwel/ThumbnailGeneratorAssets/main/games/" + this._game + "/char/" + this._formatName + "_" + this._row + "_" + this._col + ".png";
+            //charUrl = "https://smash-render.s3.eu-west-3.amazonaws.com/" + this._game + "/char/" + this._formatName + "_" + this._row + "_" + this._col + ".png";
+            //charUrl = this.getRoot() + "img/char/" + this._game + "/" + this._formatName + "_" + this._row + "_" + this._col + ".png";
 		return charUrl;
+    }
+    get charUrl() {
+        return this.getCharUrl();
     }
 
     // GETTER SETTER

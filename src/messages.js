@@ -39,7 +39,14 @@ const messages = {
         custom: 'Custom Font'
       },
       angle: 'Angle',
-      blur: 'Flou'
+      blur: 'Flou',
+      shortcut: {
+        tab: 'Valide le choix du champ courant et passe au suivant',
+        ctrlEnter: 'Créer une nouvelle entrée'
+      },
+      startgg: {
+        remember: 'Se souvenir'
+      }
     },
     title: {
       tagAndPhases: 'Tag & Phases',
@@ -58,25 +65,52 @@ const messages = {
         banner: 'Ombre bandeau'
       },
       versus: 'Versus',
-      default: 'Par défaut'
+      default: 'Par défaut',
+      quickAdd: 'Ajout rapide',
+      shortcut: 'Raccourcis',
+      apiKey: 'Startgg API token'
     },
     placeholder: {
       image: 'Choisissez une image'
+    },
+    error: {
+      smashgg: {
+        noApiKey: 'Vérifiez votre clé d\'API startgg dans l\'onglet de configuration',
+        nodata: 'Aucune donnée trouvée ! Vérifiez le lien',
+        noSetStreamed: 'Aucun set streamé trouvé ! ',
+      }
+    },
+    notification: {
+      smashgg: {
+        importOk: '{nb} sets importés !'
+      }
     },
     tooltip: {
       random: 'Personnages aléatoires !',
       clippath: 'Empêche un élément d\'être affiché sur une zone',
       btn: {
-        reset: 'Réinitialisation'
+        reset: 'Réinitialisation',
+        add: 'Ajout'
+      },
+      help: {
+        import: {
+          smashgg: 'Lien de l\'évenement (https://start.gg/tournament/TOURNAMENT_ID/event/EVENT_ID)'
+        },
       },
       menu: {
+        quick: 'Ajout rapide',
         credits: 'Credits',
         twitter: 'Twitter',
         discord: 'ID Discord',
-        github: 'Github Repo'
+        github: 'Github Repo',
+        apikey: 'Comment générer ce token ?'
       }
+    },
+    short: {
+      character: 'Perso. {nb}'
     }
   },
+
   en: {
     credits: {
       icon: 'Smash Bros Icons',
@@ -108,7 +142,14 @@ const messages = {
         custom: 'Custom Font'
       },
       angle: 'Angle',
-      blur: 'Blur'
+      blur: 'Blur',
+      shortcut: {
+        tab: 'Validate the choice of the current field and go to the next one',
+        ctrlEnter: 'Create a new entry'
+      },
+      startgg: {
+        remember: 'Remember'
+      }
     },
     title: {
       tagAndPhases: 'Tag & Phases',
@@ -127,23 +168,49 @@ const messages = {
         banner: 'Banner shadow'
       },
       versus: 'Versus',
-      default: 'Default'
+      default: 'Default',
+      quickAdd: 'Quick add',
+      shortcut: 'Shortcuts',
+      apiKey: 'Startgg API token'
     },
     placeholder: {
       image: 'Choose a picture'
+    },
+    error: {
+      smashgg: {
+        noApiKey: 'Check your startgg API key in configuration tab',
+        nodata: 'No data found ! Please check the startgg link',
+        noSetStreamed: 'No streamed sets found !',
+      }
+    },
+    notification: {
+      smashgg: {
+        importOk: '{nb} imported sets !'
+      }
     },
     tooltip: {
       random: 'Random characters !',
       clippath: 'Prevents an element from being displayed on an area',
       btn: {
-        reset: 'Reset'
+        reset: 'Reset',
+        add: 'Add'
+      },
+      help: {
+        import: {
+          smashgg: 'Event link (https://start.gg/tournament/TOURNAMENT_ID/event/EVENT_ID)'
+        },
       },
       menu: {
+        quick: 'Quick add',
         credits: 'Credits',
         twitter: 'Twitter',
         discord: 'Discord ID',
-        github: 'Github Repo'
+        github: 'Github Repo',
+        apikey: 'How to generate this token ?'
       }
+    },
+    short: {
+      character: 'Char. {nb}'
     }
   }
 }

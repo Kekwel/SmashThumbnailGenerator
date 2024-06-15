@@ -105,6 +105,8 @@ export default {
     // par defaut Ultimate
     this.game = Games.ULT;
     this.characters = Stocks.ULT;
+    
+    localStorage.characters = JSON.stringify({...this.characters});
 
     // -- J1
     var bgOptions = { width: 640, height: 720, x: 0, y: 0, index: 0 };
@@ -359,9 +361,9 @@ export default {
       item.vs = this.versus.toJSON();
 
       // custom img
-      if (this.$refs.confImg.images) {
+      if (this.$refs.confImg.newImages) {
         item.images = [];
-        for (let img of this.$refs.confImg.images) {
+        for (let img of this.$refs.confImg.newImages) {
           let itemImg = {};
           itemImg.name = img.name;
           itemImg.index = this.$refs.confImg.crtIndex(img);
@@ -440,7 +442,7 @@ export default {
       if (jsonObj.images)
         this.addCustomImages(jsonObj.images);
     },
-    setPlayerInfo(player, infoPlayer) {
+    async setPlayerInfo(player, infoPlayer) {
         // tag
       if (infoPlayer.tag)
         this.setTextInfos(player.myTag, infoPlayer.tag);
@@ -450,13 +452,21 @@ export default {
         this.setBgInfos(player.bg, infoPlayer.bg);
       
         // characters
-      if (infoPlayer.characters) {
-        if (infoPlayer.characters.url)
-          player.filename = infoPlayer.characters.url;
+      if (infoPlayer.duo?.length > 1) {
+        //const game = infoPlayer.duo[0].game;
+        this.setCharInfos(player.firstCharacter, infoPlayer.characters);
+        //await player.addImg(game, infoPlayer.duo[1])
+      } else if (infoPlayer.characters) {
+        // if (infoPlayer.characters.url)
+        //   player.filename = infoPlayer.characters.url;
         this.setCharInfos(player.firstCharacter, infoPlayer.characters);
       }
     },
     setTextInfos(text, infoText) {
+      if ("string" === typeof infoText) {
+        text.txt = infoText
+      }
+
       text.index = infoText.index;
       // text.tag = infoText.text.value // pas besoin
       if (infoText.text) {
@@ -494,7 +504,6 @@ export default {
         //text.bgTag.y = infoText.bg.y; // pas besoin
         if (infoText.bg.gradient && infoText.bg.gradient.colors) text.bgTag.colors = infoText.bg.gradient.colors;
         if (infoText.bg.colorDirection) text.bgTag.colorDirection = infoText.bg.colorDirection.colorDirection;
-
         text.group.setCoords();
       } else {
         if (infoText.scale) {
@@ -505,9 +514,9 @@ export default {
         }
       }
 
-      if (infoText.text.alignmentX) 
+      if (infoText.text?.alignmentX) 
         text.align(infoText.text.alignmentX);
-      if (infoText.text.alignmentY) 
+      if (infoText.text?.alignmentY) 
         text.align(null, infoText.text.alignmentY);
 
           // shadow
@@ -556,6 +565,7 @@ export default {
       } 
     },
     addCustomImages(images) {
+      console.log('..import custom images');
       for (let img of images) {
         let imgTag = document.createElement('img');
         imgTag.id = 'tmp-img'
@@ -593,7 +603,7 @@ export default {
         this.j2.removeImg();
       
       this.game = game;
-      switch (game.code) {
+      switch (game.code ? game.code : game) {
         case 'ult':
           this.characters = Stocks.ULT;
           break;
@@ -606,9 +616,14 @@ export default {
         case 'roa':
           this.characters = Stocks.ROA
           break;
+        case 'nasb':
+          this.characters = Stocks.NASB
+          break;
         default:
           this.characters = [];
       }
+      
+      localStorage.characters = JSON.stringify({...this.characters});
       this.$refs.confPlayer.updateGame(game);
     }
   },

@@ -1,9 +1,8 @@
 <template>
   <v-app>
-    <!-- TODO img bg en fonction du jeu ? src="..." -->
     <v-app-bar app dense dark :src="game.bgSrc">
       <v-toolbar-title>
-        <v-select style="width: 12em;" class="mr-2" 
+        <v-select style="width: 12em;" class="mr-2"
             @change="updateGame"
             v-model="game" :items="games" item-text="name" item-value="id"
             filled dense dark hide-details color="light-blue" item-color="blue">
@@ -15,10 +14,9 @@
           </template>
         </v-select>
       </v-toolbar-title>
-      <v-toolbar-title>Thumbnail Generator v1.0.1</v-toolbar-title>
+      <v-toolbar-title>Thumbnail Generator v1.2.1</v-toolbar-title>
 
-      
-      <v-tooltip right>
+      <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="ml-2" dark x-small fab color="lime" @click="randomPNG();" v-bind="attrs" v-on="on">
             <v-icon id="refresh-icon" :class="spin ? 'refresh' : 'refresh spin'" color="black">mdi-autorenew</v-icon>
@@ -26,12 +24,57 @@
         </template>
         <span>{{ $t('tooltip.random') }}</span>
       </v-tooltip>
+
+      <v-divider class="ml-2" inset vertical></v-divider>
+
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <div>
+            <div v-if="quickCrt" class="ml-2 quick-menu">
+              <!-- BTN PREV -->
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn class="mx-2" dark x-small fab color="teal" v-bind="attrs" v-on="on"
+                        :disabled="!hasQuickPrev" @click="quickPrev" v-hotkey="keymapprev">
+                    <v-icon>mdi-arrow-left-bold</v-icon>
+                  </v-btn>
+                </template>
+                <span><kbd>Ctrl</kbd> + <kbd>←</kbd></span>
+              </v-tooltip>
+              <!-- ITEM COURANT -->
+              <div class="quick-menu-vs" @click.stop="showQuickAdd = true;" v-bind="attrs" v-on="on" v-hotkey="keymapquicklist">
+                <stock-icon class="mx-1" :width="28" :src="quickCrt.j1.characters.firstStockUrl" /> <div class="text-button">VS</div> <stock-icon class="mx-1" :width="28" :src="quickCrt.j2.characters.firstStockUrl" />
+              </div>
+              <!-- BTN NEXT -->
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn class="mx-2" dark x-small fab color="teal" v-bind="attrs" v-on="on"
+                        :disabled="!hasQuickNext" @click="quickNext" v-hotkey="keymapnext">
+                    <v-icon>mdi-arrow-right-bold</v-icon>
+                  </v-btn>
+                </template>
+                <span><kbd>Ctrl</kbd> + <kbd>→</kbd></span>
+              </v-tooltip>
+            </div>
+            <v-btn v-else class="ml-2" dark x-small fab color="teal" @click.stop="showQuickAdd = true;" v-bind="attrs" v-on="on" v-hotkey="keymapquicklist">
+              <v-icon>mdi-format-list-numbered</v-icon>
+            </v-btn>
+          </div>
+        </template>
+        <span>{{ $t('tooltip.menu.quick') }} <kbd>Ctrl</kbd> + <kbd>↓</kbd></span>
+      </v-tooltip>
+      <quick-add ref="quickAdd" v-model="showQuickAdd" v-on:quick-infos="updateQuickList"></quick-add>
       <v-spacer></v-spacer>
 
-      <v-btn dark color="light-blue" @click="exportPNG">
-        <v-icon dark left>mdi-image-move</v-icon>
-        PNG
-      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn dark color="light-blue" @click="exportPNG" v-bind="attrs" v-on="on" v-hotkey="keymappng">
+            <v-icon dark left>mdi-image-move</v-icon>
+            PNG
+          </v-btn>
+        </template>
+        <span>Export PNG <kbd>Ctrl</kbd> + <kbd>Alt</kbd> +<kbd>Enter</kbd></span>
+      </v-tooltip>
 
       <v-spacer></v-spacer>
 
@@ -57,63 +100,7 @@
         </template>
         <span>{{ $t('tooltip.menu.credits') }}</span>
       </v-tooltip>
-      <v-dialog v-model="showCredits" max-width="700">
-        <v-card>
-          <v-card-title class="headline">Credits</v-card-title>
-          <v-divider class="ma-2"></v-divider>
-
-          <v-card-text>
-            <div class="text-h6">Renders</div> 
-            <!-- TODO icone jeu ? -->
-            <v-btn text small color="primary" href="https://www.deviantart.com/rapbattleeditor0510/art/Logos-Super-Smash-Bros-Logo-Icons-737799238" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> {{ $t("credits.icon") }}
-            </v-btn><br/>
-            <v-btn text small color="primary" href="https://www.spriters-resource.com/nintendo_switch/supersmashbrosultimate/" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Super Smash Bros Ultimate
-            </v-btn><br/>
-            <v-btn text small color="primary" href="https://www.reddit.com/r/smashbros/comments/4khef3/melee_full_classic_mode_poses_good_for_streams/" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Super Smash Bros Melee Classic mode poses
-            </v-btn><br/>
-            <v-btn text small color="primary" href="https://assets.melee.tv/" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Super Smash Bros Melee HD
-            </v-btn><br/>
-            <v-btn text small color="primary" href="https://projectplusgame.com/download/" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Project +
-            </v-btn><br/>
-            <v-btn text small color="primary" href="https://drive.google.com/drive/folders/1SMjNgynt7c-VdKJJ9_wTcKSasS2NcVSF" target="_blank">
-              <v-icon left>mdi-open-in-new</v-icon> Rivals of Aether
-            </v-btn>{{ $t("credits.custom") }}<br />
-            {{ $t("credits.characters") }}
-
-            <v-divider class="ma-2"></v-divider>
-            <div class="text-h6">{{ $t("credits.fonts") }}</div>
-
-            <v-btn text small color="primary" href="https://www.dafontfree.net/freefonts-futura-f30.htm" target="_blank" style="font-family: Futura Bold">
-              <v-icon left>mdi-open-in-new</v-icon> Futura
-            </v-btn>
-            <v-btn text small color="primary" href="https://www.dafontfree.net/freefonts-impact-f129612.htm" target="_blank" style="font-family: Impact">
-              <v-icon left>mdi-open-in-new</v-icon> Impact
-            </v-btn>
-            <v-btn text small color="primary" href="https://www.dafont.com/blacklisted.font" target="_blank" style="font-family: BlackListed">
-              <v-icon left>mdi-open-in-new</v-icon> BlackListed
-            </v-btn>
-            <v-btn text small color="primary" href="https://www.dafont.com/android-assassin.font" target="_blank" style="font-family: Android Assassin">
-              <v-icon left>mdi-open-in-new</v-icon> Android Assassin
-            </v-btn>
-            <v-btn text small color="primary" href="https://fontsgeek.com/fonts/Gotham-Black-Regular" target="_blank" style="font-family: Gotham Black Regular">
-              <v-icon left>mdi-open-in-new</v-icon> Gotham Black
-            </v-btn>
-            <v-btn text small color="primary" href="https://www.dafont.com/heroes-legend.font" target="_blank" style="font-family: Heroes Legend">
-              <v-icon left>mdi-open-in-new</v-icon> Heroes Legend
-            </v-btn>
-
-            <v-divider class="ma-2"></v-divider>
-            Made with <a href="https://vuejs.org/" target="_blank"><img :src="getVuejsSVG()" width="16" height="16"/>VueJS</a> 
-            and <a href="https://v2.vuetifyjs.com/" target="_blank"><img :src="getVuetifySVG()" width="16" height="16"/>Vuetify</a>
-            by Kekwel (c'est moi)
-          </v-card-text>
-        </v-card>
-      </v-dialog>
+      <credits v-model="showCredits"></credits>
       <v-divider class="mx-1" inset vertical></v-divider>
 
       <v-tooltip bottom>
@@ -154,16 +141,19 @@
 <script>
 import Thumbnail from './components/Thumbnail.vue';
 import Games from "./utils/games"
-import Utils from "./utils"
 import CountryFlag from 'vue-country-flag'
+import QuickAdd from './components/ui/dialog/QuickAdd.vue';
+import Credits from './components/ui/dialog/Credits.vue';
+import StockIcon from './components/ui/StockIcon.vue';
 
 export default {
   name: 'App',
-  components: { Thumbnail, CountryFlag },
+  components: { Thumbnail, CountryFlag, QuickAdd, Credits, StockIcon },
   data() {
     return {
       game: null,
       games: ['Smash Ultimate'],
+      showQuickAdd: false,
       showCredits: false,
       panel: [0, 1],
       locales: [{
@@ -173,12 +163,42 @@ export default {
         locale: 'en',
         flag: 'gb'
       }],
-      spin: false
+      spin: false,
+      //quickList: [],
+      quickCrt: null,
+      crtIdx: 0,
+      hasQuickPrev: false,
+      hasQuickNext: false,
+    }
+  },
+  computed: {
+    keymapprev () {
+      return {
+        'ctrl+left': this.quickPrev
+      }
+    },
+    keymapquicklist () {
+      return {
+        'ctrl+down': this.showQuickList
+      }
+    },
+    keymapnext () {
+      return {
+        'ctrl+right': this.quickNext
+      }
+    },
+    keymappng () {
+      return {
+        'ctrl+alt+enter': this.exportPNG
+      }
     }
   },
   created() {
     this.games = Games.GAMES;
     this.game = Games.ULT;
+  },
+  mounted() {
+      this.$refs.quickAdd.updateCharacters();
   },
   methods: {
     exportPNG() {
@@ -191,19 +211,79 @@ export default {
     },
     updateGame(id) {
       this.game = this.games[id];
+
       console.log('.. change game', this.game.name);
       this.$refs.main.updateGame(this.game);
+      this.$refs.quickAdd.updateCharacters();
+
+      // reset list courante
+      this.quickCrt = null;
+      localStorage.quickList = '';
+      localStorage.quickCrtIdx = 0;
+      this.crtIdx = 0;
+      this.hasQuickPrev = false;
+      this.hasQuickNext = false;
     },
     updateLocale(locale) {
       if (this.$i18n.locale !== locale)
         this.$i18n.locale = locale;
     },
-    getVuejsSVG() {
-      return Utils.getRoot() + 'img/icons/vuejs.svg';
+    // ** QUICK LIST ** //
+    showQuickList(val) {
+      if (typeof val == Boolean)
+        this.showQuickAdd = val;
+      else
+        this.showQuickAdd = !this.showQuickAdd;
     },
-    getVuetifySVG() {
-      return Utils.getRoot() + 'img/icons/vuetify.svg';
+    updateQuickList(infos) {
+      console.log('.. update quick list');
+      // infos = array -> id, p1 {tag, char}, p2 {...}, phase
+      //this.quickList = infos;
+      this.quickCrt = infos[0];
+      
+      // met dans storage local..
+      //localStorage.quickList = JSON.stringify(this.quickList);
+      localStorage.quickList = JSON.stringify(infos);
+      localStorage.quickCrtIdx = 0;
+      this.crtIdx = 0;
+
+      // set info
+      this.$refs.main.importInfos(this.quickCrt);
+      // update char select
+      this.$refs.main.$refs.confPlayer.selectQuickChar(this.quickCrt.j1.characters.game, this.quickCrt.j1, this.quickCrt.j2);
+
+      this.hasQuickPrev = false;
+      this.hasQuickNext = infos[this.crtIdx + 1];
     },
+    quickPrev() {
+      if (this.hasQuickPrev) {
+        this.quickPrevOrNext(true);
+      }
+    },
+    quickNext() {
+      if (this.hasQuickNext) {
+        this.quickPrevOrNext(false);
+      }
+    },
+    quickPrevOrNext(prev) {
+      console.log(prev ? '..prev' : '..next');
+      var quickList = JSON.parse(localStorage.quickList);
+      var crtidx = localStorage.quickCrtIdx;
+      if (prev) crtidx-- 
+      else crtidx++;
+      
+      this.quickCrt = quickList[crtidx];
+      localStorage.quickCrtIdx = crtidx;
+      this.crtIdx = crtidx;
+
+      // TODO transformer quickCrt en vrai objet (Character etc)
+      this.$refs.main.importInfos(this.quickCrt);
+      // update char select
+      this.$refs.main.$refs.confPlayer.selectQuickChar(this.quickCrt.j1.characters.game, this.quickCrt.j1, this.quickCrt.j2);
+
+      this.hasQuickPrev = quickList[this.crtIdx - 1];
+      this.hasQuickNext = quickList[this.crtIdx + 1];
+    }
   }
 }
 </script>
@@ -225,5 +305,29 @@ export default {
 .refresh.spin{
   transform: rotate(360deg);
   transition: transform 0.5s linear;
+}
+
+.quick-menu {
+  display: flex;
+  align-items: center;
+}
+.quick-menu-vs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: solid aqua 1px;
+  border-radius: 5px;
+  background-color: teal;
+}
+.quick-menu-vs:hover {
+  cursor: pointer;
+  border-radius: 5px;
+  color: black;
+  // light-blue lighten-4
+  background-color: #B3E5FC;
+}
+
+.toasted {
+  font-family: "Roboto", sans-serif;
 }
 </style>

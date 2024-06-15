@@ -5,18 +5,19 @@
         <v-row no-gutters>
           <v-col cols="10">
             <!-- TODO v-autocomplete ? -->
-            <v-select class="my-2" style="width: 15.5em" :options="characters" label="_name" @input="updateChar($event, image)" v-model="crtCharacter">
-              <template #selected-option="{ _name, _firstStockUrl }">
+            <multi-select class="my-2" style="width: 15.5em" :options="characters" label="_name" @input="updateChar($event, image)" v-model="crtCharacter">
+              <template #selected-option="{ _name, name, _firstStockUrl }">
                 <div class="stock-icon-selected">
-                  <stock-icon :width="28" :src="_firstStockUrl" /> {{ _name }}
+                  <stock-icon :width="28" :src="_firstStockUrl" /> {{ _name }}{{ name }}
                 </div>
               </template>
-              <template #option="option">
+              <!-- TODO dégueu de mettre _name et name.. revoir structure lors de l'import (quick add) -->
+              <template #option="{ _name, name, _firstStockUrl }">
                 <div class="stock-icon-selected">
-                  <stock-icon :width="28" :src="option._firstStockUrl" />{{ option._name }}
+                  <stock-icon :width="28" :src="_firstStockUrl" />{{ _name }}{{ name }}
                 </div>
               </template>
-            </v-select>
+            </multi-select>
           </v-col>
           <v-col cols="2" align-self="center" class="d-flex justify-end">
             <v-btn @click="image.flip(); updateActive(); activeFlip = !activeFlip" :color="activeFlip ? 'primary' : ''" :dark="activeFlip" elevation="2" small>
@@ -42,14 +43,16 @@
 </template>
 
 <script>
-import vSelect from "vue-select";
+import { Character } from '../js/Character';
 import StockIcon from '../ui/StockIcon.vue';
 export default {
-  components: { vSelect, StockIcon },
+  components: { StockIcon },
   props: {
     player: Object,
     image: Object,
     characters: Array,
+    // TODO a revoir...
+    isSecond: Boolean,
   },
   data() {
     return {
@@ -90,7 +93,7 @@ export default {
     stockStyles(row, col) {
       /*var maxW = this.maxWidth();*/
       return {
-        'background-image': `url(${this.crtCharacter.getAllStocksUrl()})`,
+        'background-image': `url(${this.crtCharacter.allStocksUrl ?? this.crtCharacter.getAllStocksUrl()})`,
         'background-size' : `${this.maxColWidth}px ${(this.crtCharacter.maxRow) * this.maxWidth}px`,
         'background-position': `${col * -this.maxWidth}px ${row * -this.maxWidth}px`,
         'height' : `${this.maxWidth}px`,
@@ -114,8 +117,47 @@ export default {
     updateChar(character) {
       this.resetActive();
       console.log("update", character ? character.formatName : 'null', "for player", this.image.number, "..");
+      console.log(this.characters)
+
+      var quickList = localStorage.quickList ? JSON.parse(localStorage.quickList) : [];
+      var quickIdx = localStorage.quickCrtIdx ? JSON.parse(localStorage.quickCrtIdx) : '';
+      var qui = quickList[quickIdx];
+      // TODO a modifier, a revoir, a détruire je sais pas mais j'ai fait n'imp sur ce coup, mais ca fonctionne
+
+      if (qui?.j1 && qui?.j2) {
+        // si j1
+        if (this.image.number === 'j1') {
+          // si second perso
+          if (!this.isSecond) {
+            qui.j1.characters.row = character.row;
+            qui.j1.characters.col = character.col;
+            // flemme de tout changer... désolé
+            qui.j1.characters.url = character.url ?? character.getCharUrl();
+          } else {
+            qui.j1.duo[1].row = character.row;
+            qui.j1.duo[1].col = character.col;
+            qui.j1.duo[1].url = character.url ?? character.getCharUrl();
+          }
+        } else {
+          if (!this.isSecond) {
+            qui.j2.characters.row = character.row;
+            qui.j2.characters.col = character.col;
+            qui.j2.characters.url = character.url ?? character.getCharUrl();
+          } else {
+            qui.j2.duo[1].row = character.row;
+            qui.j2.duo[1].col = character.col;
+            qui.j2.duo[1].url = character.url ?? character.getCharUrl();
+          }
+        }
+        // on maj le storage
+        quickList[quickIdx] = qui;
+        
+        localStorage.quickList = JSON.stringify(quickList);
+        //localStorage.quickCrt = JSON.stringify(qui);
+      }
+
       if (character)
-        this.image.filename = character.getCharUrl();
+        this.image.filename = character.url ?? character.getCharUrl();
       else
         this.image.filename = '';
       this.crtCharacter = character;
@@ -126,6 +168,7 @@ export default {
     setCurrentChar(image, row, col) {
       this.crtCharacter.row = row;
       this.crtCharacter.col = this.pad(col, 2);
+      
       this.updateChar(this.crtCharacter, image);
     },
     initStockIconDivsArray() {
@@ -167,6 +210,13 @@ export default {
     },
     selectChar(char) {
       this.updateChar(char);
+    },
+    selectQuickChar(j) {
+      let quickChar = new Character(j.characters.game, '1', j.characters.name, j.characters.formatName, j.characters.maxRow, j.characters.maxCol)
+      quickChar.row = j.characters.row;
+      quickChar.col = j.characters.col;
+      
+      this.updateChar(quickChar);
     },
     isActiveFlip(val) {
       return this.activeFlip === val;
